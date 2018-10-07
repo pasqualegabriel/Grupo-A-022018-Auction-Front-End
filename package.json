@@ -1,0 +1,25 @@
+{
+  "name": "x",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "async-reactor": "^1.2.2",
+    "axios": "^0.18.0",
+    "email-validator": "^2.0.4",
+    "jwt-decode": "^2.2.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-notifications": "^1.4.3",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4",
+    "react-stringify": "^1.0.0",
+    "semantic-ui-css": "^2.3.3",
+    "semantic-ui-react": "^0.82.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
