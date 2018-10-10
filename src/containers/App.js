@@ -21,7 +21,7 @@ export default class App extends Component {
           <Header/>
           <Switch>
             <Route exact path="/" render={()=><Home anUserName={this.state.name}/>}/>
-            <Route exact path="signIn" component ={Login}/>
+            <Route exact path="/signIn" component ={Login}/>
           </Switch>
       </div>
     );

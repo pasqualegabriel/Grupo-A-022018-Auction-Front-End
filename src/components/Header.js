@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Input, Menu } from 'semantic-ui-react'
-import { Redirect } from 'react-router-dom'
 
 export default class Header extends Component {
 
@@ -9,13 +8,12 @@ export default class Header extends Component {
     super(props);
     this.state = {
       loggedIn: false,
-      sesion: 'signIn'
+      sesionName: 'signIn',
+      sesion: this.verifySesion()
     }
   }
 
-  handleSesion = (e, { name }) => {
-    return <Redirect to='/signIn' />
-  }
+  verifySesion = () => 'signIn'
   
   render() {
 
@@ -34,8 +32,9 @@ export default class Header extends Component {
               <Input icon='search' placeholder='Search Auctions...' />
             </Menu.Item>
             <Menu.Item
-              name={this.state.sesion}
-              onClick={this.handleSesion}
+              as={Link}
+              name={this.state.sesionName}
+              to={this.state.sesion}
             />
           </Menu.Menu>
         </Menu>
