@@ -6,15 +6,30 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
     this.auctionService = new AuctionService()
+    this.state = {
+      auctions: [] 
+    }
   }
 
-  //auctions = async() => this.auctionService.getAuctions()
+  componentDidMount = () => this.setAuctions()
+
+  setAuctions = async() => {
+    this.auctionService.getAuctions()
+    .then(response => {
+      const auctions = response.data;
+      this.setState({ auctions });
+    })
+  }
 
   render() {
 
     return (
       <div>
-        <h2>hola</h2>
+        {this.state.auctions.map(auction => 
+          <li key={auction.id}>
+            {auction.emailAuthor}
+          </li>
+        )}
       </div>
     )
   }

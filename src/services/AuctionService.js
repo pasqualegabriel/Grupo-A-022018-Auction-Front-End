@@ -13,7 +13,7 @@ class AuctionService {
     }
 
     getAuctions = () => axios.get('http://localhost:8080/auctions')
-
+    
 }
     
 export default AuctionService
