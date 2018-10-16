@@ -1,24 +1,41 @@
 import React from 'react'
+import { Item } from 'semantic-ui-react'
+
+const style1 = { 
+    border          :'1px solid #2d2e2f',
+    backgroundColor :'rgb(27, 28, 29)',
+    marginLeft      :'45px',
+    padding         :'3px',
+    margin          :'22px',
+    align           :'center'
+}
+
+const blue = {
+    color:'#adf2f4'
+}
+
+const green = {
+    color:'#d5fcb5'
+}
+
+const white = {
+    color:'#ffffff'
+}
 
 export default ({auction}) => {
 
     return ( 
-        <div class='ui card' width="%100">
-            <img src='https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/God_of_War_4_cover.jpg/220px-God_of_War_4_cover.jpg'
-            alt='subasta' class='ui image' width="100" height="100"/>
-            <div class='content'>
-                <div class='header'>{auction.title}</div>
-                <div class='meta'>$ {auction.price}</div>
-                <div class='description'>
-                    {auction.description}
-                </div>
-            </div>
-            <div class='extra content'>
-                <a>
-                <i aria-hidden='true' class='user icon' />
-                    {auction.emailAuthor}
-                </a>
-            </div>
-        </div>
+     <Item style={style1} >
+      <Item.Image size='tiny' src='https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/God_of_War_4_cover.jpg/220px-God_of_War_4_cover.jpg' />
+
+      <Item.Content>
+        <Item.Header as='a'style={blue} >{auction.title}</Item.Header>
+        <Item.Meta style={green}>$ {auction.price}</Item.Meta>
+        <Item.Description style={white}>
+          {auction.description}
+        </Item.Description>
+        <Item.Extra style={green}>{auction.emailAuthor}</Item.Extra>
+      </Item.Content>
+    </Item>
     )
 }

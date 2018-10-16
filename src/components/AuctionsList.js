@@ -1,15 +1,14 @@
 import React from 'react'
 import Auction from './Auction.js'
+import { Item } from 'semantic-ui-react'
 
 export default ({auctions}) => {
 
     return ( 
-      <div>
+      <Item.Group>
         {auctions.map(anAuction => 
-          <div key={anAuction.id}>
-            <Auction auction={anAuction}/>
-          </div>
+            <Auction key={anAuction.id} auction={anAuction}/>
         )}
-      </div>
+      </Item.Group>
     )
 }
