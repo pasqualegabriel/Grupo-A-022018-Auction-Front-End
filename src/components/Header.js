@@ -9,11 +9,16 @@ export default class Header extends Component {
     this.state = {
       loggedIn: false,
       sesionName: 'signIn',
+      search: '',
       sesion: this.verifySesion()
     }
   }
 
   verifySesion = () => 'signIn'
+
+  handleChange = (event) => {
+    this.setState({search: event.target.value});
+  }
   
   render() {
 
@@ -29,7 +34,8 @@ export default class Header extends Component {
                       name    ='Auctions'/>
           <Menu.Menu  position='right'>
             <Menu.Item>
-              <Input icon='search' placeholder='Search Auctions...' />
+              <Input icon='search' placeholder='Search Auctions...' 
+              value={this.state.search} onChange={this.handleChange}/>
             </Menu.Item>
             <Menu.Item
               as={Link}

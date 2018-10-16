@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AuctionService from '../services/AuctionService.js'
+import AuctionsList from '../components/AuctionsList.js'
 
 export default class Home extends Component {
 
@@ -24,12 +25,8 @@ export default class Home extends Component {
   render() {
 
     return (
-      <div>
-        {this.state.auctions.map(auction => 
-          <li key={auction.id}>
-            {auction.emailAuthor}
-          </li>
-        )}
+      <div className="ui-cards">
+        <AuctionsList auctions={this.state.auctions}/>   
       </div>
     )
   }
