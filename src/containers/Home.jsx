@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import AuctionService from '../services/AuctionService.js'
-import AuctionsList from '../components/AuctionsList.js'
+import React, { Component } from 'react'
+import AuctionService from '../services/AuctionService'
+import AuctionsList from '../components/AuctionsList'
 
 export default class Home extends Component {
 

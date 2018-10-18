@@ -1,5 +1,7 @@
 import React from 'react'
 import { Item } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
+import {setItem} from '../services/LocalStorageService'
 
 const style1 = { 
     border          :'1px solid #2d2e2f',
@@ -29,7 +31,9 @@ export default ({auction}) => {
       <Item.Image size='tiny' src='https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/God_of_War_4_cover.jpg/220px-God_of_War_4_cover.jpg' />
 
       <Item.Content>
-        <Item.Header as='a'style={blue} >{auction.title}</Item.Header>
+        <Link style={blue} to={'/auction'} onClick={()=>setItem('auction', auction.id)}>
+          {auction.title}
+        </Link> 
         <Item.Meta style={green}>$ {auction.price}</Item.Meta>
         <Item.Description style={white}>
           {auction.description}
