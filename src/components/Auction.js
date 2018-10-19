@@ -31,7 +31,7 @@ export default ({auction}) => {
       <Item.Image size='tiny' src='https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/God_of_War_4_cover.jpg/220px-God_of_War_4_cover.jpg' />
 
       <Item.Content>
-        <Link style={blue} to={'/auction'} onClick={()=>setItem('auction', auction.id)}>
+        <Link style={blue} to={'/auction'} onClick={()=>setItem('auction', auction)}>
           {auction.title}
         </Link> 
         <Item.Meta style={green}>$ {auction.price}</Item.Meta>

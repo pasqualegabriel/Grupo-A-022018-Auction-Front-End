@@ -1,31 +1,36 @@
 import React, { Component } from 'react'
-import AuctionService from '../services/AuctionService'
 import {getItem} from '../services/LocalStorageService'
 
 export default class App extends Component {
   
   constructor(){
     super()
-    this.auctionService = new AuctionService()
     this.state = { 
-      auction: ""
+      auction: {},
+      bidders: []
     }
   }
 
-//   componentDidMount = () => this.setAuction()
+  componentDidMount = () => this.setAuction()
 
-//   setAuction = () => {
-//     const auctionId = getItem('auction')
-//     const auction = this.auctionService.getAuction(auctionId)
-//     this.setState({
-//       auction
-//     })
-//   }
+  setAuction = () => {
+    const auction = getItem('auction')
+    const bidders = auction.bidders
+    this.setState({
+      auction,
+      bidders
+    })
+  }
 
   render() {
     return (
       <div>
-          {getItem('auction')}
+          {this.state.auction.emailAuthor}
+          {this.state.bidders.map(b => 
+            <div key={b.id}>
+              <h1>{b.author}</h1>
+            </div>
+          )}
       </div>
     );
   }
