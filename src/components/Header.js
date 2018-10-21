@@ -7,41 +7,19 @@ export default class Header extends Component {
   constructor(props) { 
     super(props);
     this.state = {
-      loggedIn: false,
-      sesionName: 'signIn',
-      search: '',
-      language: '',
-      sesion: this.verifySesion()
+      search: ''
     }
   }
-
-  componentDidMount = () => {
-    var language = this.props.getLanguage()
-    if(language === 'en') {
-      language = 'spanish'
-    } else {
-      language = 'inglés'
-    }
-    this.setState({ language })
-  }
-
-  verifySesion = () => 'signIn'
 
   handleChange = (event) => {
     this.setState({search: event.target.value})
   }
 
-  changePropLanguage = (idiom, oldIdiom) => {
-    this.props.changeLanguage(idiom)
-    const language = oldIdiom
-    this.setState({ language })
-  }
-
   changeLanguage = () => {
     if(this.props.getLanguage() === 'en') {
-      this.changePropLanguage('es', 'inglés')
+      this.props.changeLanguage('es')
     } else {
-      this.changePropLanguage('en', 'spanish')
+      this.props.changeLanguage('en')
     }
   }
   
@@ -63,13 +41,13 @@ export default class Header extends Component {
               value={this.state.search} onChange={this.handleChange}/>
             </Menu.Item>
             <Menu.Item
-              name={this.state.language}
+              name={this.props.getTranslation('idiom')}
               onClick={this.changeLanguage}
             />
             <Menu.Item
               as={Link}
-              name={this.state.sesionName}
-              to={this.state.sesion}
+              name='signIn'
+              to='/signIn'
             />
           </Menu.Menu>
         </Menu>
