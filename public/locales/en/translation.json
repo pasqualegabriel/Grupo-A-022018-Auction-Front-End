@@ -1,5 +1,10 @@
 {
   "title": "Welcome to react using react-i18next",
+  "home": "Home",
   "auction": "Auction",
-  "idiom": "spanish"
+  "idiom": "spanish",
+  "language-tilte": "language",
+  "idiom-en": "english",
+  "idiom-es": "spanish",
+  "search-placeholder": "Search Auctions..."
 }

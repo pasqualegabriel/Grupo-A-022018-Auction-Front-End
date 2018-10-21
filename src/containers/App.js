@@ -25,12 +25,10 @@ class App extends Component {
         <Header getTranslation={this.getTranslation} 
                 changeLanguage={this.changeLanguage}
                 getLanguage={this.getLanguage}/>
-        {/* <button onClick={() => this.changeLanguage('es')}>es</button>
-        <button onClick={() => this.changeLanguage('en')}>en</button> */}
         <Switch>
           <Route exact path="/" render={()=><Home/>}/>
-          <Route exact path="/signIn" component ={Login}/>
-          <Route exact path="/auction" component ={AuctionDetails}/>
+          <Route exact path="/signIn" render={()=><Login getTranslation={this.getTranslation} />}/>
+          <Route exact path="/auction" render={()=><AuctionDetails getTranslation={this.getTranslation} />}/>
         </Switch>
       </div>
     );

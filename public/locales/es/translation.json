@@ -1,5 +1,10 @@
 {
   "title": "Bienvenido a react usando react-i18next",
+  "home": "Inicio",
   "auction": "Subasta",
-  "idiom": "ingles"
+  "idiom": "ingles",
+  "language-tilte": "lenguaje",
+  "idiom-en": "ingles",
+  "idiom-es": "español",
+  "search-placeholder": "Buscar Subastas..."
 }
