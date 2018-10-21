@@ -1,38 +1,32 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { Route, Switch } from 'react-router-dom'
-import { withNamespaces, NamespacesConsumer } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
 import Header from '../components/Header';
 import AuctionDetails from '../components/AuctionDetails';
 import 'react-notifications/lib/notifications.css'
 import Login from './Login'
 import Home from './Home';
 
-const Welcome = () => {
-  return (
-    <NamespacesConsumer>
-      {
-        (t, { i18n }) => <h2>{t('title')}</h2>
-      }
-    </NamespacesConsumer>
-  )
-}
-
 class App extends Component {
 
-  render() {
-    const { i18n } = this.props;
+  getTranslation = (key) => this.props.t(key)
 
-    const changeLanguage = (lng) => {
-      i18n.changeLanguage(lng);
-    }
+  changeLanguage = (lng) => {
+    this.props.i18n.changeLanguage(lng)
+  }
+
+  getLanguage = () => this.props.lng
+
+  render() {
 
     return (
       <div>
-        <Header/>
-        <Welcome />
-        <button onClick={() => changeLanguage('es')}>es</button>
-        <button onClick={() => changeLanguage('en')}>en</button>
+        <Header getTranslation={this.getTranslation} 
+                changeLanguage={this.changeLanguage}
+                getLanguage={this.getLanguage}/>
+        {/* <button onClick={() => this.changeLanguage('es')}>es</button>
+        <button onClick={() => this.changeLanguage('en')}>en</button> */}
         <Switch>
           <Route exact path="/" render={()=><Home/>}/>
           <Route exact path="/signIn" component ={Login}/>
