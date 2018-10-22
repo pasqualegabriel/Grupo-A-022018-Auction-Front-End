@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import AuctionDetails from '../components/AuctionDetails';
 import 'react-notifications/lib/notifications.css'
 import Login from './Login'
-import Home from './Home';
+import Home from './Home'
 
 class App extends Component {
 

@@ -4,24 +4,26 @@ import { Link } from 'react-router-dom';
 import {setItem} from '../services/LocalStorageService'
 
 const style1 = { 
-    border          :'1px solid #2d2e2f',
-    backgroundColor :'rgb(27, 28, 29)',
+    border          :'2px solid #e2e2e0',
+    backgroundColor :'#f9f9ef',
     marginLeft      :'45px',
     padding         :'3px',
     margin          :'22px',
-    align           :'center'
+    align           :'center',
+    width           :'95%'
 }
 
 const blue = {
-    color:'#adf2f4'
+    color:'#140e63',
+    fontSize: '21px'
 }
 
 const green = {
-    color:'#d5fcb5'
+    color:'#0f5611'
 }
 
 const white = {
-    color:'#ffffff'
+    color:'#010007'
 }
 
 export default ({auction}) => {
