@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import AuctionService from '../services/AuctionService'
 import AuctionsList from '../components/AuctionsList'
 
+
+
 export default class Home extends Component {
 
   constructor(props) {
@@ -25,9 +27,9 @@ export default class Home extends Component {
   render() {
 
     return (
-      <div className="ui-cards">
-        <AuctionsList auctions={this.state.auctions}/>   
-      </div>
+
+        <AuctionsList auctions={this.state.auctions}/> 
+
     )
   }
 

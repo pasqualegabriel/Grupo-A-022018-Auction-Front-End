@@ -1,47 +1,49 @@
 import React from 'react'
-import { Item } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import {setItem} from '../services/LocalStorageService'
-
-const style1 = { 
-    border          :'2px solid #e2e2e0',
-    backgroundColor :'#f9f9ef',
-    marginLeft      :'45px',
-    padding         :'3px',
-    margin          :'22px',
-    align           :'center',
-    width           :'95%'
-}
+import { Image, List, Card } from 'semantic-ui-react'
 
 const blue = {
     color:'#140e63',
     fontSize: '21px'
 }
 
-const green = {
-    color:'#0f5611'
+const st = {
+    textAlign       : 'center',
+    border          : '1px solid #e6e6e6',
+    backgroundColor : '#e6e6e6',
+    width: '206px'
 }
 
-const white = {
-    color:'#010007'
+const st2 = {
+    height: '190px'
 }
 
 export default ({auction}) => {
 
-    return ( 
-     <Item style={style1} >
-      <Item.Image size='tiny' src='https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/God_of_War_4_cover.jpg/220px-God_of_War_4_cover.jpg' />
+    return (
 
-      <Item.Content>
-        <Link style={blue} to={'/auction'} onClick={()=>setItem('auction', auction)}>
-          {auction.title}
-        </Link> 
-        <Item.Meta style={green}>$ {auction.price}</Item.Meta>
-        <Item.Description style={white}>
-          {auction.description}
-        </Item.Description>
-        <Item.Extra style={green}>{auction.emailAuthor}</Item.Extra>
-      </Item.Content>
-    </Item>
+      <List.Item>
+        <Card style={st}>
+            <Image 
+                src='https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/God_of_War_4_cover.jpg/220px-God_of_War_4_cover.jpg' 
+                style={st2}
+            />
+            <Card.Content>
+            <Card.Header>{auction.title}</Card.Header>
+            <Card.Meta>{auction.emailAuthor}</Card.Meta>
+            <Card.Description>{auction.description}</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+                <Link style={blue} to={'/auction'} onClick={()=>setItem('auction', auction)}>
+                Details
+                </Link> 
+            </Card.Content>
+        </Card>
+      </List.Item>
     )
 }
+
+
+
+
