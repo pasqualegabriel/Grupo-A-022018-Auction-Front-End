@@ -5,10 +5,13 @@ import { Item } from 'semantic-ui-react'
 export default ({auctions}) => {
 
     return ( 
-      <Item.Group>
-        {auctions.map(anAuction => 
-            <Auction key={anAuction.id} auction={anAuction}/>
-        )}
-      </Item.Group>
+      <div class="album py-5 bg-light">
+          <div class="row">
+      
+              {auctions.map(anAuction => 
+                  <Auction key={anAuction.id} auction={anAuction}/>
+              )}
+          </div>
+      </div>
     )
 }

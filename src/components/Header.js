@@ -37,7 +37,7 @@ export default class Header extends Component {
             alt="logo"/>
         </Menu.Item>
         <Menu.Item  as ={Link} 
-                    to      ='/'
+                    to      ='/home'
                     name    ={this.props.getTranslation('home')}/>
         <Menu.Item  as      ={Link}  
                     to      ='/auctions'

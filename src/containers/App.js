@@ -24,12 +24,17 @@ class App extends Component {
       <div>
         <Header getTranslation={this.getTranslation} 
                 changeLanguage={this.changeLanguage}
-                getLanguage={this.getLanguage}/>
+                getLanguage={this.getLanguage}/> 
         <Switch>
-          <Route exact path="/" render={()=><Home/>}/>
-          <Route exact path="/signIn" render={()=><Login getTranslation={this.getTranslation} />}/>
+          <Route exact path="/home"        render={()=><Home/>}/>
+          <Route exact path="/signIn"  render={()=><Login getTranslation={this.getTranslation} />}/>
           <Route exact path="/auction" render={()=><AuctionDetails getTranslation={this.getTranslation} />}/>
         </Switch>
+
+        <div>
+          {/* <img src='https://i.ytimg.com/vi/UcMMA7KKBsk/maxresdefault.jpg' alt="" sizes></img> */}
+        </div>
+        
       </div>
     );
   }
