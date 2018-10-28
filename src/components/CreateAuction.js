@@ -1,11 +1,25 @@
 import React, { Component } from 'react'
-import { Form } from 'semantic-ui-react'
 import AuctionService from '../services/AuctionService'
+import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import 'react-datepicker/dist/react-datepicker.css'
 
-const options = [
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
-]
+const styles = {
+    loginStyle: {
+        height: '100%',
+        width: '500', 
+        padding: '1em'
+    }
+}
+
+const dateStyle = {
+  // height: '100%',
+  // margin: '1px',
+  // size: '5%',
+  width: '300px',
+  // padding: '8em'
+}
 
 export default class CreateAuction extends Component {
 
@@ -13,8 +27,18 @@ export default class CreateAuction extends Component {
     super(props);
     this.auctionService = new AuctionService()
     this.state = {
-      search: ''
+      search: '',
+      startDate: moment(),
+      endDate: moment()
     }
+  }
+
+  handleChangeStartDate = (event) => {
+    this.setState({startDate: event})
+  }
+
+  handleChangeEndDate = (event) => {
+    this.setState({endDate: event})
   }
 
   handleChange = (event) => {
@@ -22,17 +46,116 @@ export default class CreateAuction extends Component {
   }
 
   render() {
+    return ( 
+      <div>
+        <div className='login-form'>
+        <style>{`
+          body > div,
+          body > div > div,
+          body > div > div > div.login-form {
+            height: 100%;
+          }
+        `}</style>
+        <Grid textAlign='center' style={styles.loginStyle} verticalAlign='middle' >
+          <Grid.Column style={{ maxWidth: 500 }}>
+            
+            <Form size='large' >
+              <Segment stacked>
+              <Header as='h2' color='teal' textAlign='center'>
+                Create Auction
+              </Header>
+                <Form.Input name="email" onChange={this.handleChange} fluid icon='mail' 
+                            iconPosition='left' placeholder='Email' />
+                <Form.Input
+                  fluid
+                  name="title"
+                  onChange={this.handleChange}
+                  icon='tags'
+                  iconPosition='left'
+                  placeholder='Title'
+                />
 
-    return (
-        <Form>
-            <Form.Group widths='equal'>
-                <Form.Input fluid label='First name' placeholder='First name' error />
-                <Form.Input fluid label='Last name' placeholder='Last name' />
-            </Form.Group>
-            <Form.Select options={options} placeholder='Gender' error />
-            <Form.Checkbox label='I agree to the Terms and Conditions' error />
-        </Form>
+                <Form.Input
+                  fluid
+                  name="title"
+                  onChange={this.handleChange}
+                  icon='content'
+                  iconPosition='left'
+                  placeholder='Description'
+                />
+
+                <Form.Input
+                  fluid
+                  name="price"
+                  onChange={this.handleChange}
+                  icon='money bill alternate'
+                  iconPosition='left'
+                  placeholder='Initial Price'
+                />
+
+                <Form.Group widths='equal'>
+                  <Form.Field label='Publication Date' />
+                  <Form.Field label='Finish Date'  />
+                </Form.Group>
+
+                <Form.Group widths='equal'>
+                <div style={dateStyle}>
+                  <DatePicker
+                    label='First name'
+                    selected={this.state.startDate}
+                    onChange={this.handleChangeStartDate}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    dateFormat="LLL"
+                    timeCaption="time"
+                  />
+</div>
+<div style={dateStyle}>
+                  <DatePicker
+                    selected={this.state.endDate}
+                    onChange={this.handleChangeEndDate}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    dateFormat="LLL"
+                    timeCaption="time"
+                  />
+                  </div>
+                </Form.Group>
+
+                <Form.Input
+                  fluid
+                  name="photo"
+                  onChange={this.handleChange}
+                  icon='photo'
+                  iconPosition='left'
+                  placeholder='Add Photo Link'
+                />
+
+                <Button color='teal' fluid size='large' >
+                  Create
+                </Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
+      </div>
+    </div>
     )
   }
 
 }
+
+/*
+"emailAuthor": "user@gmail.com",
+    "publicationDate": "2018-09-25T14:13:30",
+    "finishDate": "2018-09-28T14:13:30",
+    "initialFinishDate": "2018-09-28T14:13:30",
+    "price": 100,
+    "automaticOfferAmount": 200,
+    "title": "PS4 God of War",
+    "description": "The goddess Athena tasks Kratos with killing Ares.",
+    "address": null,
+    "photos": null,
+*/

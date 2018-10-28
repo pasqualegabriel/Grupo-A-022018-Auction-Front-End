@@ -31,7 +31,7 @@ export default ({auction}) => {
             />
             <Card.Content>
             <Card.Header>{auction.title}</Card.Header>
-            <Card.Meta>{auction.emailAuthor}</Card.Meta>
+            <Card.Meta>$ {auction.price}</Card.Meta>
             <Card.Description>{auction.description}</Card.Description>
             </Card.Content>
             <Card.Content extra>
