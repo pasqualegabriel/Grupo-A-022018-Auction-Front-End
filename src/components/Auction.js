@@ -12,11 +12,11 @@ const st = {
     textAlign       : 'center',
     border          : '1px solid #e6e6e6',
     backgroundColor : '#e6e6e6',
-    width: '206px'
+    width: '158px'
 }
 
 const st2 = {
-    height: '190px'
+    height: '122px'
 }
 
 export default ({auction}) => {
@@ -26,7 +26,7 @@ export default ({auction}) => {
       <List.Item>
         <Card style={st}>
             <Image 
-                src='https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/God_of_War_4_cover.jpg/220px-God_of_War_4_cover.jpg' 
+                src='https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg' 
                 style={st2}
             />
             <Card.Content>
@@ -35,7 +35,7 @@ export default ({auction}) => {
             <Card.Description>{auction.description}</Card.Description>
             </Card.Content>
             <Card.Content extra>
-                <Link style={blue} to={'/auction'} onClick={()=>setItem('auction', auction)}>
+                <Link style={blue} to={'/detail'} onClick={()=>setItem('auction', auction)}>
                 Details
                 </Link> 
             </Card.Content>

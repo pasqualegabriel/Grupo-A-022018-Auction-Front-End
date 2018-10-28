@@ -40,7 +40,7 @@ export default class Header extends Component {
                     to      ='/home'
                     name    ={this.props.getTranslation('home')}/>
         <Menu.Item  as      ={Link}  
-                    to      ='/auctions'
+                    to      ='/auction'
                     name    ={this.props.getTranslation('auction')}/>
 
         <Menu.Menu position='right'>
