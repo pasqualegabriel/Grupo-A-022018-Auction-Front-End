@@ -29,7 +29,12 @@ export default class CreateAuction extends Component {
     this.state = {
       search: '',
       startDate: moment(),
-      endDate: moment()
+      endDate: moment(), 
+      description: '',
+      title: '',
+      price: 0,
+      address: '',
+      photo: ''
     }
   }
 
@@ -41,8 +46,22 @@ export default class CreateAuction extends Component {
     this.setState({endDate: event})
   }
 
-  handleChange = (event) => {
-    this.setState({search: event.target.value})
+  handleChange = (ev, {name, value}) => {
+    this.setState({ [name]: value })
+  }
+
+  create = async (event) => {
+    const newAuction = {
+      emailAuthor: "user2@gmail.com",
+      publicationDate: this.state.startDate,
+      finishDate: this.state.endDate,
+      price: this.state.price,
+      title: this.state.title,
+      description: this.state.description,
+      address: this.state.address,
+      photos: 'https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg',
+    }
+    this.auctionService.auction(newAuction)
   }
 
   render() {
@@ -64,8 +83,7 @@ export default class CreateAuction extends Component {
               <Header as='h2' color='teal' textAlign='center'>
                 Create Auction
               </Header>
-                <Form.Input name="email" onChange={this.handleChange} fluid icon='mail' 
-                            iconPosition='left' placeholder='Email' />
+
                 <Form.Input
                   fluid
                   name="title"
@@ -77,7 +95,7 @@ export default class CreateAuction extends Component {
 
                 <Form.Input
                   fluid
-                  name="title"
+                  name="description"
                   onChange={this.handleChange}
                   icon='content'
                   iconPosition='left'
@@ -133,7 +151,7 @@ export default class CreateAuction extends Component {
                   placeholder='Add Photo Link'
                 />
 
-                <Button color='teal' fluid size='large' >
+                <Button color='teal' onClick={this.create} fluid size='large' >
                   Create
                 </Button>
               </Segment>
