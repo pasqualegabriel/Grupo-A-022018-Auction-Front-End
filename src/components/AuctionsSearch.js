@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AuctionService from '../services/AuctionService'
-import AuctionsList from '../components/AuctionsList'
+import ListAuction from './ListAuction'
 
 export default class Home extends Component {
 
@@ -25,10 +25,9 @@ export default class Home extends Component {
   render() {
 
     return (
-      <div>
-        <AuctionsList auctions={this.state.auctions}/> 
-        <AuctionsList auctions={this.state.auctions}/> 
-      </div>
+
+        <ListAuction auctions={this.state.auctions}/> 
+
     )
   }
 

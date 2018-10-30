@@ -17,6 +17,10 @@ const Arrow = ({ text, className }) => {
     >{text}</div>
   );
 };
+
+const st = {
+  height: '100%'
+}
  
 const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
 const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
@@ -38,6 +42,7 @@ export default class AuctionList extends Component {
     return (
       <div className="App">
         <ScrollMenu
+          style={st}
           data={menu}
           arrowLeft={ArrowLeft}
           arrowRight={ArrowRight}

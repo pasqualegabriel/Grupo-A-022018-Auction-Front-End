@@ -17,11 +17,11 @@ export default class Header extends Component {
 
   handleKeyPress = ({key}) => {
     if (key === 'Enter') {
-      window.location.pathname = '/auctions'
+      window.location.pathname = '/auctions/search'
     }
   }
 
-  onActionSearchAuction = () => window.location.pathname = '/auctions'
+  onActionSearchAuction = () => window.location.pathname = '/auctions/search'
 
   changeLanguageEn = () => this.props.changeLanguage('en')
 
@@ -31,7 +31,7 @@ export default class Header extends Component {
 
     return (
       <Menu size='large'>
-         <Menu.Item>
+         <Menu.Item onClick={this.props.click1}>
             <Image avatar 
             src='https://orig00.deviantart.net/9428/f/2015/206/a/5/esfera_del_dragon_de_1_estrella_render_hd_png_by_todoanimeoficial-d92t5g9.png'
             alt="logo"/>

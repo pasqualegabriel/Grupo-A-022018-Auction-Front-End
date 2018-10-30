@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import {setItem} from '../services/LocalStorageService'
-import { Image, Card } from 'semantic-ui-react'
+import { Image, Card, List } from 'semantic-ui-react'
 
 const blue = {
     color:'#140e63',
@@ -27,7 +27,7 @@ export default ({auction}) => {
 
     return (
 
-    //   <List.Item>
+      <List.Item>
         <Card style={st}>
             <Image 
                 src='https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg' 
@@ -44,7 +44,7 @@ export default ({auction}) => {
                 </Link> 
             </Card.Content>
         </Card>
-    //   </List.Item>
+       </List.Item>
     )
 }
 
