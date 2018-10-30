@@ -9,9 +9,9 @@ const blue = {
 }
 
 const st = {
-    // textAlign       : 'center',
+    textAlign       : 'center',
     // border          : '1px solid #e6e6e6',
-    backgroundColor : '#e6e6e6',
+    backgroundColor : '#f7f7f7',
     width: '158px',
     // padding: '2 50px',
     margin: '10px'
@@ -21,10 +21,7 @@ const st2 = {
     height: '122px'
 }
 
-const st3 = {
-    width: '12px'
-    // height: '122px'
-}
+const stitle = {color:'black'}
 
 export default ({auction}) => {
 
@@ -37,9 +34,9 @@ export default ({auction}) => {
                 style={st2}
             />
             <Card.Content>
-            <Card.Header>{auction.title}</Card.Header>
-            <Card.Meta>$ {auction.price}</Card.Meta>
-            <Card.Description style={st3}>{auction.description}</Card.Description>
+            <Card.Header style={stitle}>{auction.title}</Card.Header>
+            <Card.Meta style={stitle}>$ {auction.price}</Card.Meta>
+            <Card.Description>{auction.emailAuthor}</Card.Description>
             </Card.Content>
             <Card.Content extra>
                 <Link style={blue} to={'/detail'} onClick={()=>setItem('auction', auction)}>
