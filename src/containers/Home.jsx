@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import AuctionService from '../services/AuctionService'
 import AuctionsList from '../components/AuctionsList'
 
+const styles = {
+  height: '200%'
+}
+
 export default class Home extends Component {
 
   constructor(props) {
@@ -25,7 +29,7 @@ export default class Home extends Component {
   render() {
 
     return (
-      <div>
+      <div style={styles}>
         <AuctionsList auctions={this.state.auctions}/> 
         <AuctionsList auctions={this.state.auctions}/> 
       </div>

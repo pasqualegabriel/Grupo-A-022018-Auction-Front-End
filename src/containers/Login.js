@@ -58,3 +58,7 @@ export default ({verify, handleChange}) => {
         </div>
     )
 }
+
+/*
+https://react.semantic-ui.com/collections/form/#states-error
+*/

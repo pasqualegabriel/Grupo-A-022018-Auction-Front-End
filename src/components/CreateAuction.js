@@ -14,11 +14,7 @@ const styles = {
 }
 
 const dateStyle = {
-  // height: '100%',
-  // margin: '1px',
-  // size: '5%',
-  width: '300px',
-  // padding: '8em'
+  width: '300px'
 }
 
 export default class CreateAuction extends Component {
@@ -128,17 +124,17 @@ export default class CreateAuction extends Component {
                     dateFormat="LLL"
                     timeCaption="time"
                   />
-</div>
-<div style={dateStyle}>
-                  <DatePicker
-                    selected={this.state.endDate}
-                    onChange={this.handleChangeEndDate}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    dateFormat="LLL"
-                    timeCaption="time"
-                  />
+                </div>
+                  <div style={dateStyle}>
+                    <DatePicker
+                      selected={this.state.endDate}
+                      onChange={this.handleChangeEndDate}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={15}
+                      dateFormat="LLL"
+                      timeCaption="time"
+                    />
                   </div>
                 </Form.Group>
 

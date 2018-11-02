@@ -6,7 +6,6 @@ import HeaderM from '../components/Header';
 import AuctionDetails from '../components/AuctionDetails';
 import CreateAuction from '../components/CreateAuction';
 import AuctionsSearch from '../components/AuctionsSearch';
-import Auctions from '../components/Auctions';
 import 'react-notifications/lib/notifications.css'
 import Login from './Login'
 import Home from './Home'
@@ -64,7 +63,6 @@ class App extends Component {
               <Route exact path="/home"     render={()=><Home/>}/>
               <Route exact path="/signIn"   render={()=><Login getTranslation={this.getTranslation} />}/>
               <Route exact path="/auction"  render={()=><CreateAuction  getTranslation={this.getTranslation} />}/>
-              <Route exact path="/auctions" render={()=><Auctions  getTranslation={this.getTranslation} />}/>
               <Route exact path="/auctions/search" render={()=><AuctionsSearch  getTranslation={this.getTranslation} />}/>
               <Route exact path="/detail"   render={()=><AuctionDetails getTranslation={this.getTranslation} />}/>
             </Switch>
