@@ -105,6 +105,7 @@ export default class CreateAuction extends Component {
                   icon='money bill alternate'
                   iconPosition='left'
                   placeholder='Initial Price'
+                  error={false}
                 />
 
                 <Form.Group widths='equal'>

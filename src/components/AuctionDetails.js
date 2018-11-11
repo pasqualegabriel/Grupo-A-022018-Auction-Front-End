@@ -3,6 +3,9 @@ import {getItem} from '../services/LocalStorageService'
 import { Table, Button, Label } from 'semantic-ui-react'
 import 'moment/locale/es'
 import moment from 'moment'
+import AuctionService from '../services/AuctionService'
+
+// import './asd.css'
 
 const container = {
   width: 'available',
@@ -37,6 +40,7 @@ export default class App extends Component {
   
   constructor(){
     super()
+    this.auctionService = new AuctionService()
     this.state = { 
       auction: {},
       bidders: []
@@ -56,14 +60,35 @@ export default class App extends Component {
 
   render() {
 
+    const { auction, bidders } = this.state
+
+    const AutomaticOffer = () => { 
+      if(bidders.length === 0) {
+        return (
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>sin ofertas</Table.Cell>
+              <Table.Cell>
+                <Button primary>
+                  <h3>Realizar oferta automatica</h3>
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        )
+      } else {
+        return <div/>
+      }
+    }
+
     return (
       <div style={container}>
         <div style={leftpane}>
           <div style={titleS}>
-            <h1>{this.state.auction.title}</h1>
-            <h3>{this.state.auction.description}</h3>
+            <h1>{auction.title}</h1>
+            <h3>{auction.description}</h3>
             <img alt='' src='https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg'/>
-            <h3>Finaliza {moment(this.state.auction.finishDate).locale('es').endOf('hour').fromNow()}</h3> 
+            <h3>Finaliza {moment(auction.finishDate).locale('es').endOf('hour').fromNow()}</h3> 
           </div>
         </div>
         <div style={middlepane}>
@@ -75,7 +100,7 @@ export default class App extends Component {
                 <Table.HeaderCell>Ultimo tramo</Table.HeaderCell>
                 <Table.HeaderCell>
                 <Label color='teal'>
-                  <h2>$ {this.state.auction.price}</h2>
+                  <h2>$ {auction.price}</h2>
                 </Label>
                 </Table.HeaderCell>
               </Table.Row>
@@ -92,6 +117,8 @@ export default class App extends Component {
               </Table.Row>
             </Table.Body>
 
+            <AutomaticOffer/>
+
           </Table>
 
           <Table celled textAlign='center' >
@@ -100,7 +127,7 @@ export default class App extends Component {
                 <Table.HeaderCell colSpan='5'><h2>Avance de la subasta</h2></Table.HeaderCell>
               </Table.Row>
             </Table.Header>
-            {this.state.bidders.map(b => 
+            {bidders.map(b => 
               <Table.Body key={b.id}>
                 <Table.Row>
                   <Table.Cell>{b.author}</Table.Cell>
@@ -113,7 +140,7 @@ export default class App extends Component {
             )}
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell colSpan='5'>{this.state.bidders.length} postores en la subasta</Table.Cell>
+                  <Table.Cell colSpan='5'>{bidders.length} postores en la subasta</Table.Cell>
                 </Table.Row>
               </Table.Body>
           </Table>
@@ -146,3 +173,13 @@ id: 77
 price: 200
 publicationDate: "2018-09-28T14:13:30
 */
+
+
+
+function Container(props){
+  return (
+    <div className="container">
+      {props.children}
+    </div>
+  )
+}

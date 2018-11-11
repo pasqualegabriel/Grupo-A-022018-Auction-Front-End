@@ -10,20 +10,49 @@ import 'react-notifications/lib/notifications.css'
 import Login from './Login'
 import Home from './Home'
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import { prototype } from 'stream';
+
+
+// classObj = {
+//   sarasa()
+// }
+
+// {
+//   prototype: classObj
+//   sarasa: () => {classObj.sarasa()}
+// }
 
 class App extends Component {
 
   state = { visible: false }
 
-  handleShowClick = () => this.setState({ visible: true })
+  constructor(props){
+    super(props)
+    this.time = Date.now()
+  }
 
-  handleSidebarHide = () => this.setState({ visible: false })
+  componentDidMount() {
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+  }
 
-  getTranslation = (key) => this.props.t(key)
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
-  changeLanguage = (lng) => this.props.i18n.changeLanguage(lng)
+  // fetch
+  // request
+  // setear estado
+  // timeout fetch
 
-  getLanguage = () => this.props.lng
+  getTranslation(key) {this.props.t(key)}
+
+  changeLanguage(lng) {this.props.i18n.changeLanguage(lng)}
+
+  handleShowClick() {this.setState({ visible: true })}
+
+  handleSidebarHide() {this.setState({ visible: false })}
+
+  getLanguage() {this.props.lng}
 
   render() {
 

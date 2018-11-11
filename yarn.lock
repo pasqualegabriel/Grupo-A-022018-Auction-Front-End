@@ -6827,7 +6827,7 @@ react-error-overlay@^4.0.1:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.1.tgz#417addb0814a90f3a7082eacba7cee588d00da89"
   integrity sha512-xXUbDAZkU08aAkjtUvldqbvI04ogv+a1XdHxvYuHPYKIVk/42BIOD0zSKTHAWV4+gDy3yGm283z2072rA2gdtw==
 
-react-horizontal-scrolling-menu@^0.3.4:
+react-horizontal-scrolling-menu@^0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/react-horizontal-scrolling-menu/-/react-horizontal-scrolling-menu-0.3.5.tgz#4de9bdfa446fcab57a26a1784bfca9e74ba6d0e3"
   integrity sha512-Yt3Y2TZRCx03qe/ftutt8pQNyZ8DV5AKPsRypCIIytyqajguR9aEh5+/lvWh4DfVjIObw9LirXjbAZ9tQgTbAQ==
