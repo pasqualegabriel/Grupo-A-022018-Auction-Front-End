@@ -176,10 +176,10 @@ publicationDate: "2018-09-28T14:13:30
 
 
 
-function Container(props){
-  return (
-    <div className="container">
-      {props.children}
-    </div>
-  )
-}
+// function Container(props){
+//   return (
+//     <div className="container">
+//       {props.children}
+//     </div>
+//   )
+// }

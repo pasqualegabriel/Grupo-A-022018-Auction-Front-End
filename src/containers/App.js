@@ -10,7 +10,7 @@ import 'react-notifications/lib/notifications.css'
 import Login from './Login'
 import Home from './Home'
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
-import { prototype } from 'stream';
+// import { prototype } from 'stream';
 
 
 // classObj = {
@@ -26,33 +26,20 @@ class App extends Component {
 
   state = { visible: false }
 
-  constructor(props){
-    super(props)
-    this.time = Date.now()
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   // fetch
   // request
   // setear estado
   // timeout fetch
 
-  getTranslation(key) {this.props.t(key)}
+  handleShowClick = () => this.setState({ visible: true })
 
-  changeLanguage(lng) {this.props.i18n.changeLanguage(lng)}
+  handleSidebarHide = () => this.setState({ visible: false })
 
-  handleShowClick() {this.setState({ visible: true })}
+  getTranslation = (key) => this.props.t(key)
 
-  handleSidebarHide() {this.setState({ visible: false })}
+  changeLanguage = (lng) => this.props.i18n.changeLanguage(lng)
 
-  getLanguage() {this.props.lng}
+  getLanguage = () => this.props.lng
 
   render() {
 
