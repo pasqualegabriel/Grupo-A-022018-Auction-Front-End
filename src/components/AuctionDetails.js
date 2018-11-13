@@ -58,6 +58,11 @@ export default class App extends Component {
     })
   }
 
+  offer = async() => {
+    const { id } = this.state.auction
+    this.auctionService.offer(id, 'user2@gmail.com').then(res => console.log(res)).catch(err => console.log(err))
+  }
+
   render() {
 
     const { auction, bidders } = this.state
@@ -110,7 +115,7 @@ export default class App extends Component {
               <Table.Row>
                 <Table.Cell>Tramo 10 - $ 100</Table.Cell>
                 <Table.Cell>
-                  <Button primary>
+                  <Button primary onClick={this.offer}>
                     <h3>Realizar offerta</h3>
                   </Button>
                 </Table.Cell>

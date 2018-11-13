@@ -18,7 +18,7 @@ class AuctionService {
 
     // getAuctions = id => axios.get('http://localhost:8080/auctionById/' + id)
 
-    offer = (auctionId, bidder) => axios.post(`auction/${auctionId}/offer/${bidder}`, {})
+    offer = (auctionId, bidder) => axios.post(`http://localhost:8080/auction/${auctionId}/offer/${bidder}`, {})
 
     firstOffer = (auctionId, bidder, maxAmount) => 
         axios.post(`/auction/first/offer/${auctionId}/${maxAmount}/${bidder}`, {})
