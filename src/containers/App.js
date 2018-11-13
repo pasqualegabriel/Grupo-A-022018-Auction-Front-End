@@ -10,6 +10,7 @@ import 'react-notifications/lib/notifications.css'
 import Login from './Login'
 import Home from './Home'
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import Callback from './Callback'
 // import { prototype } from 'stream';
 
 
@@ -81,6 +82,9 @@ class App extends Component {
               <Route exact path="/auction"  render={()=><CreateAuction  getTranslation={this.getTranslation} />}/>
               <Route exact path="/auctions/search" render={()=><AuctionsSearch  getTranslation={this.getTranslation} />}/>
               <Route exact path="/detail"   render={()=><AuctionDetails getTranslation={this.getTranslation} />}/>
+              <Route path="/callback" render={(props) => {
+                return <Callback {...props} /> 
+              }}/>           
             </Switch>
           </Sidebar.Pusher>
         </Sidebar.Pushable>

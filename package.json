@@ -5,6 +5,7 @@
   "dependencies": {
     "@trendmicro/react-sidenav": "^0.4.5",
     "async-reactor": "^1.2.2",
+    "auth0-js": "^9.8.1",
     "bootstrap": "^3.3.7",
     "email-validator": "^2.0.4",
     "i18next": "11.3.2",
