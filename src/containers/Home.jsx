@@ -18,7 +18,7 @@ export default class Home extends Component {
   componentDidMount = () => this.setAuctions()
 
   setAuctions = async() => {
-    this.auctionService.getAuctions()
+    this.auctionService.getAuctions(0, 15)
     .then(response => {
       const auctions = response.data.content;
       this.setState({ auctions });

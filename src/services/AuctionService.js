@@ -12,7 +12,7 @@ class AuctionService {
             return _auctionService
     }
 
-    getAuctions = () => axios.get('http://localhost:8080/auctions/0/15')
+    getAuctions = (page, limit) => axios.get(`http://localhost:8080/auctions/${page}/${limit}`)
 
     auction = (anAuction) => axios.post('http://localhost:8080/auction', anAuction)
 
