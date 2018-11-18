@@ -17,7 +17,7 @@ export default class Home extends Component {
   setAuctions = async() => {
     this.auctionService.getAuctions()
     .then(response => {
-      const auctions = response.data;
+      const auctions = response.data.content;
       this.setState({ auctions });
     })
   }

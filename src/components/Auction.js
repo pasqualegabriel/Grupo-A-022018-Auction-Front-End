@@ -14,7 +14,8 @@ const st = {
     backgroundColor : '#f7f7f7',
     width: '158px',
     // padding: '2 50px',
-    margin: '10px'
+    margin: '10px',
+    height: 'available'
 }
 
 const st2 = {

@@ -19,7 +19,7 @@ const Arrow = ({ text, className }) => {
 };
 
 const st = {
-  height: '100%'
+  height: 'available'
 }
  
 const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });

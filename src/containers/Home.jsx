@@ -3,7 +3,6 @@ import AuctionService from '../services/AuctionService'
 import AuctionsList from '../components/AuctionsList'
 
 const styles = {
-  height: '200%'
 }
 
 export default class Home extends Component {
@@ -21,7 +20,7 @@ export default class Home extends Component {
   setAuctions = async() => {
     this.auctionService.getAuctions()
     .then(response => {
-      const auctions = response.data;
+      const auctions = response.data.content;
       this.setState({ auctions });
     })
   }

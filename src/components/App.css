@@ -7,19 +7,20 @@
     margin: 'auto';
     /* margin-left: '40px';
     padding: '5em'; */ 
-    width: '100%';
+    width: 'available';
+    height: 'available';
 }
 .menu-item-wrapper.active {
     border: 1px blue solid;
-    width: '100%';
+    width: 'available';
 }
 .menu-item.active {
     border: 1px green solid;
-    width: '100%';
+    width: 'available';
 }
 
 .scroll-menu-arrow {
     padding: 20px;
     cursor: pointer;
-    width: '100%';
+    width: 'available';
 }
