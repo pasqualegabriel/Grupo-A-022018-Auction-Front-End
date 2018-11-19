@@ -3,7 +3,7 @@ import AuctionService from '../services/AuctionService'
 import ListAuction from './ListAuction'
 import {getItem} from '../services/LocalStorageService'
 import Pagination from 'semantic-ui-react-button-pagination'
-import { Table, Input, Button } from 'semantic-ui-react'
+import { Table, Input, Button, Dropdown } from 'semantic-ui-react'
 
 const container = {
   width: 'available',
@@ -12,21 +12,17 @@ const container = {
 
 const leftpane = {
   width: '30%',
-  // minWidth: '1550px',
   height: 'available',
   minHeight: '900px',
   float: 'left',
-  // backgroundColor: 'rosybrown',
   borderCollapse: 'collapse'
 }
 
 const middlepane = {
  width: '70%',
-//  minWidth: '800px',
  height: 'available',
  minHeight: '900px',
  float: 'left',
-//  backgroundColor: 'royalblue',
  borderCollapse: 'collapse'
 }
 
@@ -48,7 +44,6 @@ export default class Home extends Component {
   }
 
   componentDidMount = () => {
-    console.log(this.state.title)
     this.state.title === '' 
     ? this.setAuctions(this.state.page)
     : this.setAuctionsTitle(this.state.page, this.state.title)
@@ -88,6 +83,17 @@ export default class Home extends Component {
     this.setState({ [name]: value })
   }
 
+  setLimit = (ev, {name, value}) => {
+    const page = this.state.offset / parseInt(value)
+    this.setState({ [name]: parseInt(value) })
+    this.setState({page})
+    if(this.state.title === '' && this.state.description === '') {
+      this.setAuctions(page)
+    } else if(this.state.title !== '' && this.state.description !== '') {
+      this.setAuctionsTitleDescription(this.state.title, this.state.description, page)
+    } else this.setAuctionsTitle(page, this.state.title)
+  }
+
   setAuctionsTitleDescription = (title, description, page) => {
     this.auctionService.getAuctionsTitleDescription(title, description, page, this.state.limit)
     .then(res => {
@@ -115,34 +121,52 @@ export default class Home extends Component {
 
           <Table.Header>
             <Table.Row>
-              <Table.Cell width='6'>Title:</Table.Cell>
+              <Table.Cell width='6'>Show:</Table.Cell>
               <Table.Cell>
-              <Input 
-                fluid
-                size='large'
-                name="title"
-                onChange={this.handleChange}
-                placeholder='Title'
-                defaultValue={this.state.title}
-                error={false}
-              />
+                <Dropdown item text={this.state.limit.toString()} >
+                  <Dropdown.Menu >
+                  <Dropdown.Item as={Button} value='5' name='limit'
+                                  onClick={this.setLimit}>5</Dropdown.Item>
+                    <Dropdown.Item as={Button} value='10' name='limit'
+                                  onClick={this.setLimit}>10</Dropdown.Item>
+                    <Dropdown.Item as={Button} value='15' name='limit'
+                                  onClick={this.setLimit}>15</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Table.Cell>
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
             <Table.Row>
+              <Table.Cell width='6'>Title:</Table.Cell>
+              <Table.Cell>
+                <Input 
+                  fluid
+                  size='large'
+                  name="title"
+                  onChange={this.handleChange}
+                  placeholder='Title'
+                  defaultValue={this.state.title}
+                  error={false}
+                />
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+
+          <Table.Body>
+            <Table.Row>
               <Table.Cell>Description:</Table.Cell>
               <Table.Cell>
-              <Input 
-                fluid
-                size='large'
-                name="description"
-                onChange={this.handleChange}
-                placeholder='Description'
-                defaultValue={this.state.description}
-                error={false}
-              />
+                <Input 
+                  fluid
+                  size='large'
+                  name="description"
+                  onChange={this.handleChange}
+                  placeholder='Description'
+                  defaultValue={this.state.description}
+                  error={false}
+                />
               </Table.Cell>
             </Table.Row>
           </Table.Body>
