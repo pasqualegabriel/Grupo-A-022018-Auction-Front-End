@@ -4,7 +4,7 @@ import { Item, Button, Icon } from 'semantic-ui-react'
 
 export default ({auction}) => (
     <Item >
-      <Item.Image src='https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg' />
+      <Item.Image src={auction.photos}/>
 
       <Item.Content>
         <Item.Header as='a'>{auction.title}</Item.Header>

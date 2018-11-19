@@ -2,6 +2,8 @@ import axios from 'axios'
 
 let _auctionService = null
 
+const port = 'http://localhost:8080/'
+
 class AuctionService {
 
     constructor () {
@@ -12,24 +14,24 @@ class AuctionService {
             return _auctionService
     }
 
-    getAuctions = (page, limit) => axios.get(`http://localhost:8080/auctions/${page}/${limit}`)
+    getAuctions = (page, limit) => axios.get(`${port}auctions/${page}/${limit}`)
 
-    getAuctionsTitle = (title, page, limit) => axios.get(`http://localhost:8080/auction/for/${title}/${page}/${limit}`)
+    getAuctionsTitle = (title, page, limit) => axios.get(`${port}auction/for/${title}/${page}/${limit}`)
 
-    getRecentAuctions = (page, limit) => axios.get(`http://localhost:8080/auctions/recentAuctions/${page}/${limit}`)
+    getRecentAuctions = (page, limit) => axios.get(`${port}auctions/recentAuctions/${page}/${limit}`)
 
-    getAuctionsToFinish = (page, limit) => axios.get(`http://localhost:8080/auction/toFinish/${page}/${limit}`)
+    getAuctionsToFinish = (page, limit) => axios.get(`${port}auction/toFinish/${page}/${limit}`)
 
-    getAuctionsTitleDescription = (title, description, page, limit) => axios.get(`http://localhost:8080/auction/${title}/${description}/${page}/${limit}`)
+    getAuctionsTitleDescription = (title, description, page, limit) => axios.get(`${port}auction/${title}/${description}/${page}/${limit}`)
 
-    auction = (anAuction) => axios.post('http://localhost:8080/auction', anAuction)
+    auction = (anAuction) => axios.post(`${port}auction`, anAuction)
 
-    getAuction = id => axios.get(`http://localhost:8080/auction/recover/${id}`)
+    getAuction = id => axios.get(`${port}auction/recover/${id}`)
 
-    offer = (auctionId, bidder) => axios.post(`http://localhost:8080/auction/${auctionId}/offer/${bidder}`, {})
+    offer = (auctionId, bidder) => axios.post(`${port}auction/${auctionId}/offer/${bidder}`, {})
 
     firstOffer = (auctionId, bidder, maxAmount) => 
-        axios.post(`http://localhost:8080/auction/first/offer/${auctionId}/${maxAmount}/${bidder}`, {})
+        axios.post(`${port}auction/first/offer/${auctionId}/${maxAmount}/${bidder}`, {})
 }
     
 export default AuctionService

@@ -5,9 +5,6 @@ import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
 import FirstOffer from './FirstOffer'
-
-// import './asd.css'
-
 const container = {
   width: 'available',
   height: 'available'
@@ -15,26 +12,27 @@ const container = {
 
 const leftpane = {
   width: '55%',
-  // minWidth: '1550px',
   height: 'available',
   minHeight: '900px',
   float: 'left',
-  // backgroundColor: 'rosybrown',
   borderCollapse: 'collapse'
 }
 
 const middlepane = {
  width: '45%',
-//  minWidth: '800px',
  height: 'available',
  minHeight: '900px',
  float: 'left',
-//  backgroundColor: 'royalblue',
  borderCollapse: 'collapse'
 }
 
 const titleS = {
   textAlign: 'center'
+}
+
+const image = {
+  width: '100%',
+  height: '100%'
 }
 
 export default class App extends Component {
@@ -115,7 +113,7 @@ export default class App extends Component {
           <div style={titleS}>
             <h1>{auction.title}</h1>
             <h3>{auction.description}</h3>
-            <img alt='' src='https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg'/>
+            <img alt='' style={image} src={auction.photos}/>
             <h3>Finaliza {moment(auction.finishDate).locale('es').endOf('hour').fromNow()}</h3> 
           </div>
         </div>
