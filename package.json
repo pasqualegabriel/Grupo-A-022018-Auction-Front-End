@@ -1,20 +1,18 @@
 {
-  "name": "x",
+  "name": "centralized-login",
   "version": "0.1.0",
   "private": true,
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  },
   "dependencies": {
-    "async-reactor": "^1.2.2",
-    "axios": "^0.18.0",
-    "email-validator": "^2.0.4",
-    "jwt-decode": "^2.2.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-notifications": "^1.4.3",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4",
-    "react-stringify": "^1.0.0",
-    "semantic-ui-css": "^2.3.3",
-    "semantic-ui-react": "^0.82.0"
+    "auth0-js": "^9.0.0",
+    "bootstrap": "^3.3.7",
+    "react": "^15.5.4",
+    "react-bootstrap": "^0.31.0",
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
