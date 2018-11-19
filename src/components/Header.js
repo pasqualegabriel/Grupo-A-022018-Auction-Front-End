@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import {setItem} from '../services/LocalStorageService'
 import { Dropdown, Menu, Input, Image } from 'semantic-ui-react'
 
 export default class Header extends Component {
@@ -13,15 +14,20 @@ export default class Header extends Component {
 
   handleChange = (event) => {
     this.setState({search: event.target.value})
+    setItem('title', { title: event.target.value})
   }
 
   handleKeyPress = ({key}) => {
     if (key === 'Enter') {
+      setItem('title', { title: this.state.search})
       window.location.pathname = '/auctions/search'
     }
   }
 
-  onActionSearchAuction = () => window.location.pathname = '/auctions/search'
+  onActionSearchAuction = () => { 
+    setItem('title', { title: this.state.search})
+    window.location.pathname = '/auctions/search'
+  }
 
   changeLanguageEn = () => this.props.changeLanguage('en')
 

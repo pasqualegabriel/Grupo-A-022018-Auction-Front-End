@@ -4,9 +4,7 @@ import { Table, Button, Label } from 'semantic-ui-react'
 import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
-
-// import './asd.css'
-
+import FirstOffer from './FirstOffer'
 const container = {
   width: 'available',
   height: 'available'
@@ -14,26 +12,27 @@ const container = {
 
 const leftpane = {
   width: '55%',
-  // minWidth: '1550px',
   height: 'available',
   minHeight: '900px',
   float: 'left',
-  // backgroundColor: 'rosybrown',
   borderCollapse: 'collapse'
 }
 
 const middlepane = {
  width: '45%',
-//  minWidth: '800px',
  height: 'available',
  minHeight: '900px',
  float: 'left',
-//  backgroundColor: 'royalblue',
  borderCollapse: 'collapse'
 }
 
 const titleS = {
   textAlign: 'center'
+}
+
+const image = {
+  width: '100%',
+  height: '100%'
 }
 
 export default class App extends Component {
@@ -50,17 +49,30 @@ export default class App extends Component {
   componentDidMount = () => this.setAuction()
 
   setAuction = () => {
-    const auction = getItem('auction')
-    const bidders = auction.bidders
-    this.setState({
-      auction,
-      bidders
-    })
+    const anAuction = getItem('auction')
+    this.auctionService.getAuction(anAuction.id)
+    .then(res => {
+      const auction = res.data
+      const bidders = auction.bidders
+      this.setState({
+        auction,
+        bidders
+      })
+    }).catch(err => console.log(err))
   }
 
-  offer = async() => {
+  offer = () => {
     const { id } = this.state.auction
-    this.auctionService.offer(id, 'user2@gmail.com').then(res => console.log(res)).catch(err => console.log(err))
+    this.auctionService.offer(id, 'goku@gmail.com')
+      .then(res => this.setAuction())
+      .catch(err => console.log(err))
+  }
+
+  firstOffer = amount => {
+    const { id } = this.state.auction
+    this.auctionService.firstOffer(id, 'vegeta@gmail.com', amount)
+      .then(res => this.setAuction())
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -72,17 +84,26 @@ export default class App extends Component {
         return (
           <Table.Body>
             <Table.Row>
-              <Table.Cell>sin ofertas</Table.Cell>
+              <Table.Cell>Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
               <Table.Cell>
-                <Button primary>
-                  <h3>Realizar oferta automatica</h3>
-                </Button>
+                <FirstOffer offer={this.offer} firstOffer={this.firstOffer}/>
               </Table.Cell>
             </Table.Row>
           </Table.Body>
         )
       } else {
-        return <div/>
+        return (
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell>Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
+              <Table.Cell>
+                <Button primary onClick={this.offer}>
+                  <h3>Realizar offerta</h3>
+                </Button>
+              </Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        )
       }
     }
 
@@ -92,7 +113,7 @@ export default class App extends Component {
           <div style={titleS}>
             <h1>{auction.title}</h1>
             <h3>{auction.description}</h3>
-            <img alt='' src='https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg'/>
+            <img alt='' style={image} src={auction.photos}/>
             <h3>Finaliza {moment(auction.finishDate).locale('es').endOf('hour').fromNow()}</h3> 
           </div>
         </div>
@@ -111,17 +132,6 @@ export default class App extends Component {
               </Table.Row>
             </Table.Header>
 
-            <Table.Body>
-              <Table.Row>
-                <Table.Cell>Tramo 10 - $ 100</Table.Cell>
-                <Table.Cell>
-                  <Button primary onClick={this.offer}>
-                    <h3>Realizar offerta</h3>
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-
             <AutomaticOffer/>
 
           </Table>
@@ -132,11 +142,11 @@ export default class App extends Component {
                 <Table.HeaderCell colSpan='5'><h2>Avance de la subasta</h2></Table.HeaderCell>
               </Table.Row>
             </Table.Header>
-            {bidders.map(b => 
+            {bidders.map((b, i) => 
               <Table.Body key={b.id}>
                 <Table.Row>
                   <Table.Cell>{b.author}</Table.Cell>
-                  <Table.Cell>Tramo {b.id}</Table.Cell>
+                  <Table.Cell>Tramo {i + 1}</Table.Cell>
                   <Table.Cell>$ {b.price}</Table.Cell>
                   <Table.Cell>{moment(b.publicationDate).calendar()}</Table.Cell>
                   <Table.Cell>{moment(b.publicationDate).format('LT')}</Table.Cell>

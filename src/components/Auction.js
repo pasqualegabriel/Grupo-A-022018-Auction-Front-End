@@ -14,7 +14,8 @@ const st = {
     backgroundColor : '#f7f7f7',
     width: '158px',
     // padding: '2 50px',
-    margin: '10px'
+    margin: '10px',
+    height: 'available'
 }
 
 const st2 = {
@@ -30,7 +31,7 @@ export default ({auction}) => {
       <List.Item>
         <Card style={st}>
             <Image 
-                src='https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg' 
+                src={auction.photos}
                 style={st2}
             />
             <Card.Content>

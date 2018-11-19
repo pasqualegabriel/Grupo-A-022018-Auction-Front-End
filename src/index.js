@@ -1,18 +1,12 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import 'semantic-ui-css/semantic.min.css';
 import './index.css';
-import { BrowserRouter } from 'react-router-dom'
-import App from './containers/App';
-import registerServiceWorker from './registerServiceWorker';
+import 'bootstrap/dist/css/bootstrap.css';
+import { makeMainRoutes } from './routes';
 import './i18n';
-//GABI ESTO NO ANDA
+
+const routes = makeMainRoutes();
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>, 
-    document.getElementById('root')
+  routes,
+  document.getElementById('root')
 );
-
-registerServiceWorker();

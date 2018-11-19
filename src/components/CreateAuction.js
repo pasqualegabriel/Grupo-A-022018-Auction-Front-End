@@ -48,7 +48,7 @@ export default class CreateAuction extends Component {
 
   create = async (event) => {
     const newAuction = {
-      emailAuthor: "user2@gmail.com",
+      emailAuthor: "user53@gmail.com",
       publicationDate: this.state.startDate,
       finishDate: this.state.endDate,
       price: this.state.price,
