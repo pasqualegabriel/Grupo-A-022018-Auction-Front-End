@@ -6,10 +6,10 @@ export default ({auctions}) => {
 
     return ( 
         
-            <Item.Group divided width='80%'>
-                    {auctions.map(anAuction => 
-                <Auction key={anAuction.id} auction={anAuction}/>
-            )}
-            </Item.Group>
+        <Item.Group divided>
+                {auctions.map(anAuction => 
+            <Auction key={anAuction.id} auction={anAuction}/>
+        )}
+        </Item.Group>
     )
 }

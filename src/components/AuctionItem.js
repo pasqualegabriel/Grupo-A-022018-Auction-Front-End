@@ -8,6 +8,7 @@ export default ({auction}) => (
 
       <Item.Content>
         <Item.Header as='a'>{auction.title}</Item.Header>
+        <Item.Description>$ {auction.price}</Item.Description>
         <Item.Meta>
           <span className='cinema'>{auction.emailAuthor}</span>
         </Item.Meta>

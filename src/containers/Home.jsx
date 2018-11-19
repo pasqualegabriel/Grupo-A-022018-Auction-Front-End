@@ -3,6 +3,7 @@ import AuctionService from '../services/AuctionService'
 import AuctionsList from '../components/AuctionsList'
 
 const styles = {
+  textAlign: 'center'
 }
 
 export default class Home extends Component {
@@ -11,17 +12,21 @@ export default class Home extends Component {
     super(props)
     this.auctionService = new AuctionService()
     this.state = {
-      auctions: [] 
+      toFinish: [],
+      recents: []
     }
   }
 
   componentDidMount = () => this.setAuctions()
-
+  
   setAuctions = async() => {
-    this.auctionService.getAuctions(0, 15)
-    .then(response => {
-      const auctions = response.data.content;
-      this.setState({ auctions });
+    const finish = this.auctionService.getAuctionsToFinish(0, 15)
+    const news = this.auctionService.getRecentAuctions(0, 15)
+    Promise.all([finish, news])
+    .then(res => {
+      const toFinish = res[0].data.content
+      const recents = res[1].data.content
+      this.setState({ toFinish, recents })
     })
   }
 
@@ -29,8 +34,10 @@ export default class Home extends Component {
 
     return (
       <div style={styles}>
-        <AuctionsList auctions={this.state.auctions}/> 
-        <AuctionsList auctions={this.state.auctions}/> 
+        <h2>Subastas por terminar</h2>
+        <AuctionsList auctions={this.state.toFinish}/> 
+        <h2>Ultimas publicadas</h2>
+        <AuctionsList auctions={this.state.recents}/> 
       </div>
     )
   }
