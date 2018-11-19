@@ -62,3 +62,4 @@ export default class Auth {
     return new Date().getTime() < expiresAt;
   }
 }
+
