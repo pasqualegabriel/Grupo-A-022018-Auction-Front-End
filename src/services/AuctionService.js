@@ -20,6 +20,8 @@ class AuctionService {
 
     getAuctionsToFinish = (page, limit) => axios.get(`http://localhost:8080/auction/toFinish/${page}/${limit}`)
 
+    getAuctionsTitleDescription = (title, description, page, limit) => axios.get(`http://localhost:8080/auction/${title}/${description}/${page}/${limit}`)
+
     auction = (anAuction) => axios.post('http://localhost:8080/auction', anAuction)
 
     getAuction = id => axios.get(`http://localhost:8080/auction/recover/${id}`)
