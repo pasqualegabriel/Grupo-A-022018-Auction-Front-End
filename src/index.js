@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 import './i18n';
+//GABI ESTO NO ANDA
 
 ReactDOM.render(
     <BrowserRouter>
