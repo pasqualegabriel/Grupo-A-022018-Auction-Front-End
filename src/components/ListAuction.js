@@ -1,23 +1,15 @@
 import React from 'react'
-import Auction from './Auction.js'
-import { List } from 'semantic-ui-react'
-
-const styles = {
-    margin: 'auto',
-    marginLeft: '40px',
-    padding: '5em', 
-    width: '100%'
-}
+import Auction from './AuctionItem.js'
+import { Item } from 'semantic-ui-react'
 
 export default ({auctions}) => {
 
     return ( 
-        <List horizontal relaxed style={styles}>
-                  {auctions.map(anAuction => 
-            <Auction key={anAuction.id} auction={anAuction}/>
-        )}
-        </List>
-
-
+        
+            <Item.Group divided width='80%'>
+                    {auctions.map(anAuction => 
+                <Auction key={anAuction.id} auction={anAuction}/>
+            )}
+            </Item.Group>
     )
 }

@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import AuctionService from '../services/AuctionService'
 import ListAuction from './ListAuction'
-import Pagination from 'semantic-ui-react-button-pagination';
+import {getItem} from '../services/LocalStorageService'
+import Pagination from 'semantic-ui-react-button-pagination'
+
+const style = {
+  height: '100%'
+}
 
 export default class Home extends Component {
 
@@ -14,15 +19,19 @@ export default class Home extends Component {
       totalPages: 1,
       offset: 0,
       limit: 5,
-      totalElements: 100
+      totalElements: 100,
+      title: getItem('title').title
     }
   }
 
-  componentDidMount() {
-    this.setAuctions(this.state.page)
+  componentDidMount = () => {
+    console.log(this.state.title)
+    this.state.title === '' 
+    ? this.setAuctions(this.state.page)
+    : this.setAuctionsTitle(this.state.page, this.state.title)
   }
 
-  setAuctions(page) {
+  setAuctions = page => {
     this.auctionService.getAuctions(page, this.state.limit)
     .then(res => {
       const auctions = res.data.content
@@ -32,17 +41,27 @@ export default class Home extends Component {
     }).catch(err => console.log(err))
   }
 
-  handleClick(offset) {
+  setAuctionsTitle = (page, title) => {
+    this.auctionService.getAuctionsTitle(title, page, this.state.limit)
+    .then(res => {
+      const auctions = res.data.content
+      const totalPages = res.data.totalPages
+      const totalElements = res.data.totalElements
+      this.setState({ auctions, totalPages, totalElements })
+    }).catch(err => console.log(err))
+  }
+
+  handleClick = offset => {
     const page = offset / this.state.limit
     this.setState({offset, page})
-    this.setAuctions(page)
+    this.state.title === '' ? this.setAuctions(page) : this.setAuctionsTitle(page, this.state.title)
   }
 
   render() {
 
     return (
-      <div>
-        <ListAuction auctions={this.state.auctions}/> 
+      <div style={style}>
+        <ListAuction auctions={this.state.auctions}/>
         <Pagination
           offset={this.state.offset}
           limit={this.state.limit}
