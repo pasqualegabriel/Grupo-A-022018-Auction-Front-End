@@ -2,9 +2,17 @@ import axios from 'axios'
 
 let _auctionService = null
 
+var config = {
+    headers: {'Authorization': "bearer " + localStorage.getItem('access_token')}
+};
+
+var bodyParameters = {
+   key: "value"
+}
+
 // const port = 'http://localhost:8080/'
 
-const port = 'http://34bc4f57.ngrok.io/'
+const port = 'http://e8925c6d.ngrok.io/'
 
 class AuctionService {
 
@@ -16,13 +24,31 @@ class AuctionService {
             return _auctionService
     }
 
-    getAuctions = (page, limit) => axios.get(`${port}auctions/${page}/${limit}`)
 
-    getAuctionsTitle = (title, page, limit) => axios.get(`${port}auction/for/${title}/${page}/${limit}`)
 
-    getRecentAuctions = (page, limit) => axios.get(`${port}auctions/recentAuctions/${page}/${limit}`)
+    getAuctions = (page, limit) => axios.post(`${port}auctions`, {
+		"index" : 0,
+		"size" : 10
+},       bodyParameters,
+config)
 
-    getAuctionsToFinish = (page, limit) => axios.get(`${port}auction/toFinish/${page}/${limit}`)
+    getAuctionsTitle = (title, page, limit) => axios.post(`${port}auctions`, {
+		"index" : 0,
+		"size" : 10
+} ,     bodyParameters,
+config)
+
+    getRecentAuctions = (page, limit) => axios.post(`${port}auctions`, {
+		"index" : 0,
+		"size" : 10
+    } ,     bodyParameters,
+    config)
+
+    getAuctionsToFinish = (page, limit) => axios.post(`${port}auctions`, {
+		"index" : 0,
+		"size" : 10
+    } ,     bodyParameters,
+    config)
 
     getAuctionsTitleDescription = (title, description, page, limit) => axios.get(`${port}auction/${title}/${description}/${page}/${limit}`)
 

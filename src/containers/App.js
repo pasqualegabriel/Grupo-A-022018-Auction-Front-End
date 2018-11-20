@@ -1,35 +1,26 @@
 import React, { Component } from 'react';
-import '../App.css';
-import { Route, Switch } from 'react-router-dom'
+import '../components/App.css';
 import { withNamespaces } from 'react-i18next';
 import HeaderM from '../components/Header';
-import AuctionDetails from '../components/AuctionDetails';
-import CreateAuction from '../components/CreateAuction';
-import AuctionsSearch from '../components/AuctionsSearch';
 import 'react-notifications/lib/notifications.css'
-import Login from './Login'
-import Home from './Home'
-import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
-// import { prototype } from 'stream';
-
-
-// classObj = {
-//   sarasa()
-// }
-
-// {
-//   prototype: classObj
-//   sarasa: () => {classObj.sarasa()}
-// }
+import { Icon, Menu, Segment, Sidebar, Button } from 'semantic-ui-react'
 
 class App extends Component {
 
   state = { visible: false }
 
-  // fetch
-  // request
-  // setear estado
-  // timeout fetch
+  
+  goTo = (route) => {
+    this.props.history.replace(`/${route}`)
+  }
+
+  login = () => {
+    this.props.auth.login();
+  }
+
+  logout = () => {
+    this.props.auth.logout();
+  }
 
   handleShowClick = () => this.setState({ visible: true })
 
@@ -43,49 +34,66 @@ class App extends Component {
 
   render() {
 
+    const { isAuthenticated } = this.props.auth;
+
     const { visible } = this.state
 
     return (
-        <Sidebar.Pushable as={Segment}>
-          <Sidebar
-            as={Menu}
-            animation='overlay'
-            icon='labeled'
-            onHide={this.handleSidebarHide}
-            vertical
-            visible={visible}
-            width='thin'
-          >
-            <Menu.Item as='a'>
-              <Icon name='home' />
-              Home
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='gamepad' />
-              Games
-            </Menu.Item>
-            <Menu.Item as='a'>
-              <Icon name='camera' />
-              Channels
-            </Menu.Item>
-          </Sidebar>
-
-          <Sidebar.Pusher dimmed={visible}>
-          <HeaderM click1={this.handleShowClick} 
-                getTranslation={this.getTranslation} 
-                changeLanguage={this.changeLanguage}
-                getLanguage={this.getLanguage}/> 
-            <Switch>
-              <Route exact path="/home"     render={()=><Home/>}/>
-              <Route exact path="/signIn"   render={()=><Login getTranslation={this.getTranslation} />}/>
-              <Route exact path="/auction"  render={()=><CreateAuction  getTranslation={this.getTranslation} />}/>
-              <Route exact path="/auctions/search" render={()=><AuctionsSearch  getTranslation={this.getTranslation} />}/>
-              <Route exact path="/detail"   render={()=><AuctionDetails getTranslation={this.getTranslation} />}/>
-            </Switch>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+<div>
+          
+                {
+  !isAuthenticated() && (
+      <Button
+        id="qsLoginBtn"
+        bsStyle="primary"
+        className="btn-margin"
+        onClick={this.login.bind(this)}
+      >
+        Log In
+      </Button>
+    )
+}
+{
+  isAuthenticated() && (
+      <Button
+        id="qsLogoutBtn"
+        bsStyle="primary"
+        className="btn-margin"
+        onClick={this.logout.bind(this)}
+      >
+        Log Out
+      </Button>
+    )
+}
+</div>
     )
   }
 }
 
 export default withNamespaces('translation')(App);
+
+
+// {
+//   !isAuthenticated() && (
+//       <Button
+//         id="qsLoginBtn"
+//         bsStyle="primary"
+//         className="btn-margin"
+//         onClick={this.login.bind(this)}
+//       >
+//         Log In
+//       </Button>
+//     )
+// }
+// {
+//   isAuthenticated() && (
+//       <Button
+//         id="qsLogoutBtn"
+//         bsStyle="primary"
+//         className="btn-margin"
+//         onClick={this.logout.bind(this)}
+//       >
+//         Log Out
+//       </Button>
+//     )
+// }
