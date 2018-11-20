@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 // import { Route, Switch } from 'react-router-dom'
-import { Route, Router, Switch } from 'react-router-dom';
+import { Route, Router } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import HeaderM from '../components/Header';
 import AuctionDetails from '../components/AuctionDetails';

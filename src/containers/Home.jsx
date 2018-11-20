@@ -32,6 +32,11 @@ export default class Home extends Component {
   }
 
   setAuctions = async() => {
+    this.auctionService.getAuctions(0, 15)
+    .then(res => {
+      const toFinish = res.data.content
+      this.setState({ toFinish, recents: toFinish })
+    })
     // const finish = this.auctionService.getAuctionsToFinish(0, 15)
     // const news = this.auctionService.getRecentAuctions(0, 15)
     // Promise.all([finish, news])
