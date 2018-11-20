@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { Route, Switch } from 'react-router-dom'
+// import { Route, Switch } from 'react-router-dom'
+import { Route, Router, Switch } from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import HeaderM from '../components/Header';
 import AuctionDetails from '../components/AuctionDetails';
@@ -10,26 +11,21 @@ import 'react-notifications/lib/notifications.css'
 import Login from './Login'
 import Home from './Home'
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
-// import { prototype } from 'stream';
+import Callback from '../Callback/Callback';
+import Auth from '../Auth/Auth';
+import history from '../history';
 
+const auth = new Auth();
 
-// classObj = {
-//   sarasa()
-// }
-
-// {
-//   prototype: classObj
-//   sarasa: () => {classObj.sarasa()}
-// }
+const handleAuthentication = ({location}) => {
+  if (/access_token|id_token|error/.test(location.hash)) {
+    auth.handleAuthentication();
+  }
+}
 
 class App extends Component {
 
   state = { visible: false }
-
-  // fetch
-  // request
-  // setear estado
-  // timeout fetch
 
   handleShowClick = () => this.setState({ visible: true })
 
@@ -75,13 +71,20 @@ class App extends Component {
                 getTranslation={this.getTranslation} 
                 changeLanguage={this.changeLanguage}
                 getLanguage={this.getLanguage}/> 
-            <Switch>
-              <Route exact path="/home"     render={()=><Home/>}/>
+
+            <Router history={history}>
+            <div>
+              <Route exact path="/home"     render={(props) => <Home auth={auth} {...props} />} />
               <Route exact path="/signIn"   render={()=><Login getTranslation={this.getTranslation} />}/>
               <Route exact path="/auction"  render={()=><CreateAuction  getTranslation={this.getTranslation} />}/>
               <Route exact path="/auctions/search" render={()=><AuctionsSearch  getTranslation={this.getTranslation} />}/>
               <Route exact path="/detail"   render={()=><AuctionDetails getTranslation={this.getTranslation} />}/>
-            </Switch>
+              <Route path="/callback" render={(props) => {
+                handleAuthentication(props);
+                return <Callback {...props} /> 
+              }}/>
+                      </div>
+            </Router>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
     )

@@ -2,9 +2,9 @@ import axios from 'axios'
 
 let _auctionService = null
 
-// const port = 'http://localhost:8080/'
+const port = 'http://localhost:8080/'
 
-const port = 'http://34bc4f57.ngrok.io/'
+// const port = 'http://34bc4f57.ngrok.io/'
 
 class AuctionService {
 
