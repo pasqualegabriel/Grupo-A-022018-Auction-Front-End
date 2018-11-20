@@ -2,24 +2,35 @@ import axios from 'axios'
 
 let _auctionService = null
 
+const auth = {
+    client_id:"jsIbb85qC7j39hGLNleDWtye6v57tZLN",
+    client_secret:"HXRAbP-iuFX0QzDoc1mxFJZx-1FL3SrZjRP7T2CoV2Jof_WIVbflYuW5bSIO2t91",
+    audience:"http://localhost:8080/testApiAuction",
+    grant_type:"client_credentials"
+    }
+
+// const config = {
+//     headers: {'Authorization': "bearer " + localStorage.getItem('access_token')}
+// };
+
+/**
+  --header 'content-type: application/json' \
+  --data '{"client_id":"Nl60ys3tk2j9u5Rp45MzoH5Lb7CIgoUE",
+  "client_secret":"TW68CqOu7VZvKmeXByuWmJYOXCxrhYztxh3abnNS64SpQzkl7NfBZDicYmuhdi2i",
+  "audience":"http://localhost:8080/testA",
+  "grant_type":"client_credentials"}'
+ */
+
 const config = {
-    headers: {'Authorization': "bearer " + localStorage.getItem('access_token')}
-};
+    headers: {
+        'Content-Type': 'application/json',
+    }
+}
 
 const bodyParameters = {
     index: 0,
     size: 10
 }
-
-// Axios.post( 
-//   'http://localhost:8000/api/v1/get_token_payloads',
-//   bodyParameters,
-//   config
-// ).then((response) => {
-//   console.log(response)
-// }).catch((error) => {
-//   console.log(error)
-// });
 
 const port = 'http://localhost:8080/'
 
@@ -31,11 +42,13 @@ class AuctionService {
         if(!_auctionService) {
             _auctionService = this
         }
-        else
-            return _auctionService
-    }
+        else {
+            return _auctionService}
+        }
 
-    getAuctions = (page, limit) => axios.post(`${port}auctions`, bodyParameters, config)
+    postToken = () => axios.post(`https://f-na-a.auth0.com/oauth/token`,auth, config) 
+
+    getAuctions = (page, limit, a) => axios.post(`${port}auctions`, bodyParameters, a)
 
     getAuctionsTitle = (title, page, limit) => axios.get(`${port}auction/for`, bodyParameters, config)
 
