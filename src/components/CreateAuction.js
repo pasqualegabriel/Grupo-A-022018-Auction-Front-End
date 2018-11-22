@@ -57,7 +57,7 @@ export default class CreateAuction extends Component {
       address: this.state.address,
       photos: 'https://www.crystalcommerce.com/wp-content/uploads/2018/09/square_gow4-notxt.jpg',
     }
-    this.auctionService.auction(newAuction)
+    this.auctionService.auction(newAuction).then(res => console.log(res)).catch(err => console.log(err))
   }
 
   render() {

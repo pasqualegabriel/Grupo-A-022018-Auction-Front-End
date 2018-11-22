@@ -21,6 +21,15 @@ export default class Auth {
     this.auth0.authorize();
   }
 
+  getEmail() {
+    const accessToken = localStorage.getItem('access_token');
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        console.log(this.auth0.client);
+      }
+});
+  }
+
   handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {

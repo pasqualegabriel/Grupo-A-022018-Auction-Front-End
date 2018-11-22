@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+// import { Button } from 'react-router-dom'
 import {setItem} from '../services/LocalStorageService'
-import { Dropdown, Menu, Input, Image } from 'semantic-ui-react'
+import { Dropdown, Menu, Input, Image, Button } from 'semantic-ui-react'
 
 export default class Header extends Component {
 
@@ -42,11 +42,11 @@ export default class Header extends Component {
             src='https://orig00.deviantart.net/9428/f/2015/206/a/5/esfera_del_dragon_de_1_estrella_render_hd_png_by_todoanimeoficial-d92t5g9.png'
             alt="logo"/>
         </Menu.Item>
-        <Menu.Item  as ={Link} 
-                    to      ='/home'
+        <Menu.Item  as ={Button} 
+                    onClick={() => window.location.pathname = '/home'}
                     name    ={this.props.getTranslation('home')}/>
-        <Menu.Item  as      ={Link}  
-                    to      ='/auction'
+        <Menu.Item  as      ={Button}  
+                    onClick={() => window.location.pathname = '/auction'}
                     name    ={this.props.getTranslation('auction')}/>
 
         <Menu.Menu position='right'>
@@ -67,13 +67,13 @@ export default class Header extends Component {
 
           <Dropdown item text='invited' >
             <Dropdown.Menu >
-            <Dropdown.Item as={Link}
-                             to='/signIn'>Auctions</Dropdown.Item>
-              <Dropdown.Item as={Link}
-                             to='/signIn'>Profile</Dropdown.Item>
+            <Dropdown.Item as={Button}
+                             onClick={() => window.location.pathname = '/signIn'}>Auctions</Dropdown.Item>
+              <Dropdown.Item as={Button}
+                             onClick={() => window.location.pathname = '/signIn'}>Profile</Dropdown.Item>
               {/* disabled={true} */}
-              <Dropdown.Item as={Link}
-                             to='/signIn'>Sign Out</Dropdown.Item>
+              <Dropdown.Item as={Button}
+                             onClick={() => window.location.pathname = '/signIn'}>Sign Out</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           
@@ -83,3 +83,5 @@ export default class Header extends Component {
   }
 
 }
+
+//window.location.pathname = '/auctions/search'

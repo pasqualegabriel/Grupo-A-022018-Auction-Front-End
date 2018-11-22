@@ -44,39 +44,13 @@ export default class Home extends Component {
   }
 
   componentDidMount = () => {
-    this.state.title === '' 
-    ? this.setAuctions(this.state.page)
-    : this.setAuctionsTitle(this.state.page, this.state.title)
-  }
-
-  setAuctions = page => {
-    this.auctionService.getAuctions(page, this.state.limit)
-    .then(res => {
-      const auctions = res.data.content
-      const totalPages = res.data.totalPages
-      const totalElements = res.data.totalElements
-      this.setState({ auctions, totalPages, totalElements })
-    }).catch(err => console.log(err))
-  }
-
-  setAuctionsTitle = (page, title) => {
-    this.auctionService.getAuctionsTitle(title, page, this.state.limit)
-    .then(res => {
-      const auctions = res.data.content
-      const totalPages = res.data.totalPages
-      const totalElements = res.data.totalElements
-      this.setState({ auctions, totalPages, totalElements })
-    }).catch(err => console.log(err))
+    this.setAuctionsTitleDescription(this.state.page, this.state.title)
   }
 
   handleClick = offset => {
     const page = offset / this.state.limit
     this.setState({offset, page})
-    if(this.state.title === '' && this.state.description === '') {
-      this.setAuctions(page)
-    } else if(this.state.title !== '' && this.state.description !== '') {
-      this.setAuctionsTitleDescription(this.state.title, this.state.description, page)
-    } else this.setAuctionsTitle(page, this.state.title)
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, page, this.state.limit)
   }
 
   handleChange = (ev, {name, value}) => {
@@ -87,11 +61,7 @@ export default class Home extends Component {
     const page = this.state.offset / parseInt(value)
     this.setState({ [name]: parseInt(value) })
     this.setState({page})
-    if(this.state.title === '' && this.state.description === '') {
-      this.setAuctions(page)
-    } else if(this.state.title !== '' && this.state.description !== '') {
-      this.setAuctionsTitleDescription(this.state.title, this.state.description, page)
-    } else this.setAuctionsTitle(page, this.state.title)
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, page, parseInt(value))
   }
 
   setAuctionsTitleDescription = (title, description, page) => {
@@ -105,11 +75,7 @@ export default class Home extends Component {
   }
 
   search = () => {
-    if(this.state.title === '' && this.state.description === '') {
-      this.setAuctions(this.state.page)
-    } else if(this.state.title !== '' && this.state.description !== '') {
-      this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.page)
-    } else this.setAuctionsTitle(this.state.page, this.state.title)
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.page)
   }
 
   render() {

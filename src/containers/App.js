@@ -14,8 +14,12 @@ import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
 import Callback from '../Callback/Callback';
 import Auth from '../Auth/Auth';
 import history from '../history';
+import AuctionService from '../services/AuctionService'
 
 const auth = new Auth();
+
+const auctionService = new AuctionService()
+auctionService.postToken()
 
 const handleAuthentication = ({location}) => {
   if (/access_token|id_token|error/.test(location.hash)) {
@@ -27,7 +31,10 @@ class App extends Component {
 
   state = { visible: false }
 
-  handleShowClick = () => this.setState({ visible: true })
+  handleShowClick = () => {
+    const a = new Auth()
+    a.getEmail()
+    this.setState({ visible: true })}
 
   handleSidebarHide = () => this.setState({ visible: false })
 

@@ -32,17 +32,11 @@ export default class Home extends Component {
   }
 
   setAuctions = async() => {
-    this.auctionService.postToken()
-    .then(t => {
-      localStorage.setItem('key', t.data.access_token)
-      console.log(t.data.access_token)
-      this.auctionService.getAuctions(0, 15, t.data.access_token)
-      .then(res => {
-        const toFinish = res.data.content
-        
-        this.setState({ toFinish, recents: toFinish })
-      }) .catch(err => console.log("aaaa"))
-    }).catch(err => console.log("ccaca"))
+    this.auctionService.getAuctions(0, 15)
+    .then(res => {
+      const toFinish = res.data.content
+      this.setState({ toFinish, recents: toFinish })
+    }).catch(err => console.log("aaaa"))
 
     // const finish = this.auctionService.getAuctionsToFinish(0, 15)
     // const news = this.auctionService.getRecentAuctions(0, 15)

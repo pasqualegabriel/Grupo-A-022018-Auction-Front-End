@@ -5,6 +5,7 @@ import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
 import FirstOffer from './FirstOffer'
+
 const container = {
   width: 'available',
   height: 'available'
