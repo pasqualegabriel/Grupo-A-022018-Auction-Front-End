@@ -12,6 +12,18 @@ export default class Header extends Component {
     }
   }
 
+  goTo(route) {
+    this.props.history.replace(`/${route}`)
+  }
+
+  login() {
+    this.props.auth.login();
+  }
+
+  logout() {
+    this.props.auth.logout();
+  }
+
   handleChange = (event) => {
     this.setState({search: event.target.value})
     setItem('title', { title: event.target.value})
@@ -34,6 +46,8 @@ export default class Header extends Component {
   changeLanguageEs = () => this.props.changeLanguage('es')
 
   render() {
+
+    const { isAuthenticated } = this.props.auth;
 
     return (
       <Menu size='large'>
@@ -72,8 +86,19 @@ export default class Header extends Component {
               <Dropdown.Item as={Button}
                              onClick={() => window.location.pathname = '/signIn'}>Profile</Dropdown.Item>
               {/* disabled={true} */}
-              <Dropdown.Item as={Button}
-                             onClick={() => window.location.pathname = '/signIn'}>Sign Out</Dropdown.Item>
+              {
+                !isAuthenticated() && (
+                  <Dropdown.Item as={Button}
+                  onClick={this.login.bind(this)}>Log In</Dropdown.Item>
+                )
+              }
+              {
+                isAuthenticated() && (
+                  <Dropdown.Item as={Button}
+                  onClick={this.logout.bind(this)}>Log Out</Dropdown.Item>
+                )
+              }
+
             </Dropdown.Menu>
           </Dropdown>
           

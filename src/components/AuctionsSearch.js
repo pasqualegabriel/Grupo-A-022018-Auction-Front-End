@@ -55,7 +55,6 @@ export default class Home extends Component {
   }
 
   handleChange = (ev, {name, value}) => {
-    setItem(name, { [name]: value })
     this.setState({ [name]: value })
   }
 

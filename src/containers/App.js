@@ -79,13 +79,14 @@ class App extends Component {
 
           <Sidebar.Pusher dimmed={visible}>
           <HeaderM click1={this.handleShowClick} 
+                auth={auth}
                 getTranslation={this.getTranslation} 
                 changeLanguage={this.changeLanguage}
                 getLanguage={this.getLanguage}/> 
 
             <Router history={history}>
             <div>
-              <Route exact path="/home"     render={(props) => <Home auth={auth} {...props} />} />
+              <Route exact path="/home"     render={(props) => <Home {...props} />} />
               <Route exact path="/signIn"   render={()=><Login getTranslation={this.getTranslation} />}/>
               <Route exact path="/auction"  render={()=><CreateAuction  getTranslation={this.getTranslation} />}/>
               <Route exact path="/auctions/search" render={()=><AuctionsSearch  getTranslation={this.getTranslation} />}/>
