@@ -14,16 +14,8 @@ export default class Home extends Component {
   }
 
   auctionsToFinish = (page, limit) => this.auctionService.getAuctionsToFinish(page, limit)
-    .then(res => {
-      const { content: auctions, totalElements } = res.data
-      return { auctions, totalElements }
-    }).catch(err => console.log(err))
 
   recentAuctions = (page, limit) => this.auctionService.getRecentAuctions(page, limit)
-    .then(res => {
-      const { content: auctions, totalElements } = res.data
-      return { auctions, totalElements }
-    }).catch(err => console.log(err))
 
   render() {
 
