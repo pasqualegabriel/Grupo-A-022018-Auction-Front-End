@@ -7,7 +7,7 @@ export default class Auth {
     clientID: 'lfabrL7McTLJdqLUF7MI61Efx7gZ37rH',
     redirectUri: 'http://localhost:3000/callback',
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: 'openid profile'
   });
 
   constructor() {
@@ -26,6 +26,7 @@ export default class Auth {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         console.log(this.auth0.client);
+	console.log(profile);
       }
 });
   }

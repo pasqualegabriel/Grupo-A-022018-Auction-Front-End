@@ -31,6 +31,11 @@ const handleAuthentication = ({location}) => {
   }
 }
 
+const st = {
+  width: '100%',
+  height: '100%'
+}
+
 class App extends Component {
 
   state = { visible: false }
@@ -85,7 +90,7 @@ class App extends Component {
                 getLanguage={this.getLanguage}/> 
 
             <Router history={history}>
-            <div>
+            <div style={st}>
               <Route exact path="/home"     render={(props) => <Home {...props} />} />
               <Route exact path="/signIn"   render={()=><Login getTranslation={this.getTranslation} />}/>
               <Route exact path="/auction"  render={()=><CreateAuction  getTranslation={this.getTranslation} />}/>
@@ -95,7 +100,7 @@ class App extends Component {
                 handleAuthentication(props);
                 return <Callback {...props} /> 
               }}/>
-                      </div>
+            </div>
             </Router>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
