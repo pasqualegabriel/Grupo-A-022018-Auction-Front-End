@@ -11,24 +11,19 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
     this.auctionService = new AuctionService()
-    this.state = {
-      toFinish: [],
-      recents: []
-    }
   }
 
-  componentDidMount = () => this.setAuctions()
-
-  setAuctions = () => {
-    const finish = this.auctionService.getAuctionsToFinish(0, 15)
-    const news = this.auctionService.getRecentAuctions(0, 15)
-    Promise.all([finish, news])
+  auctionsToFinish = (page, limit) => this.auctionService.getAuctionsToFinish(page, limit)
     .then(res => {
-      const toFinish = res[0].data.content
-      const recents = res[1].data.content
-      this.setState({ toFinish, recents })
+      const { content: auctions, totalElements } = res.data
+      return { auctions, totalElements }
     }).catch(err => console.log(err))
-  }
+
+  recentAuctions = (page, limit) => this.auctionService.getRecentAuctions(page, limit)
+    .then(res => {
+      const { content: auctions, totalElements } = res.data
+      return { auctions, totalElements }
+    }).catch(err => console.log(err))
 
   render() {
 
@@ -36,9 +31,9 @@ export default class Home extends Component {
       <div style={styles}>
 
         <h2>Subastas por terminar</h2>
-        <AuctionsList auctions={this.state.toFinish}/> 
+        <AuctionsList getAuctions={this.auctionsToFinish}/> 
         <h2>Ultimas publicadas</h2>
-        <AuctionsList auctions={this.state.recents}/> 
+        <AuctionsList getAuctions={this.recentAuctions}/> 
 
       </div>
     )

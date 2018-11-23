@@ -34,7 +34,6 @@ export default class Home extends Component {
     this.state = {
       auctions: [] ,
       page: getItem('page').page,
-      totalPages: 1,
       offset: 0,
       limit: getItem('limit').limit,
       totalElements: 100,
@@ -65,9 +64,8 @@ export default class Home extends Component {
     this.auctionService.getAuctionsTitleDescription(this.state.title, this.state.description, 0, parseInt(value))
     .then(res => {
       const auctions = res.data.content
-      const totalPages = res.data.totalPages
       const totalElements = res.data.totalElements
-      this.setState({ auctions, totalPages, totalElements })
+      this.setState({ auctions, totalElements })
     }).catch(err => console.log(err))
   }
 
@@ -75,9 +73,8 @@ export default class Home extends Component {
     this.auctionService.getAuctionsTitleDescription(title, description, page, this.state.limit)
     .then(res => {
       const auctions = res.data.content
-      const totalPages = res.data.totalPages
       const totalElements = res.data.totalElements
-      this.setState({ auctions, totalPages, totalElements })
+      this.setState({ auctions, totalElements })
     }).catch(err => console.log(err))
   }
 

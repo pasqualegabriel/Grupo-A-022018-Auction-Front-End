@@ -26,9 +26,19 @@ const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
 const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
  
 export default class AuctionList extends Component {
-  state = {
-    selected: 0
-  };
+
+  constructor(props) {
+    super(props)
+    this.auctionService = new AuctionService()
+    this.state = {
+      auctions: [] ,
+      page: 0,
+      offset: 0,
+      limit: 5,
+      totalElements: 100,
+      selected: 0
+    }
+  }
   
   onSelect = key => {
     this.setState({ selected: key });
