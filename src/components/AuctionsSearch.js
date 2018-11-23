@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import AuctionService from '../services/AuctionService'
 import ListAuction from './ListAuction'
-import {getItem} from '../services/LocalStorageService'
+import {getItem, setItem} from '../services/LocalStorageService'
 import Pagination from 'semantic-ui-react-button-pagination'
 import { Table, Input, Button, Dropdown } from 'semantic-ui-react'
 
@@ -33,35 +33,43 @@ export default class Home extends Component {
     this.auctionService = new AuctionService()
     this.state = {
       auctions: [] ,
-      page: 0,
+      page: getItem('page').page,
       totalPages: 1,
       offset: 0,
-      limit: 5,
+      limit: getItem('limit').limit,
       totalElements: 100,
-      title: getItem('title').title,
+      title: '',
       description: ''
     }
   }
 
   componentDidMount = () => {
-    this.setAuctionsTitleDescription(this.state.page, this.state.title)
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.page)
   }
 
   handleClick = offset => {
     const page = offset / this.state.limit
     this.setState({offset, page})
-    this.setAuctionsTitleDescription(this.state.title, this.state.description, page, this.state.limit)
+    setItem('page', {page})
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, page)
   }
 
   handleChange = (ev, {name, value}) => {
+    setItem(name, { [name]: value })
     this.setState({ [name]: value })
   }
 
   setLimit = (ev, {name, value}) => {
-    const page = this.state.offset / parseInt(value)
-    this.setState({ [name]: parseInt(value) })
-    this.setState({page})
-    this.setAuctionsTitleDescription(this.state.title, this.state.description, page, parseInt(value))
+    setItem('limit', {limit: parseInt(value)})
+    setItem('page', {page: 0})
+    this.setState({limit: parseInt(value), page: 0})
+    this.auctionService.getAuctionsTitleDescription(this.state.title, this.state.description, 0, parseInt(value))
+    .then(res => {
+      const auctions = res.data.content
+      const totalPages = res.data.totalPages
+      const totalElements = res.data.totalElements
+      this.setState({ auctions, totalPages, totalElements })
+    }).catch(err => console.log(err))
   }
 
   setAuctionsTitleDescription = (title, description, page) => {
@@ -75,7 +83,9 @@ export default class Home extends Component {
   }
 
   search = () => {
-    this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.page)
+    setItem('page', {page: 0})
+    this.setState({page:0})
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, 0)
   }
 
   render() {

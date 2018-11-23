@@ -15,11 +15,15 @@ import Callback from '../Callback/Callback';
 import Auth from '../Auth/Auth';
 import history from '../history';
 import AuctionService from '../services/AuctionService'
+import {setItem} from '../services/LocalStorageService'
 
 const auth = new Auth();
 
 const auctionService = new AuctionService()
 auctionService.postToken()
+
+setItem('page', {page: 0})
+setItem('limit', {limit: 5})
 
 const handleAuthentication = ({location}) => {
   if (/access_token|id_token|error/.test(location.hash)) {

@@ -72,7 +72,7 @@ class AuctionService {
         size
     }, config)
 
-    getAuctionsTitleDescription = (title, description, index, size) => axios.get(`${port}auction/title_and_description` , {
+    getAuctionsTitleDescription = (title, description, index, size) => axios.post(`${port}auction/title_and_description` , {
         title, 
         description, 
         index,
