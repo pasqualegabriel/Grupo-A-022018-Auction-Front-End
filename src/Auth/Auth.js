@@ -18,7 +18,7 @@ export default class Auth {
   }
 
   login() {
-    this.auth0.authorize();
+    this.auth0.authorize()
   }
 
   getEmail(accessToken) {

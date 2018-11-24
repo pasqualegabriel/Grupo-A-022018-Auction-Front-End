@@ -3,6 +3,7 @@ import AuctionService from '../services/AuctionService'
 import ListAuction from './ListAuction'
 import {getItem, setItem} from '../services/LocalStorageService'
 import Pagination from 'semantic-ui-react-button-pagination'
+import Login from '../containers/Login'
 import { Table, Input, Button, Dropdown } from 'semantic-ui-react'
 
 const container = {
@@ -32,7 +33,7 @@ export default class Home extends Component {
     super(props)
     this.auctionService = new AuctionService()
     this.state = {
-      auctions: [] ,
+      auctions: [],
       page: getItem('page').page,
       offset: 0,
       limit: getItem('limit').limit,
@@ -86,79 +87,92 @@ export default class Home extends Component {
 
   render() {
 
+    const { isAuthenticated } = this.props.auth;
+
     return (
-      <div style={container}>
-        <div style={leftpane}>
-        <Table celled textAlign='center' >
+      <div>
+      {
+        !isAuthenticated() && (
+          <Login auth={this.props.auth} getTranslation={this.props.getTranslation}/>
+        )
+      }
+      {
+        isAuthenticated() && (
+          <div style={container}>
+            <div style={leftpane}>
+            <Table celled textAlign='center' >
 
-          <Table.Header>
-            <Table.Row>
-              <Table.Cell width='6'>Show:</Table.Cell>
-              <Table.Cell>
-                <Dropdown item text={this.state.limit.toString()} >
-                  <Dropdown.Menu >
-                  <Dropdown.Item as={Button} value='5' name='limit'
-                                  onClick={this.setLimit}>5</Dropdown.Item>
-                    <Dropdown.Item as={Button} value='10' name='limit'
-                                  onClick={this.setLimit}>10</Dropdown.Item>
-                    <Dropdown.Item as={Button} value='15' name='limit'
-                                  onClick={this.setLimit}>15</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Header>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Cell width='6'>Show:</Table.Cell>
+                  <Table.Cell>
+                    <Dropdown item text={this.state.limit.toString()} >
+                      <Dropdown.Menu >
+                      <Dropdown.Item as={Button} value='5' name='limit'
+                                      onClick={this.setLimit}>5</Dropdown.Item>
+                        <Dropdown.Item as={Button} value='10' name='limit'
+                                      onClick={this.setLimit}>10</Dropdown.Item>
+                        <Dropdown.Item as={Button} value='15' name='limit'
+                                      onClick={this.setLimit}>15</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Header>
 
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell width='6'>Title:</Table.Cell>
-              <Table.Cell>
-                <Input 
-                  fluid
-                  size='large'
-                  name="title"
-                  onChange={this.handleChange}
-                  placeholder='Title'
-                  defaultValue={this.state.title}
-                  error={false}
-                />
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell width='6'>Title:</Table.Cell>
+                  <Table.Cell>
+                    <Input 
+                      fluid
+                      size='large'
+                      name="title"
+                      onChange={this.handleChange}
+                      placeholder='Title'
+                      defaultValue={this.state.title}
+                      error={false}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
 
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell>Description:</Table.Cell>
-              <Table.Cell>
-                <Input 
-                  fluid
-                  size='large'
-                  name="description"
-                  onChange={this.handleChange}
-                  placeholder='Description'
-                  defaultValue={this.state.description}
-                  error={false}
-                />
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>Description:</Table.Cell>
+                  <Table.Cell>
+                    <Input 
+                      fluid
+                      size='large'
+                      name="description"
+                      onChange={this.handleChange}
+                      placeholder='Description'
+                      defaultValue={this.state.description}
+                      error={false}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
 
-        </Table>
+            </Table>
 
-        <Button fluid size='large' onClick={this.search}>
-          <h3>Search</h3>
-        </Button>
+            <Button fluid size='large' onClick={this.search}>
+              <h3>Search</h3>
+            </Button>
 
-        </div>
-        <div style={middlepane}>
-          <ListAuction auctions={this.state.auctions}/>
-          <Pagination
-            offset={this.state.offset}
-            limit={this.state.limit}
-            total={this.state.totalElements}
-            onClick={(e, props, offset) => this.handleClick(offset)}
-          />
-        </div>
+            </div>
+            <div style={middlepane}>
+              <ListAuction auctions={this.state.auctions}/>
+              <Pagination
+                offset={this.state.offset}
+                limit={this.state.limit}
+                total={this.state.totalElements}
+                onClick={(e, props, offset) => this.handleClick(offset)}
+              />
+            </div>
+          </div>
+        )
+      }
       </div>
     )
   }

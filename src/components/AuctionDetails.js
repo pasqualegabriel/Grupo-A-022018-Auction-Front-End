@@ -5,6 +5,7 @@ import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
 import FirstOffer from './FirstOffer'
+import Login from '../containers/Login'
 
 const container = {
   width: 'available',
@@ -82,7 +83,8 @@ export default class App extends Component {
 
   render() {
 
-    const { auction, bidders } = this.state
+    const { auction, bidders } = this.state;
+    const { isAuthenticated } = this.props.auth;
 
     const AutomaticOffer = () => { 
       if(bidders.length === 0) {
@@ -113,58 +115,69 @@ export default class App extends Component {
     }
 
     return (
-      <div style={container}>
-        <div style={leftpane}>
-          <div style={titleS}>
-            <h1>{auction.title}</h1>
-            <h3>{auction.description}</h3>
-            <img alt='' style={image} src={auction.photos}/>
-            <h3>Finaliza {moment(auction.finishDate).locale('es').endOf('hour').fromNow()}</h3> 
+      <div>
+      {
+        !isAuthenticated() && (
+          <Login auth={this.props.auth} getTranslation={this.props.getTranslation}/>
+        )
+      }
+      {
+        isAuthenticated() && (
+          <div style={container}>
+            <div style={leftpane}>
+              <div style={titleS}>
+                <h1>{auction.title}</h1>
+                <h3>{auction.description}</h3>
+                <img alt='' style={image} src={auction.photos}/>
+                <h3>Finaliza {moment(auction.finishDate).locale('es').endOf('hour').fromNow()}</h3> 
+              </div>
+            </div>
+            <div style={middlepane}>
+
+              <Table celled textAlign='center' >
+
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Ultimo tramo</Table.HeaderCell>
+                    <Table.HeaderCell>
+                    <Label color='teal'>
+                      <h2>$ {auction.price}</h2>
+                    </Label>
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+
+                <AutomaticOffer/>
+
+              </Table>
+
+              <Table celled textAlign='center' >
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan='5'><h2>Avance de la subasta</h2></Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                {bidders.map((b, i) => 
+                  <Table.Body key={b.id}>
+                    <Table.Row>
+                      <Table.Cell>{b.author}</Table.Cell>
+                      <Table.Cell>Tramo {i + 1}</Table.Cell>
+                      <Table.Cell>$ {b.price}</Table.Cell>
+                      <Table.Cell>{moment(b.publicationDate).calendar()}</Table.Cell>
+                      <Table.Cell>{moment(b.publicationDate).format('LT')}</Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                )}
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.Cell colSpan='5'>{bidders.length} postores en la subasta</Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+              </Table>
+            </div>
           </div>
-        </div>
-        <div style={middlepane}>
-
-          <Table celled textAlign='center' >
-
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Ultimo tramo</Table.HeaderCell>
-                <Table.HeaderCell>
-                <Label color='teal'>
-                  <h2>$ {auction.price}</h2>
-                </Label>
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-
-            <AutomaticOffer/>
-
-          </Table>
-
-          <Table celled textAlign='center' >
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell colSpan='5'><h2>Avance de la subasta</h2></Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            {bidders.map((b, i) => 
-              <Table.Body key={b.id}>
-                <Table.Row>
-                  <Table.Cell>{b.author}</Table.Cell>
-                  <Table.Cell>Tramo {i + 1}</Table.Cell>
-                  <Table.Cell>$ {b.price}</Table.Cell>
-                  <Table.Cell>{moment(b.publicationDate).calendar()}</Table.Cell>
-                  <Table.Cell>{moment(b.publicationDate).format('LT')}</Table.Cell>
-                </Table.Row>
-              </Table.Body>
-            )}
-              <Table.Body>
-                <Table.Row>
-                  <Table.Cell colSpan='5'>{bidders.length} postores en la subasta</Table.Cell>
-                </Table.Row>
-              </Table.Body>
-          </Table>
-        </div>
+        )
+      }
       </div>
     );
   }
