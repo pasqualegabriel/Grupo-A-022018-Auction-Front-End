@@ -21,14 +21,12 @@ export default class Auth {
     this.auth0.authorize();
   }
 
-  getEmail() {
-    const accessToken = localStorage.getItem('access_token');
+  getEmail(accessToken) {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
-        console.log(this.auth0.client);
-	console.log(profile);
+        localStorage.setItem('email', JSON.stringify(profile))
       }
-});
+    });
   }
 
   handleAuthentication() {
@@ -50,6 +48,8 @@ export default class Auth {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    this.getEmail(authResult.accessToken)
+    console.log('set email')
     // navigate to the home route
     history.replace('/home');
   }
@@ -59,6 +59,7 @@ export default class Auth {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('email')
     // navigate to the home route
     history.replace('/home');
   }

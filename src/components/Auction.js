@@ -37,7 +37,6 @@ export default ({auction}) => {
             <Card.Content>
             <Card.Header style={stitle}>{auction.title}</Card.Header>
             <Card.Meta style={stitle}>$ {auction.price}</Card.Meta>
-            <Card.Description>{auction.emailAuthor}</Card.Description>
             </Card.Content>
             <Card.Content extra>
                 <Link style={blue} to={'/detail'} onClick={()=>setItem('auction', auction)}>

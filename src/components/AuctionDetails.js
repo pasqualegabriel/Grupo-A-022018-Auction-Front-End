@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {getItem} from '../services/LocalStorageService'
+import { getItem } from '../services/LocalStorageService'
 import { Table, Button, Label } from 'semantic-ui-react'
 import 'moment/locale/es'
 import moment from 'moment'
@@ -63,15 +63,19 @@ export default class App extends Component {
   }
 
   offer = () => {
-    const { id } = this.state.auction
-    this.auctionService.offer(id, 'goku@gmail.com')
+    const { id } = this.state.auction;
+    const profile = JSON.parse(localStorage.getItem('email'))
+    const nick = profile.nickname
+    this.auctionService.offer(id, `${nick}@gmail.com`)
       .then(res => this.setAuction())
       .catch(err => console.log(err))
   }
 
   firstOffer = amount => {
     const { id } = this.state.auction
-    this.auctionService.firstOffer(id, 'vegeta@gmail.com', amount)
+    const profile = JSON.parse(localStorage.getItem('email'))
+    const nick = profile.nickname
+    this.auctionService.firstOffer(id, `${nick}@gmail.com`, amount)
       .then(res => this.setAuction())
       .catch(err => console.log(err))
   }

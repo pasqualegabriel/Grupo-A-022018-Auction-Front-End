@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { Button } from 'react-router-dom'
 import {setItem} from '../services/LocalStorageService'
 import { Dropdown, Menu, Input, Image, Button } from 'semantic-ui-react'
 
@@ -17,11 +16,11 @@ export default class Header extends Component {
   }
 
   login() {
-    this.props.auth.login();
+    this.props.auth.login()
   }
 
   logout() {
-    this.props.auth.logout();
+    this.props.auth.logout()
   }
 
   handleChange = (event) => {
@@ -51,7 +50,7 @@ export default class Header extends Component {
 
     return (
       <Menu size='large'>
-         <Menu.Item onClick={this.props.click1}>
+         <Menu.Item>
             <Image avatar 
             src='https://orig00.deviantart.net/9428/f/2015/206/a/5/esfera_del_dragon_de_1_estrella_render_hd_png_by_todoanimeoficial-d92t5g9.png'
             alt="logo"/>
@@ -81,10 +80,10 @@ export default class Header extends Component {
 
           <Dropdown item text='invited' >
             <Dropdown.Menu >
-            <Dropdown.Item as={Button}
-                             onClick={() => window.location.pathname = '/signIn'}>Auctions</Dropdown.Item>
-              <Dropdown.Item as={Button}
-                             onClick={() => window.location.pathname = '/signIn'}>Profile</Dropdown.Item>
+            <Dropdown.Item  as={Button}
+                            onClick={() => window.location.pathname = '/signIn'}>Auctions</Dropdown.Item>
+              <Dropdown.Item  as={Button}
+                              onClick={() => window.location.pathname = '/signIn'}>Profile</Dropdown.Item>
               {/* disabled={true} */}
               {
                 !isAuthenticated() && (
@@ -108,5 +107,3 @@ export default class Header extends Component {
   }
 
 }
-
-//window.location.pathname = '/auctions/search'

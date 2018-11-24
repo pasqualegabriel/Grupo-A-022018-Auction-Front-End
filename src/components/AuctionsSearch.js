@@ -37,7 +37,7 @@ export default class Home extends Component {
       offset: 0,
       limit: getItem('limit').limit,
       totalElements: 100,
-      title: '',
+      title: getItem('title').title || '',
       description: ''
     }
   }
