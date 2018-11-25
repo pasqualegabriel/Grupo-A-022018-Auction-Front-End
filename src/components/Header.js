@@ -79,7 +79,7 @@ export default class Header extends Component {
             </Dropdown.Menu>
           </Dropdown>
 
-          <Dropdown item text='invited' >
+          <Dropdown item text='user' >
             <Dropdown.Menu >
             <Dropdown.Item  as={Button}
                             onClick={() => this.goTo('/')}>Auctions</Dropdown.Item>

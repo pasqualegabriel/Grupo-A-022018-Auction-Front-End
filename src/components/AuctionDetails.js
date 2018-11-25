@@ -4,7 +4,6 @@ import { Table, Button, Label } from 'semantic-ui-react'
 import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
-import Login from '../containers/Login'
 
 const container = {
   width: 'available',
@@ -165,11 +164,6 @@ export default class App extends Component {
     return (
       <div>
       {
-        !isAuthenticated() && (
-          <Login auth={this.props.auth} getTranslation={this.props.getTranslation}/>
-        )
-      }
-      {
         isAuthenticated() && (
           <div style={container}>
             <div style={leftpane}>
@@ -202,7 +196,12 @@ export default class App extends Component {
                   </Table.Row>
                 </Table.Header>
 
-                <AutomaticOffer/>
+                {
+                  moment(this.state.auction.publicationDate) <= moment() &&
+                  moment(this.state.auction.finishDate) >= moment() && (
+                    <AutomaticOffer/>
+                  )
+                }
 
               </Table>
 

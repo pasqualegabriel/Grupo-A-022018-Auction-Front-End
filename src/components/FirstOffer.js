@@ -1,17 +1,7 @@
 import React, { Component } from 'react'
-// import Popup from "reactjs-popup"
 import { Button, Input } from 'semantic-ui-react'
 import AuctionService from '../services/AuctionService'
-
-// const contentStyle = {
-//     maxWidth: "600px",
-//     width: "90%",
-//     height: '300px',
-//     padding: '2rem',
-//     position: 'center',
-//     top: '10%',
-//     transform: '40px'
-// };
+import Login from '../containers/Login'
 
 export default class FirstOffer extends Component {
 
@@ -28,7 +18,7 @@ export default class FirstOffer extends Component {
         const profile = JSON.parse(localStorage.getItem('email'))
         const nick = profile.nickname
         this.auctionService.offer(id, `${nick}@gmail.com`)
-            .then(() => window.location.pathname = '/auctions/search')
+            .then(() => window.location.pathname = '/detail')
             .catch(err => console.log(err))
     }
     
@@ -37,7 +27,7 @@ export default class FirstOffer extends Component {
         const profile = JSON.parse(localStorage.getItem('email'))
         const nick = profile.nickname
         this.auctionService.firstOffer(id, `${nick}@gmail.com`, this.state.amount)
-            .then(() => window.location.pathname = '/auctions/search')
+            .then(() => window.location.pathname = '/detail')
             .catch(err => console.log(err))
     }
 
@@ -52,17 +42,18 @@ export default class FirstOffer extends Component {
     }
 
     render() {
+
+        const { isAuthenticated } = this.props.auth;
+
         return (
-            // <Popup
-            //     trigger={
-            //         <Button primary>
-            //             <h3>Realizar oferta</h3>
-            //         </Button>
-            //     }
-            //     modal
-            //     contentStyle={contentStyle}
-            // >
-            //     {close => (
+            <div>
+            {
+                !isAuthenticated() && (
+                    <Login auth={this.props.auth} getTranslation={this.props.getTranslation}/>
+                )
+            }
+            {
+            isAuthenticated() && (
                 <div className="modal">
                     <div className="content">
                     Puedes realizar una oferta 
@@ -94,8 +85,9 @@ export default class FirstOffer extends Component {
                         <br/>
                     </div>
                 </div>
-            //     )}
-            // </Popup>
+                )
+            }
+            </div>
         )
     }
 }
