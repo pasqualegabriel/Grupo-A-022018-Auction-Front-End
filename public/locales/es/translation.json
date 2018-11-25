@@ -6,5 +6,7 @@
   "language-tilte": "lenguaje",
   "idiom-en": "ingles",
   "idiom-es": "español",
-  "search-placeholder": "Buscar Subastas..."
+  "search-placeholder": "Buscar Subastas...",
+  "titleAutomatic": "Puedes realizar una oferta con seguimiento automático",
+  "offer": "Ofertar"
 }

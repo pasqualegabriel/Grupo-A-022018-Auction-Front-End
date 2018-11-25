@@ -6,5 +6,7 @@
   "language-tilte": "language",
   "idiom-en": "english",
   "idiom-es": "spanish",
-  "search-placeholder": "Search Auctions..."
+  "search-placeholder": "Search Auctions...",
+  "titleAutomatic": "You can make an offer with automatic tracking",
+  "offer": "Offer"
 }

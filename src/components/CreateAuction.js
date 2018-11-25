@@ -47,7 +47,7 @@ export default class CreateAuction extends Component {
     this.setState({ [name]: value })
   }
 
-  create = async (event) => {
+  create = event => {
     const profile = JSON.parse(localStorage.getItem('email'))
     const nick = profile.nickname
     const newAuction = {

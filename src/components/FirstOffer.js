@@ -56,14 +56,13 @@ export default class FirstOffer extends Component {
             isAuthenticated() && (
                 <div className="modal">
                     <div className="content">
-                    Puedes realizar una oferta 
-                    con seguimiento automatico
+                        {this.props.getTranslation('titleAutomatic')}
                     </div>
                     <br/>
                     <div className="actions">
                     <div className="content">
                         <Button primary onClick={this.offer}>
-                            <h3>Realizar oferta</h3>
+                            <h3>{this.props.getTranslation('offer')}</h3>
                         </Button>
                         </div>
                         <br/>

@@ -24,7 +24,7 @@ const configAuth = {
 
 const port = 'http://localhost:8080/'
 
-// const port = 'http://e8925c6d.ngrok.io/'
+// const port = 'http://b4b99871.ngrok.io/'
 
 class AuctionService {
 

@@ -47,6 +47,13 @@ export default class Header extends Component {
     this.props.changeLanguage('es')
   }
 
+  nickname = () => {
+    const profile = JSON.parse(localStorage.getItem('email'))
+    const defaultNick = 'user'
+    const nick = profile ? profile.nickname || defaultNick : defaultNick
+    return nick
+  }
+
   render() {
 
     return (
@@ -79,12 +86,10 @@ export default class Header extends Component {
             </Dropdown.Menu>
           </Dropdown>
 
-          <Dropdown item text='user' >
+          <Dropdown item text={this.nickname()}>
             <Dropdown.Menu >
             <Dropdown.Item  as={Button}
                             onClick={() => this.goTo('/')}>Auctions</Dropdown.Item>
-              <Dropdown.Item  as={Button}
-                              onClick={() => this.goTo('/')}>Profile</Dropdown.Item>
               {/* disabled={true} */}
               <Dropdown.Item as={Button}
               onClick={this.logout.bind(this)}>Log Out</Dropdown.Item>

@@ -82,15 +82,16 @@ export default class App extends Component {
     const anAuction = getItem('auction')
     this.auctionService.getAuction(anAuction.id)
     .then(result => {
+      const now = moment()
       const auction = result.data
       const bidders = auction.bidders
       const pd = moment(auction.publicationDate)
       const fd = moment(auction.finishDate)
-      const diff = fd.diff(moment())
-      const diff2 = pd.diff(moment())
-      const res = moment() > fd 
+      const diff = fd.diff(now)
+      const diff2 = pd.diff(now)
+      const res = now > fd 
                   ? 'Finalizado' 
-                  : pd > moment() 
+                  : pd > now 
                     ? `Comienza en ${this.convert(diff2)}` 
                     : `Finaliza en ${this.convert(diff)}`
       // `Finaliza ${fd.fromNow()}`
@@ -102,20 +103,22 @@ export default class App extends Component {
     }).catch(err => console.log(err))
   }
 
+  getAuthor = () => {
+    const profile = JSON.parse(localStorage.getItem('email'))
+    const nick = profile.nickname 
+    return `${nick}@gmail.com`
+  }
+
   offer = () => {
     const { id } = this.state.auction;
-    const profile = JSON.parse(localStorage.getItem('email'))
-    const nick = profile.nickname
-    this.auctionService.offer(id, `${nick}@gmail.com`)
+    this.auctionService.offer(id, this.getAuthor())
       .then(() => this.setAuction())
       .catch(err => console.log(err))
   }
 
   firstOffer = amount => {
     const { id } = this.state.auction
-    const profile = JSON.parse(localStorage.getItem('email'))
-    const nick = profile.nickname
-    this.auctionService.firstOffer(id, `${nick}@gmail.com`, amount)
+    this.auctionService.firstOffer(id, this.getAuthor(), amount)
       .then(() => this.setAuction())
       .catch(err => console.log(err))
   }
@@ -124,6 +127,8 @@ export default class App extends Component {
     localStorage.setItem('firstOffer', JSON.stringify({ id: this.state.auction.id }))
     window.location.pathname = '/firstOffer'
   }
+
+  edit = () => {}
 
   render() {
 
@@ -198,8 +203,25 @@ export default class App extends Component {
 
                 {
                   moment(this.state.auction.publicationDate) <= moment() &&
-                  moment(this.state.auction.finishDate) >= moment() && (
+                  moment(this.state.auction.finishDate) >= moment() &&
+                  this.state.auction.emailAuthor !== this.getAuthor() && (
                     <AutomaticOffer/>
+                  )
+                }
+
+                {
+                  moment(this.state.auction.finishDate) >= moment() &&
+                  this.state.auction.emailAuthor === this.getAuthor() && (
+                    <Table.Body>
+                      <Table.Row>
+                        <Table.Cell>Editar subasta</Table.Cell>
+                        <Table.Cell>
+                          <Button primary onClick={this.edit}>
+                            <h3>Editar</h3>
+                          </Button>
+                        </Table.Cell>
+                      </Table.Row>
+                    </Table.Body>
                   )
                 }
 

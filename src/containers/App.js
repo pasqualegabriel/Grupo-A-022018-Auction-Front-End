@@ -28,17 +28,17 @@ const handleAuthentication = ({location}) => {
 
 class App extends Component {
 
-  // tick = () => {
-  //   console.log('sisi')
-  // }
+  tick = () => {
 
-  // componentDidMount = () => {
-  //   this.interval = setInterval(() => this.tick(), 2000);
-  // }
+  }
 
-  // componentWillUnmount = () => {
-  //   clearInterval(this.interval);
-  // }
+  componentDidMount = () => {
+    this.interval = setInterval(() => this.tick(), 2000);
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
+  }
 
   getTranslation = key => this.props.t(key)
 
