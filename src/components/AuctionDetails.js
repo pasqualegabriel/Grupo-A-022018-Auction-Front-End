@@ -4,7 +4,6 @@ import { Table, Button, Label } from 'semantic-ui-react'
 import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
-import FirstOffer from './FirstOffer'
 import Login from '../containers/Login'
 
 const container = {
@@ -22,6 +21,7 @@ const leftpane = {
 
 const middlepane = {
   width: '45%',
+  textAlign: 'center',
   height: 'available',
   minHeight: '900px',
   float: 'left',
@@ -39,8 +39,8 @@ const image = {
 
 export default class App extends Component {
   
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.auctionService = new AuctionService()
     this.state = { 
       auction: {},
@@ -62,13 +62,39 @@ export default class App extends Component {
     clearInterval(this.interval);
   }
 
+  convert = ms => {
+    var d, h, m, s;
+    s = Math.floor(ms / 1000);
+    m = Math.floor(s / 60);
+    s = s % 60;
+    h = Math.floor(m / 60);
+    m = m % 60;
+    d = Math.floor(h / 24);
+    h = h % 24;
+    h += d * 24;
+    // return h + ':' + m + ':' + s;
+    const hr = h === 0 ? '' : h < 10 ? `0${h}:` : `${h}:`
+    const mr = m === 0 ? '' : m < 10 ? `0${m}:` : `${m}:`
+    const sr = s < 10 ? `0${s}` : `${s}`
+    return hr + mr + sr
+  }
+
   setAuction = () => {
     const anAuction = getItem('auction')
     this.auctionService.getAuction(anAuction.id)
     .then(result => {
       const auction = result.data
       const bidders = auction.bidders
-      const res = moment(moment(auction.finishDate) - moment()).format('LTS')
+      const pd = moment(auction.publicationDate)
+      const fd = moment(auction.finishDate)
+      const diff = fd.diff(moment())
+      const diff2 = pd.diff(moment())
+      const res = moment() > fd 
+                  ? 'Finalizado' 
+                  : pd > moment() 
+                    ? `Comienza en ${this.convert(diff2)}` 
+                    : `Finaliza en ${this.convert(diff)}`
+      // `Finaliza ${fd.fromNow()}`
       this.setState({
         auction,
         bidders,
@@ -82,7 +108,7 @@ export default class App extends Component {
     const profile = JSON.parse(localStorage.getItem('email'))
     const nick = profile.nickname
     this.auctionService.offer(id, `${nick}@gmail.com`)
-      .then(res => this.setAuction())
+      .then(() => this.setAuction())
       .catch(err => console.log(err))
   }
 
@@ -91,8 +117,13 @@ export default class App extends Component {
     const profile = JSON.parse(localStorage.getItem('email'))
     const nick = profile.nickname
     this.auctionService.firstOffer(id, `${nick}@gmail.com`, amount)
-      .then(res => this.setAuction())
+      .then(() => this.setAuction())
       .catch(err => console.log(err))
+  }
+
+  fO = () => {
+    localStorage.setItem('firstOffer', JSON.stringify({ id: this.state.auction.id }))
+    window.location.pathname = '/firstOffer'
   }
 
   render() {
@@ -107,7 +138,10 @@ export default class App extends Component {
             <Table.Row>
               <Table.Cell>Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
               <Table.Cell>
-                <FirstOffer offer={this.offer} firstOffer={this.firstOffer}/>
+                {/* <FirstOffer offer={this.offer} firstOffer={this.firstOffer} fO={this.fO}/> */}
+                <Button primary onClick={this.fO}>
+                  <h3>Realizar oferta</h3>
+                </Button>
               </Table.Cell>
             </Table.Row>
           </Table.Body>
@@ -119,7 +153,7 @@ export default class App extends Component {
               <Table.Cell>Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
               <Table.Cell>
                 <Button primary onClick={this.offer}>
-                  <h3>Realizar offerta</h3>
+                  <h3>Realizar oferta</h3>
                 </Button>
               </Table.Cell>
             </Table.Row>
@@ -141,12 +175,19 @@ export default class App extends Component {
             <div style={leftpane}>
               <div style={titleS}>
                 <h1>{auction.title}</h1>
-                <h3>{auction.description}</h3>
+                
                 <img alt='' style={image} src={auction.photos}/>
-                <h3>Finaliza en {this.state.res}</h3> 
+                <h3>{auction.description}</h3>
               </div>
             </div>
             <div style={middlepane}>
+            <Table celled textAlign='center' >
+              <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell><h3>{this.state.res}</h3> </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+              </Table>
 
               <Table celled textAlign='center' >
 
@@ -178,7 +219,7 @@ export default class App extends Component {
                       <Table.Cell>Tramo {i + 1}</Table.Cell>
                       <Table.Cell>$ {b.price}</Table.Cell>
                       <Table.Cell>{moment(b.publicationDate).calendar()}</Table.Cell>
-                      <Table.Cell>{moment(b.publicationDate).format('LT')}</Table.Cell>
+                      {/* <Table.Cell>{moment(b.publicationDate).format('LT')}</Table.Cell> */}
                     </Table.Row>
                   </Table.Body>
                 )}
