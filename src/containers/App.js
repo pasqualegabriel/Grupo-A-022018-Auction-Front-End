@@ -27,6 +27,18 @@ const handleAuthentication = ({location}) => {
 
 class App extends Component {
 
+  // tick = () => {
+  //   console.log('sisi')
+  // }
+
+  // componentDidMount = () => {
+  //   this.interval = setInterval(() => this.tick(), 2000);
+  // }
+
+  // componentWillUnmount = () => {
+  //   clearInterval(this.interval);
+  // }
+
   getTranslation = key => this.props.t(key)
 
   changeLanguage = lng => this.props.i18n.changeLanguage(lng)
@@ -37,10 +49,10 @@ class App extends Component {
 
     return (
         <div>
-          <HeaderM auth={auth}
-                getTranslation={this.getTranslation} 
-                changeLanguage={this.changeLanguage}
-                getLanguage={this.getLanguage}/> 
+          <HeaderM  auth={auth}
+                    getTranslation={this.getTranslation} 
+                    changeLanguage={this.changeLanguage}
+                    getLanguage={this.getLanguage}/> 
 
             <Router history={history}>
             <div>

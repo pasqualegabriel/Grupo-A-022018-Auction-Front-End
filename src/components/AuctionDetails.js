@@ -21,11 +21,11 @@ const leftpane = {
 }
 
 const middlepane = {
- width: '45%',
- height: 'available',
- minHeight: '900px',
- float: 'left',
- borderCollapse: 'collapse'
+  width: '45%',
+  height: 'available',
+  minHeight: '900px',
+  float: 'left',
+  borderCollapse: 'collapse'
 }
 
 const titleS = {
@@ -44,21 +44,35 @@ export default class App extends Component {
     this.auctionService = new AuctionService()
     this.state = { 
       auction: {},
-      bidders: []
+      bidders: [],
+      res: moment().format()
     }
   }
 
-  componentDidMount = () => this.setAuction()
+  tick = () => {
+    this.setAuction()
+  }
+
+  componentDidMount = () => {
+    this.interval = setInterval(() => this.tick(), 1000);
+    this.setAuction()
+  }
+
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
+  }
 
   setAuction = () => {
     const anAuction = getItem('auction')
     this.auctionService.getAuction(anAuction.id)
-    .then(res => {
-      const auction = res.data
+    .then(result => {
+      const auction = result.data
       const bidders = auction.bidders
+      const res = moment(moment(auction.finishDate) - moment()).format('LTS')
       this.setState({
         auction,
-        bidders
+        bidders,
+        res
       })
     }).catch(err => console.log(err))
   }
@@ -129,7 +143,7 @@ export default class App extends Component {
                 <h1>{auction.title}</h1>
                 <h3>{auction.description}</h3>
                 <img alt='' style={image} src={auction.photos}/>
-                <h3>Finaliza {moment(auction.finishDate).locale('es').endOf('hour').fromNow()}</h3> 
+                <h3>Finaliza en {this.state.res}</h3> 
               </div>
             </div>
             <div style={middlepane}>

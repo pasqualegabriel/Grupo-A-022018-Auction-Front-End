@@ -27,24 +27,23 @@ const stitle = {color:'black'}
 export default ({auction}) => {
 
     return (
-
-      <List.Item>
-        <Card style={st}>
-            <Image 
-                src={auction.photos}
-                style={st2}
-            />
-            <Card.Content>
-            <Card.Header style={stitle}>{auction.title}</Card.Header>
-            <Card.Meta style={stitle}>$ {auction.price}</Card.Meta>
-            </Card.Content>
-            <Card.Content extra>
-                <Link style={blue} to={'/detail'} onClick={()=>setItem('auction', auction)}>
-                Details
-                </Link> 
-            </Card.Content>
-        </Card>
-       </List.Item>
+        <List.Item>
+            <Card style={st}>
+                <Image 
+                    src={auction.photos}
+                    style={st2}
+                />
+                <Card.Content>
+                <Card.Header style={stitle}>{auction.title}</Card.Header>
+                <Card.Meta style={stitle}>$ {auction.price}</Card.Meta>
+                </Card.Content>
+                <Card.Content extra>
+                    <Link style={blue} to={'/detail'} onClick={()=>setItem('auction', auction)}>
+                    Details
+                    </Link> 
+                </Card.Content>
+            </Card>
+        </List.Item>
     )
 }
 
