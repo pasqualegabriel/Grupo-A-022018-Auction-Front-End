@@ -24,7 +24,7 @@ const st2 = {
 
 const stitle = {color:'black'}
 
-export default ({auction}) => {
+export default ({auction, getTranslation}) => {
 
     return (
         <List.Item>
@@ -39,7 +39,7 @@ export default ({auction}) => {
                 </Card.Content>
                 <Card.Content extra>
                     <Link style={blue} to={'/detail'} onClick={()=>setItem('auction', auction)}>
-                    Details
+                        {getTranslation('detail')}
                     </Link> 
                 </Card.Content>
             </Card>

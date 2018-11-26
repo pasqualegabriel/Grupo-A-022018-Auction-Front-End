@@ -8,5 +8,14 @@
   "idiom-es": "español",
   "search-placeholder": "Buscar Subastas...",
   "titleAutomatic": "Puedes realizar una oferta con seguimiento automático",
-  "offer": "Ofertar"
+  "offer": "Ofertar",
+  "automatic": "Realizar oferta con seguimiento automatico",
+  "amountFirstOffer": "Monto",
+  "detail": "Detalle",
+  "search": "Buscar",
+  "description": "Descripción:",
+  "title-search": "Titulo:",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  "auctions": "Subastas"
 }

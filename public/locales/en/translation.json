@@ -8,5 +8,14 @@
   "idiom-es": "spanish",
   "search-placeholder": "Search Auctions...",
   "titleAutomatic": "You can make an offer with automatic tracking",
-  "offer": "Offer"
+  "offer": "Offer",
+  "automatic": "Make offer with automatic tracking",
+  "amountFirstOffer": "Amount",
+  "detail": "Detail",
+  "search": "Search",
+  "description": "Description:",
+  "title-search": "Title:",
+  "login": "Log In",
+  "logout": "Log Out",
+  "auctions": "Auctions"
 }

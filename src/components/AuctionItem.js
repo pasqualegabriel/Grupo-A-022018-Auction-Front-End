@@ -1,13 +1,18 @@
 import React from 'react'
 import {setItem} from '../services/LocalStorageService'
 import { Item, Button, Icon } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
-export default ({auction}) => (
+export default ({auction, getTranslation}) => (
     <Item >
       <Item.Image src={auction.photos}/>
 
       <Item.Content>
-        <Item.Header as='a'>{auction.title}</Item.Header>
+        <Item.Header>
+          <Link style={blue} to={'/detail'} onClick={()=>setItem('auction', auction)}>
+            {auction.title}
+          </Link> 
+        </Item.Header>
         <Item.Description>$ {auction.price}</Item.Description>
         <Item.Meta>
           <span className='cinema'>{auction.emailAuthor}</span>
@@ -18,7 +23,7 @@ export default ({auction}) => (
             setItem('auction', auction)
             window.location.pathname = '/detail'
         }}>
-            Details
+            {getTranslation('detail')}
             <Icon name='right chevron' />
         </Button>
         </Item.Extra>

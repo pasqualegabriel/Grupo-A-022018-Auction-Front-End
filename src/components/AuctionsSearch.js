@@ -130,7 +130,7 @@ export default class Home extends Component {
 
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell width='6'>Title:</Table.Cell>
+                  <Table.Cell width='6'>{this.props.getTranslation('title-search')}</Table.Cell>
                   <Table.Cell>
                     <Input 
                       fluid
@@ -147,7 +147,7 @@ export default class Home extends Component {
 
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell>Description:</Table.Cell>
+                  <Table.Cell>{this.props.getTranslation('description')}</Table.Cell>
                   <Table.Cell>
                     <Input 
                       fluid
@@ -165,12 +165,12 @@ export default class Home extends Component {
             </Table>
 
             <Button fluid size='large' onClick={this.search}>
-              <h3>Search</h3>
+              <h3>{this.props.getTranslation('search')}</h3>
             </Button>
 
             </div>
             <div style={middlepane}>
-              <ListAuction auctions={this.state.auctions}/>
+              <ListAuction auctions={this.state.auctions} getTranslation={this.props.getTranslation}/>
               <Pagination
                 offset={this.state.offset}
                 limit={this.state.limit}

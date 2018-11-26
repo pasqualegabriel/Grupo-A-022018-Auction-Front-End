@@ -6,8 +6,8 @@ import Pagination from 'semantic-ui-react-button-pagination'
  
 // All items component
 // Important! add unique key
-const Menu = auctions => auctions.map(anAuction => {
-  return ( <Auction key={anAuction.id} auction={anAuction}/> )
+const Menu = (auctions, getTranslation) => auctions.map(anAuction => {
+  return ( <Auction key={anAuction.id} auction={anAuction} getTranslation={getTranslation}/> )
 })
  
 const Arrow = ({ text, className }) => {
@@ -63,7 +63,7 @@ export default class AuctionList extends Component {
   render() {
     const { selected } = this.state;
     // Create menu from items
-    const menu = Menu(this.state.auctions);
+    const menu = Menu(this.state.auctions, this.props.getTranslation);
  
     return (
       <div className="App">

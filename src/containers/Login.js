@@ -4,7 +4,7 @@ export default ({ auth, getTranslation }) => {
 
     return ( 
         <button onClick={() => auth.login()}>
-          Log In            
+          {getTranslation('login')  }      
         </button>
     )
 }

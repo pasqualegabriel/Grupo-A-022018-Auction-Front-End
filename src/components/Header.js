@@ -89,10 +89,10 @@ export default class Header extends Component {
           <Dropdown item text={this.nickname()}>
             <Dropdown.Menu >
             <Dropdown.Item  as={Button}
-                            onClick={() => this.goTo('/')}>Auctions</Dropdown.Item>
+                            onClick={() => this.goTo('/')}>{this.props.getTranslation('auctions')}</Dropdown.Item>
               {/* disabled={true} */}
               <Dropdown.Item as={Button}
-              onClick={this.logout.bind(this)}>Log Out</Dropdown.Item>
+              onClick={this.logout.bind(this)}>{this.props.getTranslation('logout')}</Dropdown.Item>
 
             </Dropdown.Menu>
           </Dropdown>

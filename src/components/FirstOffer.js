@@ -53,37 +53,37 @@ export default class FirstOffer extends Component {
                 )
             }
             {
-            isAuthenticated() && (
-                <div className="modal">
-                    <div className="content">
-                        {this.props.getTranslation('titleAutomatic')}
-                    </div>
-                    <br/>
-                    <div className="actions">
-                    <div className="content">
-                        <Button primary onClick={this.offer}>
-                            <h3>{this.props.getTranslation('offer')}</h3>
-                        </Button>
-                        </div>
-                        <br/>
-                        <div>
-                        <Input 
-                            fluid
-                            name="amount"
-                            onChange={this.handleChange}
-                            placeholder='Amount'
-                            error={false}
-                        />
-                        </div>
-                        <br/>
+                isAuthenticated() && (
+                    <div className="modal">
                         <div className="content">
-                        <Button color='green' onClick={this.firstOffer}>
-                            <h3>Realizar oferta con seguimiento automatico</h3>
-                        </Button>
+                            {this.props.getTranslation('titleAutomatic')}
                         </div>
                         <br/>
+                        <div className="actions">
+                        <div className="content">
+                            <Button primary onClick={this.offer}>
+                                <h3>{this.props.getTranslation('offer')}</h3>
+                            </Button>
+                            </div>
+                            <br/>
+                            <div>
+                            <Input 
+                                fluid
+                                name="amount"
+                                onChange={this.handleChange}
+                                placeholder={this.props.getTranslation('amountFirstOffer')}
+                                error={false}
+                            />
+                            </div>
+                            <br/>
+                            <div className="content">
+                            <Button color='green' onClick={this.firstOffer}>
+                                <h3>{this.props.getTranslation('automatic')}</h3>
+                            </Button>
+                            </div>
+                            <br/>
+                        </div>
                     </div>
-                </div>
                 )
             }
             </div>
