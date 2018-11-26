@@ -3,6 +3,11 @@ import {setItem} from '../services/LocalStorageService'
 import { Item, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
+const blue = {
+  color:'#140e63',
+  fontSize: '21px'
+}
+
 export default ({auction, getTranslation}) => (
     <Item >
       <Item.Image src={auction.photos}/>
