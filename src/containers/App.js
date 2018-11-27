@@ -40,7 +40,7 @@ class App extends Component {
     clearInterval(this.interval);
   }
 
-  getTranslation = key => this.props.t(key)
+  getTranslation = (key, values) => this.props.t(key, values)
 
   changeLanguage = lng => this.props.i18n.changeLanguage(lng)
 

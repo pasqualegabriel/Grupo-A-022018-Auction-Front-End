@@ -140,11 +140,11 @@ export default class App extends Component {
         return (
           <Table.Body>
             <Table.Row>
-              <Table.Cell>Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
+              <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
               <Table.Cell>
                 {/* <FirstOffer offer={this.offer} firstOffer={this.firstOffer} fO={this.fO}/> */}
                 <Button primary onClick={this.fO}>
-                  <h3>Realizar oferta</h3>
+                  <h3>{this.props.getTranslation('offer')}</h3>
                 </Button>
               </Table.Cell>
             </Table.Row>
@@ -154,10 +154,11 @@ export default class App extends Component {
         return (
           <Table.Body>
             <Table.Row>
-              <Table.Cell>Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
+              <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
+              {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
               <Table.Cell>
                 <Button primary onClick={this.offer}>
-                  <h3>Realizar oferta</h3>
+                  <h3>{this.props.getTranslation('offer')}</h3>
                 </Button>
               </Table.Cell>
             </Table.Row>
@@ -192,7 +193,7 @@ export default class App extends Component {
 
                 <Table.Header>
                   <Table.Row>
-                    <Table.HeaderCell>Ultimo tramo</Table.HeaderCell>
+                    <Table.HeaderCell>{this.props.getTranslation('last-stretch')}</Table.HeaderCell>
                     <Table.HeaderCell>
                     <Label color='teal'>
                       <h2>$ {auction.price}</h2>
@@ -237,7 +238,7 @@ export default class App extends Component {
                   <Table.Body key={b.id}>
                     <Table.Row>
                       <Table.Cell>{b.author}</Table.Cell>
-                      <Table.Cell>Tramo {i + 1}</Table.Cell>
+                      <Table.Cell>{this.props.getTranslation('stretch')} {i + 1}</Table.Cell>
                       <Table.Cell>$ {b.price}</Table.Cell>
                       <Table.Cell>{moment(b.publicationDate).calendar()}</Table.Cell>
                       {/* <Table.Cell>{moment(b.publicationDate).format('LT')}</Table.Cell> */}
@@ -246,7 +247,7 @@ export default class App extends Component {
                 )}
                   <Table.Body>
                     <Table.Row>
-                      <Table.Cell colSpan='5'>{bidders.length} postores en la subasta</Table.Cell>
+                      <Table.Cell colSpan='5'>{bidders.length} {this.props.getTranslation('bidders-auction')}</Table.Cell>
                     </Table.Row>
                   </Table.Body>
               </Table>

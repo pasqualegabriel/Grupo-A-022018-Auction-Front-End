@@ -55,6 +55,11 @@ class AuctionService {
         size
     }, config)
 
+    getPopularAuctions = (index, size) => axios.post(`${port}auction/popular`, {
+        index, 
+        size
+    }, config)
+
     getAuctionsToFinish = (index, size) => axios.post(`${port}auction/toFinish`, {
         index, 
         size
@@ -80,20 +85,91 @@ class AuctionService {
 export default AuctionService
 
 /*
+@GetMapping("/auction/popular")
+    public Auction recover(){return auctionService.popularAuction();}
+
+
+
     @GetMapping("/auction/recover/{id}")
+    public Auction recover(@PathVariable("id") long id ){
+        return auctionService.recoverById(id);
+    }
     @GetMapping("/auction/{emailAuthor}")
-    
+    public Auction recover(@PathVariable("emailAuthor") String emailAuthor ){
+        return auctionService.recover(emailAuthor);
+    }
+
+
     @PutMapping("/new/auction")
+    public Auction add(@RequestBody @Valid Auction anAuction){
+        return auctionService.create(anAuction);
+    }
+
     @PostMapping("/auctions")
+    public Page<Auction> all(@RequestBody @Valid RequestPage aPage){
+        return auctionService.recoverAll(aPage);
+    }
+
+
+
+    @PostMapping("/auctions/title_and_description_and_user_name")
+    public  Page<Auction> allByTitleAndDescriptionAndUserName(@RequestBody @Valid RequestPage aPage){
+        return auctionService.findAllByTitleLikeAndDescriptionLikeAndEmailAuthorLike(aPage);
+    }
+
     @PostMapping("/auctions/recentAuctions")
+    public  Page<Auction> recentAuctions(@RequestBody @Valid RequestPage aPage){
+        return auctionService.recoverAllOrderByPublicationDate(aPage);
+    }
+
+
     @PostMapping("/auction/title_and_description")
+    public Page<Auction> allByTitleAndDescription(@RequestBody @Valid RequestPage aPage){
+        return auctionService.recoverAllByTitleLikeAndDescriptionLike(aPage);
+    }
+
+
     @PostMapping("/auction/title")
+    public Page<Auction> allByTitle(@RequestBody @Valid RequestPage aPage){
+        return auctionService.recoverAllByTitleLike(aPage);
+    }
+
+
     @PostMapping("/auction/toFinish")
+    public Page<Auction> allToFinish(@RequestBody @Valid RequestPage aPage){
+        return auctionService.recoverAuctionsToFinish(aPage);
+    }
+
+
     @PostMapping("/auction/toFinishBetween")
+    public Page<Auction> allToFinishBetween(@RequestBody @Valid RequestPage aPage){
+        return auctionService.recoverAuctionsToFinishBetween(aPage);
+    }
+
     @PostMapping("/auction/update")
+    public Auction update(@RequestBody @Valid Auction anAuction){
+        return auctionService.update(anAuction);
+    }
+
+
     @PostMapping("/auction/{auctionId}/offer/{bidder}")
+    public Auction offer(@PathVariable("auctionId") long auctionId, @PathVariable("bidder") String bidder){
+        return auctionService.offer(auctionId, bidder);
+    }
+
     @PostMapping("/auction/first/offer/{auctionId}/{maxAmount}/{bidder}")
+    public Auction firstOffer(@PathVariable("auctionId") long auctionId,
+                              @PathVariable("maxAmount") long maxAmount,
+                              @PathVariable("bidder") String bidder){
+        return auctionService.firstOffer(auctionId, maxAmount, bidder);
+    }
+
+
 
     @DeleteMapping("/auction/delete/{id}")
+    public void delete(@PathVariable long id){
+        auctionService.delete(id);
+    }
+
 
 */

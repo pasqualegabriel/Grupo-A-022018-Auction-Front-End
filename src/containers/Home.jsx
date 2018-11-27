@@ -18,9 +18,12 @@ export default class Home extends Component {
 
   recentAuctions = (page, limit) => this.auctionService.getRecentAuctions(page, limit)
 
+  popularAuctions = (page, limit) => this.auctionService.getAuctionsToFinish(page, limit)
+  
   render() {
 
     const { isAuthenticated } = this.props.auth;
+    const { getTranslation: t } = this.props;
 
     return (
       <div>
@@ -32,10 +35,12 @@ export default class Home extends Component {
       {
         isAuthenticated() && (
           <div style={styles}>
-
-            <h2>Subastas por terminar</h2>
+            
+            <h2>{t('popular')}</h2>
+            <AuctionsList getAuctions={this.popularAuctions} getTranslation={this.props.getTranslation}/> 
+            <h2>{t('finish')}</h2>
             <AuctionsList getAuctions={this.auctionsToFinish} getTranslation={this.props.getTranslation}/> 
-            <h2>Ultimas publicadas</h2>
+            <h2>{t('published')}</h2>
             <AuctionsList getAuctions={this.recentAuctions} getTranslation={this.props.getTranslation}/> 
   
           </div>

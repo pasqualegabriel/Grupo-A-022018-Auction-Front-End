@@ -73,7 +73,7 @@ export default class Header extends Component {
         <Menu.Menu position='right'>
         
           <Menu.Item>
-            <Input action={{ type: 'submit', content: 'Go', onClick: this.onActionSearchAuction }}
+            <Input action={{ type: 'submit', content: this.props.getTranslation('go'), onClick: this.onActionSearchAuction }}
             placeholder={this.props.getTranslation('search-placeholder')} 
             onKeyPress={this.handleKeyPress} 
             value={this.state.search} onChange={this.handleChange}/>

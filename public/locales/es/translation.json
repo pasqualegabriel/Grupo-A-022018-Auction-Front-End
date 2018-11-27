@@ -17,5 +17,12 @@
   "title-search": "Titulo:",
   "login": "Iniciar sesión",
   "logout": "Cerrar sesión",
-  "auctions": "Subastas"
+  "auctions": "Subastas",
+  "stretch": "Tramo",
+  "last-stretch": "Último tramo",
+  "bidders-auction": "postores en la subasta",
+  "finish": "Subastas por terminar",
+  "published": "Últimas publicadas",
+  "popular": "Más populares",
+  "go": "Buscar"
 }

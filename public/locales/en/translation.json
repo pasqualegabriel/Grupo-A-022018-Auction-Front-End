@@ -17,5 +17,12 @@
   "title-search": "Title:",
   "login": "Log In",
   "logout": "Log Out",
-  "auctions": "Auctions"
+  "auctions": "Auctions",
+  "stretch": "Stretch",
+  "last-stretch": "Last stretch",
+  "bidders-auction": "bidders in the auction",
+  "finish": "Auctions to finish",
+  "published": "Last published",
+  "popular": "More popular",
+  "go": "Go"
 }
