@@ -8,7 +8,7 @@ const blue = {
   fontSize: '21px'
 }
 
-export default ({auction, getTranslation}) => (
+export default ({auction, translation}) => (
     <Item >
       <Item.Image src={auction.photos}/>
 
@@ -28,7 +28,7 @@ export default ({auction, getTranslation}) => (
             setItem('auction', auction)
             window.location.pathname = '/detail'
         }}>
-            {getTranslation('detail')}
+            {translation('detail')}
             <Icon name='right chevron' />
         </Button>
         </Item.Extra>

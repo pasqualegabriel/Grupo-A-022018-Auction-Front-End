@@ -8,7 +8,7 @@ export default ({auctions, getTranslation}) => {
         
         <Item.Group divided>
                 {auctions.map(anAuction => 
-            <Auction key={anAuction.id} auction={anAuction} getTranslation={getTranslation}/>
+            <Auction key={anAuction.id} auction={anAuction} translation={getTranslation}/>
         )}
         </Item.Group>
     )

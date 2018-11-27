@@ -34,9 +34,9 @@ export default class Home extends Component {
           <div style={styles}>
 
             <h2>Subastas por terminar</h2>
-            <AuctionsList getAuctions={this.auctionsToFinish}/> 
+            <AuctionsList getAuctions={this.auctionsToFinish} getTranslation={this.props.getTranslation}/> 
             <h2>Ultimas publicadas</h2>
-            <AuctionsList getAuctions={this.recentAuctions}/> 
+            <AuctionsList getAuctions={this.recentAuctions} getTranslation={this.props.getTranslation}/> 
   
           </div>
         )
