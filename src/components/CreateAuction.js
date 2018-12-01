@@ -4,6 +4,7 @@ import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import Login from '../containers/Login'
 import moment from 'moment'
+import HeaderM from './Header'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const styles = {
@@ -77,6 +78,11 @@ export default class CreateAuction extends Component {
       {
         isAuthenticated() && (
           <div>
+
+            <HeaderM  auth={this.props.auth}
+                      getTranslation={this.props.getTranslation} 
+                      changeLanguage={this.props.changeLanguage}
+                      getLanguage={this.props.getLanguage}/> 
             <div className='login-form'>
             <style>{`
               body > div,

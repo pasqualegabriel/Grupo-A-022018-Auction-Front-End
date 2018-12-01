@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Input } from 'semantic-ui-react'
 import AuctionService from '../services/AuctionService'
 import Login from '../containers/Login'
+import HeaderM from './Header'
 
 export default class FirstOffer extends Component {
 
@@ -55,6 +56,11 @@ export default class FirstOffer extends Component {
             {
                 isAuthenticated() && (
                     <div className="modal">
+
+                    <HeaderM  auth={this.props.auth}
+                              getTranslation={this.props.getTranslation} 
+                              changeLanguage={this.props.changeLanguage}
+                              getLanguage={this.props.getLanguage}/> 
                         <div className="content">
                             {this.props.getTranslation('titleAutomatic')}
                         </div>

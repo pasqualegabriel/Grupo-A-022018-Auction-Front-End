@@ -5,6 +5,7 @@ import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
 import AuctionsList from './AuctionsList'
+import HeaderM from './Header'
 
 const container = {
   width: 'available',
@@ -188,6 +189,11 @@ export default class App extends Component {
       {
         isAuthenticated() && (
           <div style={container}>
+
+            <HeaderM  auth={this.props.auth}
+                      getTranslation={this.props.getTranslation} 
+                      changeLanguage={this.props.changeLanguage}
+                      getLanguage={this.props.getLanguage}/> 
             <div style={leftpane}>
               <div style={titleS}>
                 <h1>{auction.title}</h1>

@@ -4,6 +4,7 @@ import ListAuction from './ListAuction'
 import Pagination from 'semantic-ui-react-button-pagination'
 import Login from '../containers/Login'
 import { Table, Input, Button, Dropdown } from 'semantic-ui-react'
+import HeaderM from './Header'
 
 const container = {
   width: 'available',
@@ -108,6 +109,12 @@ export default class Home extends Component {
       {
         isAuthenticated() && (
           <div style={container}>
+
+            <HeaderM  auth={this.props.auth}
+                      getTranslation={this.props.getTranslation} 
+                      changeLanguage={this.props.changeLanguage}
+                      getLanguage={this.props.getLanguage}/> 
+
             <div style={leftpane}>
             <Table celled textAlign='center' >
 

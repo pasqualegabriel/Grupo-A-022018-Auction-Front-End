@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import '../App.css'
 import { Route, Router } from 'react-router-dom'
 import { withNamespaces } from 'react-i18next'
-import HeaderM from '../components/Header'
 import AuctionDetails from '../components/AuctionDetails'
 import CreateAuction from '../components/CreateAuction'
 import AuctionsSearch from '../components/AuctionsSearch'
@@ -39,21 +38,21 @@ class App extends Component {
     return (
         <div>
             {/* {
-              auth.isAuthenticated() && ( */}
+              auth.isAuthenticated() && ( 
                 <HeaderM  auth={auth}
                           getTranslation={this.getTranslation} 
                           changeLanguage={this.changeLanguage}
                           getLanguage={this.getLanguage}/> 
-              {/* )
+              )
             } */}
             <Router history={history}>
             <div>
-              <Route exact path="/home"            render={(props) => <Home {...props} auth={auth} getTranslation={this.getTranslation} />} />
+              <Route exact path="/home"            render={(props) => <Home {...props} auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
               <Route exact path="/"                render={  ()    => <Login           auth={auth} getTranslation={this.getTranslation} />} />
-              <Route exact path="/auction"         render={  ()    => <CreateAuction   auth={auth} getTranslation={this.getTranslation} />} />
-              <Route exact path="/auctions/search" render={  ()    => <AuctionsSearch  auth={auth} getTranslation={this.getTranslation} />} />
-              <Route exact path="/detail"          render={  ()    => <AuctionDetails  auth={auth} getTranslation={this.getTranslation} />} />
-              <Route exact path="/firstOffer"      render={  ()    => <FirstOffer      auth={auth} getTranslation={this.getTranslation} />} />
+              <Route exact path="/auction"         render={  ()    => <CreateAuction   auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
+              <Route exact path="/auctions/search" render={  ()    => <AuctionsSearch  auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
+              <Route exact path="/detail"          render={  ()    => <AuctionDetails  auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
+              <Route exact path="/firstOffer"      render={  ()    => <FirstOffer      auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
               <Route path="/callback"              render={(props) => {
                 handleAuthentication(props);
                 return <Callback {...props} /> 

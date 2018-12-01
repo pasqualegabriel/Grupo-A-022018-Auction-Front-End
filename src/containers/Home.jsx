@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import AuctionService from '../services/AuctionService'
 import AuctionsList from '../components/AuctionsList'
 import Login from './Login'
+import HeaderM from '../components/Header'
 
 const styles = {
   textAlign: 'center'
@@ -35,6 +36,11 @@ export default class Home extends Component {
       {
         isAuthenticated() && (
           <div style={styles}>
+
+            <HeaderM  auth={this.props.auth}
+                      getTranslation={this.props.getTranslation} 
+                      changeLanguage={this.props.changeLanguage}
+                      getLanguage={this.props.getLanguage}/> 
             
             <h2>{t('popular')}</h2>
             <AuctionsList getAuctions={this.popularAuctions} getTranslation={this.props.getTranslation}/> 
