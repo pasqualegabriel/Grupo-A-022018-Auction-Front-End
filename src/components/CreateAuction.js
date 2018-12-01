@@ -115,6 +115,7 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Title'
                       defaultValue={this.state.title}
+                      error={this.state.title.length < 10 || this.state.title.length > 50}
                     />
     
                     <Form.Input
@@ -125,6 +126,7 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Description'
                       defaultValue={this.state.description}
+                      error={false}
                     />
     
                     <Form.Input

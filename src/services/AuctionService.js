@@ -37,6 +37,12 @@ class AuctionService {
         }
     }
 
+    getEmail = () => {
+        const profile = JSON.parse(localStorage.getItem('email'))
+        const nick = profile.nickname 
+        return `${nick}@gmail.com`
+    }
+
     postToken = () => {
         axios.post(`https://f-na-a.auth0.com/oauth/token`,auth, configAuth)
         .then(t => {
@@ -46,21 +52,25 @@ class AuctionService {
     } 
 
     getAuctions = (index, size) => axios.post(`${port}auctions`, {
+        email: this.getEmail(),
         index, 
         size
     }, config)
 
     getRecentAuctions = (index, size) => axios.post(`${port}auctions/recentAuctions`, {
+        email: this.getEmail(),
         index, 
         size
     }, config)
 
     getPopularAuctions = (index, size) => axios.post(`${port}auctions/popular`, {
+        email: this.getEmail(),
         index, 
         size
     }, config)
 
     getAuctionsToFinish = (index, size) => axios.post(`${port}auction/toFinish`, {
+        email: this.getEmail(),
         index, 
         size
     }, config)
@@ -69,6 +79,7 @@ class AuctionService {
         title, 
         description, 
         userName,
+        email: this.getEmail(),
         index,
         size
     }, config)
@@ -83,6 +94,7 @@ class AuctionService {
 
     getAuctionsUsers = (usersName, index, size) => axios.post(`${port}auctions/users/participate`, {
         usersName,
+        email: this.getEmail(),
         index, 
         size
     }, config)
