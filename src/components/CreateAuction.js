@@ -90,7 +90,7 @@ export default class CreateAuction extends Component {
                 
                 <Form size='large' >
                   <Segment stacked >
-                  <Header as='h2' color='dark blue' textAlign='center'>
+                  <Header as='h2' color='blue' textAlign='center'>
                     Create Auction
                   </Header>
     
@@ -171,7 +171,7 @@ export default class CreateAuction extends Component {
                       placeholder='Add Photo Link'
                     />
     
-                    <Button color='dark blue' onClick={this.create} fluid size='large' >
+                    <Button color='blue' onClick={this.create} fluid size='large' >
                       Create
                     </Button>
                   </Segment>

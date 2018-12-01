@@ -79,6 +79,12 @@ class AuctionService {
 
     offer = (auctionId, bidder) => axios.post(`${port}auction/${auctionId}/offer/${bidder}`, {}, config)
 
+    getAuctionsUsers = (usersName, index, size) => axios.post(`${port}auctions/users/participate`, {
+        usersName,
+        index, 
+        size
+    }, config)
+
     firstOffer = (auctionId, bidder, maxAmount) => 
         axios.post(`${port}auction/first/offer/${auctionId}/${maxAmount}/${bidder}`, {}, config)
 }

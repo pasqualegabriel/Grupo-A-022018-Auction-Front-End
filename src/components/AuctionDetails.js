@@ -4,6 +4,7 @@ import { Table, Button, Label } from 'semantic-ui-react'
 import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
+import AuctionsList from './AuctionsList'
 
 const container = {
   width: 'available',
@@ -44,7 +45,9 @@ export default class App extends Component {
     this.state = { 
       auction: {},
       bidders: [],
-      res: moment().format()
+      res: moment().format(),
+      auctions: [],
+      usersName: this.getUsersNames()
     }
   }
 
@@ -95,12 +98,23 @@ export default class App extends Component {
                     ? `Comienza en ${this.convert(diff2)}` 
                     : `Finaliza en ${this.convert(diff)}`
       // `Finaliza ${fd.fromNow()}`
+      const usersName2 = [auction.emailAuthor, auction.emailAuthor, auction.emailAuthor]
+      const authors = bidders.map(b => b.author)
+      const usersName = authors.length < 3 ? authors.concat(usersName2) : authors
       this.setState({
         auction,
         bidders,
-        res
+        res,
+        usersName
       })
     }).catch(err => console.log(err))
+  }
+
+  getUsersNames = () => {
+    const auction = getItem('auction')
+    const authors = auction.bidders.map(b => b.author)
+    const usersName = authors.length < 3 ? authors.concat(['', '', '']) : authors
+    return usersName
   }
 
   getAuthor = () => {
@@ -127,6 +141,8 @@ export default class App extends Component {
     localStorage.setItem('firstOffer', JSON.stringify({ id: this.state.auction.id }))
     window.location.pathname = '/firstOffer'
   }
+
+  getAuctionsUsers = (page, limit) => this.auctionService.getAuctionsUsers(this.state.usersName, page, limit)
 
   edit = () => {}
 
@@ -175,9 +191,10 @@ export default class App extends Component {
             <div style={leftpane}>
               <div style={titleS}>
                 <h1>{auction.title}</h1>
-                
-                <img alt='' style={image} src={auction.photos}/>
                 <h3>{auction.description}</h3>
+                <img alt='' style={image} src={auction.photos}/>
+                <h4>{this.props.getTranslation('other-users')}</h4>
+                <AuctionsList getAuctions={this.getAuctionsUsers} getTranslation={this.props.getTranslation}/> 
               </div>
             </div>
             <div style={middlepane}>
