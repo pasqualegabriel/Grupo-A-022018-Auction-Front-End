@@ -145,7 +145,47 @@ export default class App extends Component {
 
   getAuctionsUsers = (page, limit) => this.auctionService.getAuctionsUsers(this.state.usersName, page, limit)
 
-  edit = () => {}
+  edit = () => {
+    const { auction } = this.state
+    const anAuction =   {
+      startDate: auction.publicationDate,
+      endDate: auction.finishDate,
+      description: auction.description,
+      title: auction.title,
+      price: auction.price,
+      address: auction.address,
+      photo: auction.photos,
+      showTitle: 'Update Auction',
+      confirm: 'Update',
+      is: 'update'
+    }
+    localStorage.setItem('auction-create', JSON.stringify(anAuction))
+    window.location.pathname = '/auction'
+  }
+
+  /*
+--auction--
+automaticOfferAmount: 200
+bidders: (3) [{…}, {…}, {…}]
+currentState: "COMPLETED"
+description: "The goddess Athena tasks Kratos with killing Ares."
+emailAuthor: "user@gmail.com"
+finishDate: "2018-09-28T14:13:30"
+finished: true
+id: 76
+inProgress: false
+initialFinishDate: "2018-09-28T14:13:30"
+photos: null
+price: 100
+publicationDate: "2018-09-25T14:13:30"
+title: "PS4 God of War"
+--offer--
+auction: null
+author: "user2@gmail.com"
+id: 77
+price: 200
+publicationDate: "2018-09-28T14:13:30
+*/
 
   render() {
 

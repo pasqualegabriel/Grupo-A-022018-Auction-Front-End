@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Dropdown, Menu, Input, Image, Button } from 'semantic-ui-react'
+import moment from 'moment'
 
 export default class Header extends Component {
 
@@ -54,6 +55,23 @@ export default class Header extends Component {
     return nick
   }
 
+  createAuction = () => {
+    const anAuction =   {
+      startDate: moment(),
+      endDate: moment(), 
+      description: '',
+      title: '',
+      price: '',
+      address: '',
+      photo: '',
+      showTitle: 'Create Auction',
+      confirm: 'Create',
+      is: 'create'
+    }
+    localStorage.setItem('auction-create', JSON.stringify(anAuction))
+    window.location.pathname = '/auction'
+  }
+
   render() {
 
     return (
@@ -67,7 +85,7 @@ export default class Header extends Component {
                     onClick ={() => this.goTo('/home')}
                     name    ={this.props.getTranslation('home')}/>
         <Menu.Item  as      ={Button}  
-                    onClick ={() => this.goTo('/auction')}
+                    onClick ={this.createAuction}
                     name    ={this.props.getTranslation('auction')}/>
 
         <Menu.Menu position='right'>

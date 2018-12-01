@@ -3,8 +3,8 @@ import AuctionService from '../services/AuctionService'
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import Login from '../containers/Login'
-import moment from 'moment'
 import HeaderM from './Header'
+import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const styles = {
@@ -25,14 +25,16 @@ export default class CreateAuction extends Component {
     super(props);
     this.auctionService = new AuctionService()
     this.state = {
-      search: '',
-      startDate: moment(),
-      endDate: moment(), 
-      description: '',
-      title: '',
-      price: 0,
-      address: '',
-      photo: ''
+      startDate: moment(JSON.parse(localStorage.getItem('auction-create')).startDate),
+      endDate: moment(JSON.parse(localStorage.getItem('auction-create')).endDate),
+      description: JSON.parse(localStorage.getItem('auction-create')).description,
+      title: JSON.parse(localStorage.getItem('auction-create')).title,
+      price: JSON.parse(localStorage.getItem('auction-create')).price,
+      address: JSON.parse(localStorage.getItem('auction-create')).address,
+      photo: JSON.parse(localStorage.getItem('auction-create')).photo,
+      showTitle: JSON.parse(localStorage.getItem('auction-create')).showTitle,
+      confirm: JSON.parse(localStorage.getItem('auction-create')).confirm,
+      is: JSON.parse(localStorage.getItem('auction-create')).is
     }
   }
 
@@ -48,7 +50,7 @@ export default class CreateAuction extends Component {
     this.setState({ [name]: value })
   }
 
-  create = event => {
+  create = () => {
     const profile = JSON.parse(localStorage.getItem('email'))
     const nick = profile.nickname
     const newAuction = {
@@ -61,7 +63,12 @@ export default class CreateAuction extends Component {
       address: this.state.address,
       photos: this.state.photo
     }
-    this.auctionService.auction(newAuction).then(res => console.log(res)).catch(err => console.log(err))
+    if (this.state.is === 'create') {
+      this.auctionService.auction(newAuction).then(res => console.log(res)).catch(err => console.log(err))
+    } else {
+      this.auctionService.update(newAuction).then(res => console.log(res)).catch(err => console.log(err))
+    }
+    window.location.pathname = '/home'
   }
 
   render() {
@@ -97,7 +104,7 @@ export default class CreateAuction extends Component {
                 <Form size='large' >
                   <Segment stacked >
                   <Header as='h2' color='blue' textAlign='center'>
-                    Create Auction
+                    {this.state.showTitle}
                   </Header>
     
                     <Form.Input
@@ -107,6 +114,7 @@ export default class CreateAuction extends Component {
                       icon='tags'
                       iconPosition='left'
                       placeholder='Title'
+                      defaultValue={this.state.title}
                     />
     
                     <Form.Input
@@ -116,6 +124,7 @@ export default class CreateAuction extends Component {
                       icon='content'
                       iconPosition='left'
                       placeholder='Description'
+                      defaultValue={this.state.description}
                     />
     
                     <Form.Input
@@ -125,6 +134,7 @@ export default class CreateAuction extends Component {
                       icon='money bill alternate'
                       iconPosition='left'
                       placeholder='Initial Price'
+                      defaultValue={this.state.price}
                       error={false}
                     />
     
@@ -166,6 +176,7 @@ export default class CreateAuction extends Component {
                       icon='building outline'
                       iconPosition='left'
                       placeholder='Address'
+                      defaultValue={this.state.address}
                     />
     
                     <Form.Input
@@ -175,10 +186,11 @@ export default class CreateAuction extends Component {
                       icon='photo'
                       iconPosition='left'
                       placeholder='Add Photo Link'
+                      defaultValue={this.state.photo}
                     />
     
                     <Button color='blue' onClick={this.create} fluid size='large' >
-                      Create
+                      {this.state.confirm}
                     </Button>
                   </Segment>
                 </Form>

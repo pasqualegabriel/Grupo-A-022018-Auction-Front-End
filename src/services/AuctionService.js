@@ -75,6 +75,8 @@ class AuctionService {
 
     auction = anAuction => axios.put(`${port}new/auction`, anAuction, config)
 
+    update = anAuction => axios.post(`${port}auction/update`, anAuction, config)
+
     getAuction = id => axios.get(`${port}auction/recover/${id}`, config)
 
     offer = (auctionId, bidder) => axios.post(`${port}auction/${auctionId}/offer/${bidder}`, {}, config)
