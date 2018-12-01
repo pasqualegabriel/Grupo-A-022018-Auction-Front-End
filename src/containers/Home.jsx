@@ -13,12 +13,12 @@ export default class Home extends Component {
     super(props)
     this.auctionService = new AuctionService()
   }
-
+  
   auctionsToFinish = (page, limit) => this.auctionService.getAuctionsToFinish(page, limit)
 
   recentAuctions = (page, limit) => this.auctionService.getRecentAuctions(page, limit)
 
-  popularAuctions = (page, limit) => this.auctionService.getAuctionsToFinish(page, limit)
+  popularAuctions = (page, limit) => this.auctionService.getPopularAuctions(page, limit)
   
   render() {
 

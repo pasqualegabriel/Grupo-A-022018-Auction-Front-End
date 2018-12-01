@@ -28,18 +28,6 @@ const handleAuthentication = ({location}) => {
 
 class App extends Component {
 
-  tick = () => {
-
-  }
-
-  componentDidMount = () => {
-    this.interval = setInterval(() => this.tick(), 2000);
-  }
-
-  componentWillUnmount = () => {
-    clearInterval(this.interval);
-  }
-
   getTranslation = (key, values) => this.props.t(key, values)
 
   changeLanguage = lng => this.props.i18n.changeLanguage(lng)
@@ -50,11 +38,14 @@ class App extends Component {
 
     return (
         <div>
-          <HeaderM  auth={auth}
-                    getTranslation={this.getTranslation} 
-                    changeLanguage={this.changeLanguage}
-                    getLanguage={this.getLanguage}/> 
-
+            {/* {
+              auth.isAuthenticated() && ( */}
+                <HeaderM  auth={auth}
+                          getTranslation={this.getTranslation} 
+                          changeLanguage={this.changeLanguage}
+                          getLanguage={this.getLanguage}/> 
+              {/* )
+            } */}
             <Router history={history}>
             <div>
               <Route exact path="/home"            render={(props) => <Home {...props} auth={auth} getTranslation={this.getTranslation} />} />

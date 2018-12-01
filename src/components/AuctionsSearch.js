@@ -38,7 +38,8 @@ export default class Home extends Component {
       limit: 5,
       totalElements: 100,
       title: localStorage.getItem('search') || '',
-      description: ''
+      description: '',
+      email: ''
     }
   }
 
@@ -56,13 +57,13 @@ export default class Home extends Component {
 
   componentDidMount = () => {
     console.log(this.props.title)
-    this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.page)
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.email, this.state.page)
   }
 
   handleClick = offset => {
     const page = offset / this.state.limit
     this.setState({offset, page})
-    this.setAuctionsTitleDescription(this.state.title, this.state.description, page)
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.email, page)
   }
 
   handleChange = (ev, {name, value}) => {
@@ -71,7 +72,7 @@ export default class Home extends Component {
 
   setLimit = (ev, {name, value}) => {
     this.setState({limit: parseInt(value), page: 0})
-    this.auctionService.getAuctionsTitleDescription(this.state.title, this.state.description, 0, parseInt(value))
+    this.auctionService.getAuctionsTitleDescriptionEmail(this.state.title, this.state.description, this.state.email, 0, parseInt(value))
     .then(res => {
       const auctions = res.data.content
       const totalElements = res.data.totalElements
@@ -79,8 +80,8 @@ export default class Home extends Component {
     }).catch(err => console.log(err))
   }
 
-  setAuctionsTitleDescription = (title, description, page) => {
-    this.auctionService.getAuctionsTitleDescription(title, description, page, this.state.limit)
+  setAuctionsTitleDescription = (title, description, email, page) => {
+    this.auctionService.getAuctionsTitleDescriptionEmail(title, description, email, page, this.state.limit)
     .then(res => {
       const auctions = res.data.content
       const totalElements = res.data.totalElements
@@ -90,7 +91,7 @@ export default class Home extends Component {
 
   search = () => {
     this.setState({page:0})
-    this.setAuctionsTitleDescription(this.state.title, this.state.description, 0)
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.email, 0)
   }
 
   render() {
@@ -156,6 +157,23 @@ export default class Home extends Component {
                       onChange={this.handleChange}
                       placeholder='Description'
                       defaultValue={this.state.description}
+                      error={false}
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
+
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell>Email</Table.Cell>
+                  <Table.Cell>
+                    <Input 
+                      fluid
+                      size='large'
+                      name="email"
+                      onChange={this.handleChange}
+                      placeholder='Email'
+                      defaultValue={this.state.email}
                       error={false}
                     />
                   </Table.Cell>

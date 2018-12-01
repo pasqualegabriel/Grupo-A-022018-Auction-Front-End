@@ -55,7 +55,7 @@ class AuctionService {
         size
     }, config)
 
-    getPopularAuctions = (index, size) => axios.post(`${port}auction/popular`, {
+    getPopularAuctions = (index, size) => axios.post(`${port}auctions/popular`, {
         index, 
         size
     }, config)
@@ -65,9 +65,10 @@ class AuctionService {
         size
     }, config)
 
-    getAuctionsTitleDescription = (title, description, index, size) => axios.post(`${port}auction/title_and_description` , {
+    getAuctionsTitleDescriptionEmail = (title, description, userName, index, size) => axios.post(`${port}auctions/title_and_description_and_user_name` , {
         title, 
         description, 
+        userName,
         index,
         size
     }, config)

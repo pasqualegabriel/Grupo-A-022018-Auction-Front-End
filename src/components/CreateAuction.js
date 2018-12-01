@@ -86,11 +86,11 @@ export default class CreateAuction extends Component {
               }
             `}</style>
             <Grid textAlign='center' style={styles.loginStyle} verticalAlign='middle' >
-              <Grid.Column style={{ maxWidth: 500 }}>
+              <Grid.Column style={{ maxWidth: 500, backgroundColor: '#e2e2e2' }}>
                 
                 <Form size='large' >
-                  <Segment stacked>
-                  <Header as='h2' color='teal' textAlign='center'>
+                  <Segment stacked >
+                  <Header as='h2' color='dark blue' textAlign='center'>
                     Create Auction
                   </Header>
     
@@ -152,6 +152,15 @@ export default class CreateAuction extends Component {
                         />
                       </div>
                     </Form.Group>
+
+                    <Form.Input
+                      fluid
+                      name="address"
+                      onChange={this.handleChange}
+                      icon='building outline'
+                      iconPosition='left'
+                      placeholder='Address'
+                    />
     
                     <Form.Input
                       fluid
@@ -162,7 +171,7 @@ export default class CreateAuction extends Component {
                       placeholder='Add Photo Link'
                     />
     
-                    <Button color='teal' onClick={this.create} fluid size='large' >
+                    <Button color='dark blue' onClick={this.create} fluid size='large' >
                       Create
                     </Button>
                   </Segment>
