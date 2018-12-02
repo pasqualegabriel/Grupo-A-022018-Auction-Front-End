@@ -29,7 +29,11 @@ class App extends Component {
 
   getTranslation = (key, values) => this.props.t(key, values)
 
-  changeLanguage = lng => this.props.i18n.changeLanguage(lng)
+  changeLanguage = lng => {
+    this.props.i18n.changeLanguage(lng)
+    const url1 = window.location.pathname
+    window.location.pathname = url1
+  }
 
   getLanguage = () => this.props.lng
 
