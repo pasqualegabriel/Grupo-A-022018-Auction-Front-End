@@ -25,6 +25,7 @@ export default class CreateAuction extends Component {
     super(props);
     this.auctionService = new AuctionService()
     this.state = {
+      id: JSON.parse(localStorage.getItem('auction-create')).id,
       startDate: moment(JSON.parse(localStorage.getItem('auction-create')).startDate),
       endDate: moment(JSON.parse(localStorage.getItem('auction-create')).endDate),
       description: JSON.parse(localStorage.getItem('auction-create')).description,
@@ -52,7 +53,7 @@ export default class CreateAuction extends Component {
 
   create = () => {
     const profile = JSON.parse(localStorage.getItem('email'))
-    const nick = profile.nickname
+    const nick = profile ? profile.nickname : ''
     const newAuction = {
       emailAuthor: `${nick}@gmail.com`,
       publicationDate: this.state.startDate,
@@ -65,7 +66,9 @@ export default class CreateAuction extends Component {
     }
     if (this.state.is === 'create') {
       this.auctionService.auction(newAuction).then(res => console.log(res)).catch(err => console.log(err))
-    } else {
+    } 
+    if (this.state.is === 'update') { 
+      newAuction.id = this.state.id
       this.auctionService.update(newAuction).then(res => console.log(res)).catch(err => console.log(err))
     }
     window.location.pathname = '/home'
@@ -126,7 +129,7 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Description'
                       defaultValue={this.state.description}
-                      error={false}
+                      error={this.state.description.length < 10 || this.state.description.length > 100}
                     />
     
                     <Form.Input
@@ -137,7 +140,7 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Initial Price'
                       defaultValue={this.state.price}
-                      error={false}
+                      error={this.state.price === '' || (!/^([0-9])*$/.test(this.state.price))}
                     />
     
                     <Form.Group widths='equal'>

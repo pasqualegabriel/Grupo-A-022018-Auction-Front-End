@@ -17,7 +17,7 @@ export default class FirstOffer extends Component {
     offer = () => {
         const id = JSON.parse(localStorage.getItem('firstOffer')).id
         const profile = JSON.parse(localStorage.getItem('email'))
-        const nick = profile.nickname
+        const nick = profile ? profile.nickname : ''
         this.auctionService.offer(id, `${nick}@gmail.com`)
             .then(() => window.location.pathname = '/detail')
             .catch(err => console.log(err))
@@ -26,7 +26,7 @@ export default class FirstOffer extends Component {
     firstOffer = () => {
         const id = JSON.parse(localStorage.getItem('firstOffer')).id
         const profile = JSON.parse(localStorage.getItem('email'))
-        const nick = profile.nickname
+        const nick = profile ? profile.nickname : ''
         this.auctionService.firstOffer(id, `${nick}@gmail.com`, this.state.amount)
             .then(() => window.location.pathname = '/detail')
             .catch(err => console.log(err))

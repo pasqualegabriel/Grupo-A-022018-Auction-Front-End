@@ -46,6 +46,7 @@ export default class App extends Component {
     this.state = { 
       auction: {},
       bidders: [],
+      firstBidders: [],
       res: moment().format(),
       auctions: [],
       usersName: this.getUsersNames()
@@ -89,6 +90,7 @@ export default class App extends Component {
       const now = moment()
       const auction = result.data
       const bidders = auction.bidders
+      const firstBidders = auction.firstBidders
       const pd = moment(auction.publicationDate)
       const fd = moment(auction.finishDate)
       const diff = fd.diff(now)
@@ -105,6 +107,7 @@ export default class App extends Component {
       this.setState({
         auction,
         bidders,
+        firstBidders,
         res,
         usersName
       })
@@ -120,7 +123,7 @@ export default class App extends Component {
 
   getAuthor = () => {
     const profile = JSON.parse(localStorage.getItem('email'))
-    const nick = profile.nickname 
+    const nick = profile ? profile.nickname : ''
     return `${nick}@gmail.com`
   }
 
@@ -148,6 +151,7 @@ export default class App extends Component {
   edit = () => {
     const { auction } = this.state
     const anAuction =   {
+      id: auction.id,
       startDate: auction.publicationDate,
       endDate: auction.finishDate,
       description: auction.description,

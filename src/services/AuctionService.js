@@ -39,7 +39,7 @@ class AuctionService {
 
     getEmail = () => {
         const profile = JSON.parse(localStorage.getItem('email'))
-        const nick = profile.nickname 
+        const nick = profile ? profile.nickname : ''
         return `${nick}@gmail.com`
     }
 

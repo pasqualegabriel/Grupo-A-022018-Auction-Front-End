@@ -31,6 +31,8 @@ export default class Auth {
 
   handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
+      this.getEmail(authResult.accessToken)
+      console.log('set email')
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
         history.replace('/home');
