@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { getItem } from '../services/LocalStorageService'
-import { Table, Button, Label } from 'semantic-ui-react'
+import { Table, Button, Label, Confirm, Input } from 'semantic-ui-react'
 import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
@@ -51,9 +51,15 @@ export default class App extends Component {
       firstBidders: [],
       res: moment().format(),
       auctions: [],
-      usersName: this.getUsersNames()
+      usersName: this.getUsersNames(),
+      open: false,
+      amount: ''
     }
   }
+
+  show = () => this.setState({ open: true })
+  handleConfirm = () => this.setState({ open: false })
+  handleCancel = () => this.setState({ open: false })
 
   tick = () => {
     this.setAuction()
@@ -159,13 +165,19 @@ export default class App extends Component {
   offer = () => {
     const { id } = this.state.auction;
     this.auctionService.offer(id, this.getAuthor())
-      .then(() => this.setAuction())
-      .catch(err => console.log(err))
+      .then(() => {
+        this.setAuction()
+        this.handleCancel()
+      })
+      .catch(err => {
+        this.handleCancel()
+        this.notificationRegisterError('Alert', err.response.data.message)
+      })
   }
 
-  firstOffer = amount => {
+  firstOffer = () => {
     const { id } = this.state.auction
-    this.auctionService.firstOffer(id, this.getAuthor(), amount)
+    this.auctionService.firstOffer(id, this.getAuthor(), parseInt(this.state.amount))
       .then(() => this.setAuction())
       .catch(err => console.log(err))
   }
@@ -173,6 +185,10 @@ export default class App extends Component {
   fO = () => {
     localStorage.setItem('firstOffer', JSON.stringify({ id: this.state.auction.id }))
     window.location.pathname = '/firstOffer'
+  }
+
+  handleChange2 = (ev, {name, value}) => {
+    this.setState({ [name]: value })
   }
 
   getAuctionsUsers = (page, limit) => this.auctionService.getAuctionsUsers(this.state.usersName, page, limit)
@@ -196,34 +212,20 @@ export default class App extends Component {
     window.location.pathname = '/auction'
   }
 
-  // addNotification = (title, message, type) => {
-  //   this.notificationDOMRef.current.addNotification({
-  //     title,
-  //     message,
-  //     type, //"success"
-  //     insert: "top",
-  //     container: "top-right",
-  //     animationIn: ["animated", "fadeIn"],
-  //     animationOut: ["animated", "fadeOut"],
-  //     dismiss: { duration: 2000 },
-  //     dismissable: { click: true }
-  //   });
-  // }
-
   render() {
 
-    const { auction, bidders, firstBidders } = this.state;
+    const { auction, bidders, firstBidders, open } = this.state;
     const { isAuthenticated } = this.props.auth;
 
-    const AutomaticOffer = () => { 
+    const AutomaticOffer1 = () => { 
       if(!firstBidders.some(b => b.author === this.getAuthor())) {
-        return (
+        return ( 
           <Table.Body>
             <Table.Row>
               <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
               <Table.Cell>
                 {/* <FirstOffer offer={this.offer} firstOffer={this.firstOffer} fO={this.fO}/> */}
-                <Button primary onClick={this.fO}>
+                <Button primary onClick={this.offer}>
                   <h3>{this.props.getTranslation('offer')}</h3>
                 </Button>
               </Table.Cell>
@@ -237,9 +239,12 @@ export default class App extends Component {
               <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
               {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
               <Table.Cell>
-                <Button primary onClick={this.offer}>
+                {/* <Button primary onClick={this.offer}>
                   <h3>{this.props.getTranslation('offer')}</h3>
-                </Button>
+                </Button> */}
+
+                <Button primary onClick={this.show}>{this.props.getTranslation('offer')}</Button>
+                <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
               </Table.Cell>
             </Table.Row>
           </Table.Body>
@@ -270,11 +275,11 @@ export default class App extends Component {
             <div style={middlepane}>
             <Table celled textAlign='center' >
               <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell><h3>{this.state.res}</h3> </Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-              </Table>
+                <Table.Row>
+                  <Table.HeaderCell><h3>{this.state.res}</h3> </Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+            </Table>
 
               <Table celled textAlign='center' >
 
@@ -293,7 +298,42 @@ export default class App extends Component {
                   moment(this.state.auction.publicationDate) <= moment() &&
                   moment(this.state.auction.finishDate) >= moment() &&
                   this.state.auction.emailAuthor !== this.getAuthor() && (
-                    <AutomaticOffer/>
+                    <AutomaticOffer1/>
+                  )
+                }
+
+                {
+                  (!firstBidders.some(b => b.author === this.getAuthor())) && (
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.Cell>input</Table.Cell>
+                      {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
+                      <Table.Cell>
+                      <Input 
+                          fluid
+                          name="amount"
+                          onChange={this.handleChange2}
+                          placeholder={this.props.getTranslation('amountFirstOffer')}
+                          error={false}
+                      />
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+                  )
+                }
+
+                {
+                  (!firstBidders.some(b => b.author === this.getAuthor())) && (
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.Cell>first offer</Table.Cell>
+                      {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
+                      <Table.Cell>
+                        <Button primary onClick={this.firstOffer}>{this.props.getTranslation('offer')}</Button>
+                        <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
+                      </Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
                   )
                 }
 
