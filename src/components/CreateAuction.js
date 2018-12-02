@@ -40,15 +40,13 @@ export default class CreateAuction extends Component {
       photo: JSON.parse(localStorage.getItem('auction-create')).photo,
       showTitle: JSON.parse(localStorage.getItem('auction-create')).showTitle,
       confirm: JSON.parse(localStorage.getItem('auction-create')).confirm,
-      is: JSON.parse(localStorage.getItem('auction-create')).is,
-      startDate1: moment(JSON.parse(localStorage.getItem('auction-create')).startDate).subtract(1, 'days')
+      is: JSON.parse(localStorage.getItem('auction-create')).is
     }
   }
 
   handleChangeStartDate = (event) => {
-    const startDate1 = moment(event).subtract(1, 'days')
     const endDate = moment(event).add(2, 'days') > moment(this.state.endDate) ? moment(event).add(2, 'days') : this.state.endDate
-    this.setState({startDate: event, startDate1, endDate})
+    this.setState({startDate: event, endDate})
   }
 
   handleChangeEndDate = (event) => {
@@ -221,10 +219,10 @@ export default class CreateAuction extends Component {
                         onChange={this.handleChangeStartDate}
                         showTimeSelect
                         timeFormat="HH:mm"
-                        timeIntervals={15}
+                        timeIntervals={30}
                         dateFormat="LLL"
                         timeCaption="time"
-                        minTime={moment().locale(this.props.getLanguage()).format('ll') === moment(this.state.startDate1).locale(this.props.getLanguage()).format('ll') ? moment() : moment('2016-03-12 00:00:01')}
+                        minTime={moment().add(1, 'days').locale(this.props.getLanguage()).format('ll') === moment(this.state.startDate).locale(this.props.getLanguage()).format('ll') ? moment() : moment('2016-03-12 00:00:01')}
                         maxTime={moment('2016-03-12 23:59:00')}
                         minDate={moment().add(1, 'days')}
                         locale={this.props.getLanguage()}
@@ -237,7 +235,7 @@ export default class CreateAuction extends Component {
                           onChange={this.handleChangeEndDate}
                           showTimeSelect
                           timeFormat="HH:mm"
-                          timeIntervals={15}
+                          timeIntervals={30}
                           dateFormat="LLL"
                           timeCaption="time"
                           locale={this.props.getLanguage()}

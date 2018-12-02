@@ -14,6 +14,8 @@ const container = {
   height: 'available'
 }
 
+const help = {color:'#990000'}
+
 const leftpane = {
   width: '55%',
   height: 'available',
@@ -178,8 +180,14 @@ export default class App extends Component {
   firstOffer = () => {
     const { id } = this.state.auction
     this.auctionService.firstOffer(id, this.getAuthor(), parseInt(this.state.amount))
-      .then(() => this.setAuction())
-      .catch(err => console.log(err))
+      .then(() => {
+        this.setAuction()
+        this.handleCancel()
+      })
+      .catch(err => {
+        this.handleCancel()
+        this.notificationRegisterError('Alert', err.response.data.message)
+      })
   }
 
   fO = () => {
@@ -212,45 +220,12 @@ export default class App extends Component {
     window.location.pathname = '/auction'
   }
 
+  errorAmount = () => (!/^([0-9])*$/.test(this.state.amount)) || this.state.amount < ((this.state.auction.price * 5 / 100) + this.state.auction.price)
+
   render() {
 
     const { auction, bidders, firstBidders, open } = this.state;
     const { isAuthenticated } = this.props.auth;
-
-    const AutomaticOffer1 = () => { 
-      if(!firstBidders.some(b => b.author === this.getAuthor())) {
-        return ( 
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
-              <Table.Cell>
-                {/* <FirstOffer offer={this.offer} firstOffer={this.firstOffer} fO={this.fO}/> */}
-                <Button primary onClick={this.offer}>
-                  <h3>{this.props.getTranslation('offer')}</h3>
-                </Button>
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        )
-      } else {
-        return (
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
-              {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
-              <Table.Cell>
-                {/* <Button primary onClick={this.offer}>
-                  <h3>{this.props.getTranslation('offer')}</h3>
-                </Button> */}
-
-                <Button primary onClick={this.show}>{this.props.getTranslation('offer')}</Button>
-                <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
-              </Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        )
-      }
-    }
 
     return (
       <div>
@@ -298,23 +273,40 @@ export default class App extends Component {
                   moment(this.state.auction.publicationDate) <= moment() &&
                   moment(this.state.auction.finishDate) >= moment() &&
                   this.state.auction.emailAuthor !== this.getAuthor() && (
-                    <AutomaticOffer1/>
+                    <Table.Body>
+                      <Table.Row>
+                        <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
+                        <Table.Cell>
+                          <Button primary onClick={this.show}>{this.props.getTranslation('offer')}</Button>
+                          <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
+                        </Table.Cell>
+                      </Table.Row>
+                    </Table.Body>
                   )
                 }
 
                 {
+                  moment(this.state.auction.publicationDate) <= moment() &&
+                  moment(this.state.auction.finishDate) >= moment() &&
+                  this.state.auction.emailAuthor !== this.getAuthor() &&
                   (!firstBidders.some(b => b.author === this.getAuthor())) && (
                   <Table.Body>
                     <Table.Row>
                       <Table.Cell>input</Table.Cell>
                       {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
                       <Table.Cell>
+                      {
+                      (this.errorAmount()) && (
+                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                      )
+                    }
                       <Input 
                           fluid
+                          style={{textAlign:"center"}}
                           name="amount"
                           onChange={this.handleChange2}
                           placeholder={this.props.getTranslation('amountFirstOffer')}
-                          error={false}
+                          error={this.errorAmount()}
                       />
                       </Table.Cell>
                     </Table.Row>
@@ -323,14 +315,17 @@ export default class App extends Component {
                 }
 
                 {
+                  moment(this.state.auction.publicationDate) <= moment() &&
+                  moment(this.state.auction.finishDate) >= moment() &&
+                  this.state.auction.emailAuthor !== this.getAuthor() &&
                   (!firstBidders.some(b => b.author === this.getAuthor())) && (
                   <Table.Body>
                     <Table.Row>
                       <Table.Cell>first offer</Table.Cell>
                       {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
                       <Table.Cell>
-                        <Button primary onClick={this.firstOffer}>{this.props.getTranslation('offer')}</Button>
-                        <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
+                        <Button primary onClick={this.show} disabled={this.errorAmount()}>First Offer</Button>
+                        <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.firstOffer} />
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>
