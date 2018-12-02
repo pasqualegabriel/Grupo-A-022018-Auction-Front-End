@@ -18,6 +18,8 @@ const styles = {
     }
 }
 
+const help = {color:'#990000'}
+
 const dateStyle = {
   width: '300px'
 }
@@ -45,7 +47,7 @@ export default class CreateAuction extends Component {
 
   handleChangeStartDate = (event) => {
     const startDate1 = moment(event).subtract(1, 'days')
-    const endDate = moment(event).add(2, 'days')
+    const endDate = moment(event).add(2, 'days') > moment(this.state.endDate) ? moment(event).add(2, 'days') : this.state.endDate
     this.setState({startDate: event, startDate1, endDate})
   }
 
@@ -91,7 +93,7 @@ export default class CreateAuction extends Component {
         localStorage.setItem('auction', JSON.stringify(newAuction))
         window.location.pathname = '/detail'
       }).catch(() => {
-        this.notificationRegisterError('Alert', 'Incorrect fields')
+        this.notificationRegisterError('Alert', 'There are five auctions in new or in progress')
       }) 
     } 
     if (this.state.is === 'update') { 
@@ -111,6 +113,18 @@ export default class CreateAuction extends Component {
       })
     }
   }
+
+  errorTitle = () => this.state.title.length < 5 || this.state.title.length > 50
+
+  errorDescription = () => this.state.description.length < 10 || this.state.description.length > 500
+
+  errorPrice = () => this.state.price === '' || (!/^([0-9])*$/.test(this.state.price))
+
+  errorAddress = () => this.state.address === ''
+
+  errorPhoto = () => this.state.photo === ''
+
+  disabledButton = () => this.errorTitle() || this.errorDescription() || this.errorPrice() || this.errorAddress() || this.errorPhoto()
 
   render() {
 
@@ -148,7 +162,11 @@ export default class CreateAuction extends Component {
                   <Header as='h2' color='blue' textAlign='center'>
                     {this.state.showTitle}
                   </Header>
-    
+                    {
+                      this.errorTitle() && (
+                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                      )
+                    }
                     <Form.Input
                       fluid
                       name="title"
@@ -159,7 +177,11 @@ export default class CreateAuction extends Component {
                       defaultValue={this.state.title}
                       error={this.state.title.length < 5 || this.state.title.length > 50}
                     />
-    
+                    {
+                      this.errorDescription() && (
+                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                      )
+                    }
                     <Form.Input
                       fluid
                       name="description"
@@ -170,7 +192,11 @@ export default class CreateAuction extends Component {
                       defaultValue={this.state.description}
                       error={this.state.description.length < 10 || this.state.description.length > 500}
                     />
-    
+                    {
+                      this.errorPrice() && (
+                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                      )
+                    }
                     <Form.Input
                       fluid
                       name="price"
@@ -221,7 +247,11 @@ export default class CreateAuction extends Component {
                         />
                       </div>
                     </Form.Group>
-
+                    {
+                      this.errorAddress() && (
+                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                      )
+                    }
                     <Form.Input
                       fluid
                       name="address"
@@ -230,9 +260,14 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Address'
                       defaultValue={this.state.address}
+                      helptext='escribi un adireccion'
                       error={this.state.address === ''}
                     />
-    
+                    {
+                      this.errorPhoto() && (
+                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                      )
+                    }
                     <Form.Input
                       fluid
                       name="photo"
@@ -244,7 +279,7 @@ export default class CreateAuction extends Component {
                       error={this.state.photo === ''}
                     />
     
-                    <Button color='blue' onClick={this.create} fluid size='large' >
+                    <Button color='blue' onClick={this.create} fluid size='large' disabled={this.disabledButton()} >
                       {this.state.confirm}
                     </Button>
                   </Segment>
