@@ -6,6 +6,8 @@ import Login from '../containers/Login'
 import HeaderM from './Header'
 import 'moment/locale/es'
 import moment from 'moment'
+import 'react-notifications/lib/notifications.css'
+import {NotificationContainer, NotificationManager} from 'react-notifications'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const styles = {
@@ -55,6 +57,12 @@ export default class CreateAuction extends Component {
     this.setState({ [name]: value })
   }
 
+  notificationRegisterError = (title, message) => {
+    NotificationManager.error(message, title, 3000, () => {
+      alert('callback')
+    })
+  }
+
   create = () => {
     const profile = JSON.parse(localStorage.getItem('email'))
     const nick = profile ? profile.nickname : ''
@@ -66,16 +74,42 @@ export default class CreateAuction extends Component {
       title: this.state.title,
       description: this.state.description,
       address: this.state.address,
-      photos: this.state.photo
+      photos: this.state.photo,
+      bidders: [],
+      firstBidders: []
     }
     if (this.state.is === 'create') {
-      this.auctionService.auction(newAuction).then(res => console.log(res)).catch(err => console.log(err))
+      this.auctionService.auction(newAuction).then(res => {
+        const aNotify = {
+          is: true,
+          title: 'Successful',
+          message: 'Se creo correctamente la subasta',
+          type: 'success'
+        }
+        newAuction.id = res.data.id
+        localStorage.setItem('notify', JSON.stringify(aNotify))
+        localStorage.setItem('auction', JSON.stringify(newAuction))
+        window.location.pathname = '/detail'
+      }).catch(() => {
+        this.notificationRegisterError('Alert', 'Incorrect fields')
+      }) 
     } 
     if (this.state.is === 'update') { 
       newAuction.id = this.state.id
-      this.auctionService.update(newAuction).then(res => console.log(res)).catch(err => console.log(err))
+      this.auctionService.update(newAuction).then(res => {
+        const aNotify = {
+          is: true,
+          title: 'Successful',
+          message: 'Se edito correctamente la subasta',
+          type: 'success'
+        }
+        localStorage.setItem('notify', JSON.stringify(aNotify))
+        localStorage.setItem('auction', JSON.stringify(newAuction))
+        window.location.pathname = '/detail'
+      }).catch(() => {
+        this.notificationRegisterError('Alert', 'Incorrect fields')
+      })
     }
-    window.location.pathname = '/home'
   }
 
   render() {
@@ -84,6 +118,7 @@ export default class CreateAuction extends Component {
 
     return ( 
       <div>
+        <NotificationContainer/>
       {
         !isAuthenticated() && (
           <Login auth={this.props.auth} getTranslation={this.props.getTranslation}/>

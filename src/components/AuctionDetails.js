@@ -6,6 +6,8 @@ import moment from 'moment'
 import AuctionService from '../services/AuctionService'
 import AuctionsList from './AuctionsList'
 import HeaderM from './Header'
+import 'react-notifications/lib/notifications.css'
+import {NotificationContainer, NotificationManager} from 'react-notifications'
 
 const container = {
   width: 'available',
@@ -59,11 +61,38 @@ export default class App extends Component {
 
   componentDidMount = () => {
     this.interval = setInterval(() => this.tick(), 1000);
+    this.notifications()
     this.setAuction()
   }
 
   componentWillUnmount = () => {
     clearInterval(this.interval);
+  }
+
+  notificationRegisterSuccess = (title, message) => {
+    NotificationManager.success(message, title)
+  }
+
+  notificationRegisterError = (title, message) => {
+    NotificationManager.error(message, title, 3000, () => {
+      alert('callback')
+    })
+  }
+
+  notifications = () => {
+    const notifies = JSON.parse(localStorage.getItem('notify'))
+    const is = notifies ? notifies.is : notifies
+    if (is) {
+      const {title, message, type} = notifies
+      notifies.is = false
+      localStorage.setItem('notify', JSON.stringify(notifies))
+      if(type === 'success') {
+        this.notificationRegisterSuccess(title, message)
+      }
+      // if(type === 'error'){
+      //   this.notificationRegisterError(title, message)
+      // }
+    }
   }
 
   convert = ms => {
@@ -167,29 +196,19 @@ export default class App extends Component {
     window.location.pathname = '/auction'
   }
 
-  /*
---auction--
-automaticOfferAmount: 200
-bidders: (3) [{…}, {…}, {…}]
-currentState: "COMPLETED"
-description: "The goddess Athena tasks Kratos with killing Ares."
-emailAuthor: "user@gmail.com"
-finishDate: "2018-09-28T14:13:30"
-finished: true
-id: 76
-inProgress: false
-initialFinishDate: "2018-09-28T14:13:30"
-photos: null
-price: 100
-publicationDate: "2018-09-25T14:13:30"
-title: "PS4 God of War"
---offer--
-auction: null
-author: "user2@gmail.com"
-id: 77
-price: 200
-publicationDate: "2018-09-28T14:13:30
-*/
+  // addNotification = (title, message, type) => {
+  //   this.notificationDOMRef.current.addNotification({
+  //     title,
+  //     message,
+  //     type, //"success"
+  //     insert: "top",
+  //     container: "top-right",
+  //     animationIn: ["animated", "fadeIn"],
+  //     animationOut: ["animated", "fadeOut"],
+  //     dismiss: { duration: 2000 },
+  //     dismissable: { click: true }
+  //   });
+  // }
 
   render() {
 
@@ -230,6 +249,7 @@ publicationDate: "2018-09-28T14:13:30
 
     return (
       <div>
+        <NotificationContainer/>
       {
         isAuthenticated() && (
           <div style={container}>
@@ -322,6 +342,7 @@ publicationDate: "2018-09-28T14:13:30
           </div>
         )
       }
+    
       </div>
     );
   }

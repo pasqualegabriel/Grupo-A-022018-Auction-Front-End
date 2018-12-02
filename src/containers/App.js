@@ -41,14 +41,6 @@ class App extends Component {
 
     return (
         <div>
-            {/* {
-              auth.isAuthenticated() && ( 
-                <HeaderM  auth={auth}
-                          getTranslation={this.getTranslation} 
-                          changeLanguage={this.changeLanguage}
-                          getLanguage={this.getLanguage}/> 
-              )
-            } */}
             <Router history={history}>
             <div>
               <Route exact path="/home"            render={(props) => <Home {...props} auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
