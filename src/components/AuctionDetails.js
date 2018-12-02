@@ -56,17 +56,19 @@ export default class App extends Component {
       usersName: this.getUsersNames(),
       open: false,
       openF: false,
+      openD: false,
       amount: ''
     }
   }
 
   show = () => this.setState({ open: true })
-  handleConfirm = () => this.setState({ open: false })
   handleCancel = () => this.setState({ open: false })
 
   showF = () => this.setState({ openF: true })
-  handleConfirmF = () => this.setState({ openF: false })
   handleCancelF = () => this.setState({ openF: false })
+
+  showD = () => this.setState({ openD: true })
+  handleCancelD = () => this.setState({ openD: false })
 
   tick = () => {
     this.setAuction()
@@ -102,9 +104,6 @@ export default class App extends Component {
       if(type === 'success') {
         this.notificationRegisterSuccess(title, message)
       }
-      // if(type === 'error'){
-      //   this.notificationRegisterError(title, message)
-      // }
     }
   }
 
@@ -175,6 +174,7 @@ export default class App extends Component {
       .then(() => {
         this.setAuction()
         this.handleCancel()
+        this.notificationRegisterSuccess('Successful', 'Oferta realizada')
       })
       .catch(err => {
         this.handleCancel()
@@ -188,6 +188,7 @@ export default class App extends Component {
       .then(() => {
         this.setAuction()
         this.handleCancelF()
+        this.notificationRegisterSuccess('Successful', 'Oferta con seguimiento automatico realizado')
       })
       .catch(err => {
         this.handleCancelF()
@@ -225,11 +226,31 @@ export default class App extends Component {
     window.location.pathname = '/auction'
   }
 
+  delete = () => {
+    const { auction } = this.state
+    this.auctionService.delete(auction.id)
+    .then(() => {
+      this.handleCancelD()
+      const aNotify = {
+        is: true,
+        title: 'Successful',
+        message: 'Se elimino correctamente la subasta',
+        type: 'success'
+      }
+      localStorage.setItem('notify', JSON.stringify(aNotify))
+      window.location.pathname = '/home'
+    })
+    .catch(err => {
+      this.handleCancelD()
+      this.notificationRegisterError('Alert', err.response.data.message)
+    })
+  }
+
   errorAmount = () => (!/^([0-9])*$/.test(this.state.amount)) || this.state.amount < ((this.state.auction.price * 5 / 100) + this.state.auction.price)
 
   render() {
 
-    const { auction, bidders, firstBidders, open, openF } = this.state;
+    const { auction, bidders, firstBidders, open, openF, openD } = this.state;
     const { isAuthenticated } = this.props.auth;
 
     return (
@@ -289,7 +310,7 @@ export default class App extends Component {
                       <Table.Row>
                         <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
                         <Table.Cell>
-                          <Button primary onClick={this.show}>6{this.props.getTranslation('offer')}</Button>
+                          <Button primary onClick={this.show}>{this.props.getTranslation('offer')}</Button>
                           <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
                         </Table.Cell>
                       </Table.Row>
@@ -345,7 +366,7 @@ export default class App extends Component {
                 }
 
                 {
-                  moment(this.state.auction.finishDate) >= moment() &&
+                  moment(auction.publicationDate) > moment() &&
                   this.state.auction.emailAuthor === this.getAuthor() && (
                     <Table.Body>
                       <Table.Row>
@@ -354,6 +375,21 @@ export default class App extends Component {
                           <Button primary onClick={this.edit}>
                             <h3>Editar</h3>
                           </Button>
+                        </Table.Cell>
+                      </Table.Row>
+                    </Table.Body>
+                  )
+                }
+
+                {
+                  moment(auction.publicationDate) > moment() &&
+                  this.state.auction.emailAuthor === this.getAuthor() && (
+                    <Table.Body>
+                      <Table.Row>
+                        <Table.Cell>Eliminar subasta</Table.Cell>
+                        <Table.Cell>
+                          <Button primary onClick={this.showD}>Delete Offer</Button>
+                          <Confirm open={openD} onCancel={this.handleCancelD} onConfirm={this.delete} />
                         </Table.Cell>
                       </Table.Row>
                     </Table.Body>

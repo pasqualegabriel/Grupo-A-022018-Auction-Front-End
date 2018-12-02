@@ -12,7 +12,6 @@ import Callback from '../Callback/Callback'
 import Auth from '../Auth/Auth'
 import history from '../history'
 import AuctionService from '../services/AuctionService'
-import FirstOffer from '../components/FirstOffer'
 
 const auth = new Auth()
 
@@ -48,7 +47,6 @@ class App extends Component {
               <Route exact path="/auction"         render={  ()    => <CreateAuction   auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
               <Route exact path="/auctions/search" render={  ()    => <AuctionsSearch  auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
               <Route exact path="/detail"          render={  ()    => <AuctionDetails  auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
-              <Route exact path="/firstOffer"      render={  ()    => <FirstOffer      auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
               <Route path="/callback"              render={(props) => {
                 handleAuthentication(props);
                 return <Callback {...props} /> 

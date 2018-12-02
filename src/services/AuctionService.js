@@ -92,6 +92,8 @@ class AuctionService {
 
     offer = (auctionId, bidder) => axios.post(`${port}auction/${auctionId}/offer/${bidder}`, {}, config)
 
+    delete = id => axios.delete(`${port}auction/delete/${id}`, config)
+
     getAuctionsUsers = (usersName, index, size) => axios.post(`${port}auctions/users/participate`, {
         usersName,
         email: this.getEmail(),
