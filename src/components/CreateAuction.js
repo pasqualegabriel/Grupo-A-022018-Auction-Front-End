@@ -27,8 +27,8 @@ export default class CreateAuction extends Component {
     this.auctionService = new AuctionService()
     this.state = {
       id: JSON.parse(localStorage.getItem('auction-create')).id,
-      startDate: moment(JSON.parse(localStorage.getItem('auction-create')).startDate),
-      endDate: moment(JSON.parse(localStorage.getItem('auction-create')).endDate),
+      startDate: JSON.parse(localStorage.getItem('auction-create')).is === 'create' ? moment(JSON.parse(localStorage.getItem('auction-create')).startDate).add(1, 'days') : moment(JSON.parse(localStorage.getItem('auction-create')).startDate),
+      endDate: JSON.parse(localStorage.getItem('auction-create')).is === 'create' ? moment(JSON.parse(localStorage.getItem('auction-create')).startDate).add(3, 'days') : moment(JSON.parse(localStorage.getItem('auction-create')).endDate),
       description: JSON.parse(localStorage.getItem('auction-create')).description,
       title: JSON.parse(localStorage.getItem('auction-create')).title,
       price: JSON.parse(localStorage.getItem('auction-create')).price,
@@ -37,23 +37,18 @@ export default class CreateAuction extends Component {
       showTitle: JSON.parse(localStorage.getItem('auction-create')).showTitle,
       confirm: JSON.parse(localStorage.getItem('auction-create')).confirm,
       is: JSON.parse(localStorage.getItem('auction-create')).is,
-      startDate1: moment(JSON.parse(localStorage.getItem('auction-create')).startDate),
-      startDate2: moment(JSON.parse(localStorage.getItem('auction-create')).startDate)
+      startDate1: moment(JSON.parse(localStorage.getItem('auction-create')).startDate).subtract(1, 'days')
     }
-    console.log(moment(this.state.startDate1).locale(this.props.getLanguage()).format('ll'))
-    console.log(moment().locale(this.props.getLanguage()).format('ll'))
   }
 
   handleChangeStartDate = (event) => {
     const startDate1 = moment(event).subtract(1, 'days')
-    console.log(moment(event).format('ll'))
-    console.log(moment().locale(this.props.getLanguage()).add(1, 'days').format('ll'))
-    this.setState({startDate: event, startDate1})
+    const endDate = moment(event).add(2, 'days')
+    this.setState({startDate: event, startDate1, endDate})
   }
 
   handleChangeEndDate = (event) => {
-    const startDate2 = moment(event).subtract(2, 'days')
-    this.setState({endDate: event, startDate2})
+    this.setState({endDate: event})
   }
 
   handleChange = (ev, {name, value}) => {
@@ -161,7 +156,7 @@ export default class CreateAuction extends Component {
                     <div style={dateStyle}>
                       <DatePicker
                         label='First name'
-                        selected={this.state.startDate < moment().add(1, 'days').add(5, 'minutes') ? moment().add(1, 'days').add(5, 'minutes') : moment(this.state.startDate)}
+                        selected={this.state.startDate < moment().add(1, 'days') ? moment().add(1, 'days') : moment(this.state.startDate)}
                         onChange={this.handleChangeStartDate}
                         showTimeSelect
                         timeFormat="HH:mm"
@@ -176,7 +171,8 @@ export default class CreateAuction extends Component {
                     </div>
                       <div style={dateStyle}>
                         <DatePicker
-                          selected={this.state.endDate < moment().add(2, 'days').add(5, 'minutes') ? moment().add(2, 'days').add(5, 'minutes') : this.state.endDate}
+                          selected={moment(this.state.endDate)}
+                          // selected={this.state.endDate < moment(this.state.startDate).add(2, 'days') ? moment(this.state.startDate) < moment().add(1, 'days') ? moment(this.state.startDate).add(3, 'days') : moment(this.state.startDate).add(2, 'days') : moment(this.state.endDate)}
                           onChange={this.handleChangeEndDate}
                           showTimeSelect
                           timeFormat="HH:mm"
@@ -184,8 +180,7 @@ export default class CreateAuction extends Component {
                           dateFormat="LLL"
                           timeCaption="time"
                           locale={this.props.getLanguage()}
-                          // minTime={moment({ hour: this.state.startDate2.hour(), minute: this.state.startDate2.minute() + 5})}
-                          minTime={moment().locale(this.props.getLanguage()).format('ll') === moment(this.state.startDate2).locale(this.props.getLanguage()).format('ll') ? moment() : moment('2016-03-12 00:00:01')}
+                          minTime={moment(this.state.startDate).locale(this.props.getLanguage()).add(2, 'days').format('ll') === moment(this.state.endDate).locale(this.props.getLanguage()).format('ll') ? moment(this.state.startDate) : moment('2016-03-12 00:00:01')}
                           maxTime={moment('2016-03-12 23:59:00')}
                           minDate={moment(this.state.startDate).add(2, 'days')}
                         />
