@@ -187,7 +187,7 @@ export default class CreateAuction extends Component {
                           // minTime={moment({ hour: this.state.startDate2.hour(), minute: this.state.startDate2.minute() + 5})}
                           minTime={moment().locale(this.props.getLanguage()).format('ll') === moment(this.state.startDate2).locale(this.props.getLanguage()).format('ll') ? moment() : moment('2016-03-12 00:00:01')}
                           maxTime={moment('2016-03-12 23:59:00')}
-                          minDate={moment().add(2, 'days')}
+                          minDate={moment(this.state.startDate).add(2, 'days')}
                         />
                       </div>
                     </Form.Group>

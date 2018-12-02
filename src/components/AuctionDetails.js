@@ -193,11 +193,11 @@ publicationDate: "2018-09-28T14:13:30
 
   render() {
 
-    const { auction, bidders } = this.state;
+    const { auction, bidders, firstBidders } = this.state;
     const { isAuthenticated } = this.props.auth;
 
     const AutomaticOffer = () => { 
-      if(bidders.length === 0) {
+      if(!firstBidders.some(b => b.author === this.getAuthor())) {
         return (
           <Table.Body>
             <Table.Row>
