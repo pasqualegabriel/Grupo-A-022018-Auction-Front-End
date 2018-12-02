@@ -4,6 +4,7 @@ import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import Login from '../containers/Login'
 import HeaderM from './Header'
+import 'moment/locale/es'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
 
@@ -35,16 +36,20 @@ export default class CreateAuction extends Component {
       photo: JSON.parse(localStorage.getItem('auction-create')).photo,
       showTitle: JSON.parse(localStorage.getItem('auction-create')).showTitle,
       confirm: JSON.parse(localStorage.getItem('auction-create')).confirm,
-      is: JSON.parse(localStorage.getItem('auction-create')).is
+      is: JSON.parse(localStorage.getItem('auction-create')).is,
+      startDate1: JSON.parse(localStorage.getItem('auction-create')).startDate,
+      startDate2: JSON.parse(localStorage.getItem('auction-create')).startDate
     }
   }
 
   handleChangeStartDate = (event) => {
-    this.setState({startDate: event})
+    const startDate1 = moment(event).subtract(1, 'days')
+    this.setState({startDate: event, startDate1})
   }
 
   handleChangeEndDate = (event) => {
-    this.setState({endDate: event})
+    const startDate2 = moment(event).subtract(2, 'days')
+    this.setState({endDate: event, startDate2})
   }
 
   handleChange = (ev, {name, value}) => {
@@ -118,7 +123,7 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Title'
                       defaultValue={this.state.title}
-                      error={this.state.title.length < 10 || this.state.title.length > 50}
+                      error={this.state.title.length < 5 || this.state.title.length > 50}
                     />
     
                     <Form.Input
@@ -129,7 +134,7 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Description'
                       defaultValue={this.state.description}
-                      error={this.state.description.length < 10 || this.state.description.length > 100}
+                      error={this.state.description.length < 10 || this.state.description.length > 500}
                     />
     
                     <Form.Input
@@ -152,24 +157,33 @@ export default class CreateAuction extends Component {
                     <div style={dateStyle}>
                       <DatePicker
                         label='First name'
-                        selected={this.state.startDate}
+                        selected={this.state.startDate < moment().add(1, 'days').add(5, 'minutes') ? moment().add(1, 'days').add(5, 'minutes') : moment(this.state.startDate)}
                         onChange={this.handleChangeStartDate}
                         showTimeSelect
                         timeFormat="HH:mm"
                         timeIntervals={15}
                         dateFormat="LLL"
                         timeCaption="time"
+                        minTime={moment().format('ll') === moment(this.state.startDate1).format('ll') ? moment() : moment('2016-03-12 00:00:01')}
+                        maxTime={moment('2016-03-12 23:59:00')}
+                        minDate={moment().add(1, 'days')}
+                        locale={this.props.getLanguage()}
                       />
                     </div>
                       <div style={dateStyle}>
                         <DatePicker
-                          selected={this.state.endDate}
+                          selected={this.state.endDate < moment().add(2, 'days').add(5, 'minutes') ? moment().add(2, 'days').add(5, 'minutes') : this.state.endDate}
                           onChange={this.handleChangeEndDate}
                           showTimeSelect
                           timeFormat="HH:mm"
                           timeIntervals={15}
                           dateFormat="LLL"
                           timeCaption="time"
+                          locale={this.props.getLanguage()}
+                          // minTime={moment({ hour: this.state.startDate2.hour(), minute: this.state.startDate2.minute() + 5})}
+                          minTime={moment().format('ll') === moment(this.state.startDate2).format('ll') ? moment() : moment('2016-03-12 00:00:01')}
+                          maxTime={moment('2016-03-12 23:59:00')}
+                          minDate={moment().add(2, 'days')}
                         />
                       </div>
                     </Form.Group>
@@ -182,6 +196,7 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Address'
                       defaultValue={this.state.address}
+                      error={this.state.address === ''}
                     />
     
                     <Form.Input
@@ -192,6 +207,7 @@ export default class CreateAuction extends Component {
                       iconPosition='left'
                       placeholder='Add Photo Link'
                       defaultValue={this.state.photo}
+                      error={this.state.photo === ''}
                     />
     
                     <Button color='blue' onClick={this.create} fluid size='large' >
