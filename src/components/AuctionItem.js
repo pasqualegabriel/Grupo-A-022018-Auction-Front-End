@@ -8,7 +8,12 @@ const blue = {
   fontSize: '21px'
 }
 
-export default ({auction, translation}) => (
+const green = {
+  color:'green',
+  fontSize: '14px'
+}
+
+export default ({auction, translation, setEmail2}) => (
     <Item >
       <Item.Image src={auction.photos}/>
 
@@ -19,9 +24,13 @@ export default ({auction, translation}) => (
           </Link> 
         </Item.Header>
         <Item.Description>$ {auction.price}</Item.Description>
-        <Item.Meta>
-          <span className='cinema'>{auction.emailAuthor}</span>
-        </Item.Meta>
+        <Item.Description>
+          <Link style={green} to={'/auctions/search'} onClick={()=> {
+            setEmail2(auction.emailAuthor)
+          }}>
+            {auction.emailAuthor}
+          </Link> 
+        </Item.Description>
         <Item.Description>{auction.description}</Item.Description>
         <Item.Extra>
         <Button primary floated='right' onClick={() => {

@@ -37,6 +37,7 @@ export default class Header extends Component {
 
   onActionSearchAuction = () => {
     localStorage.setItem('search', this.state.search)
+    localStorage.setItem('search-email', '')
     window.location.pathname = '/auctions/search'
   }
 

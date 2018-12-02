@@ -40,7 +40,7 @@ export default class Home extends Component {
       totalElements: 100,
       title: localStorage.getItem('search') || '',
       description: '',
-      email: ''
+      email: localStorage.getItem('search-email') || ''
     }
   }
 
@@ -93,6 +93,11 @@ export default class Home extends Component {
   search = () => {
     this.setState({page:0})
     this.setAuctionsTitleDescription(this.state.title, this.state.description, this.state.email, 0)
+  }
+
+  setEmail2 = email => {
+    this.setState({email})
+    this.setAuctionsTitleDescription(this.state.title, this.state.description, email, this.state.page)
   }
 
   render() {
@@ -195,7 +200,7 @@ export default class Home extends Component {
 
             </div>
             <div style={middlepane}>
-              <ListAuction auctions={this.state.auctions} getTranslation={this.props.getTranslation}/>
+              <ListAuction auctions={this.state.auctions} getTranslation={this.props.getTranslation} setEmail2={this.setEmail2}/>
               <Pagination
                 offset={this.state.offset}
                 limit={this.state.limit}
