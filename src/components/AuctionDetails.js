@@ -55,6 +55,7 @@ export default class App extends Component {
       auctions: [],
       usersName: this.getUsersNames(),
       open: false,
+      openF: false,
       amount: ''
     }
   }
@@ -62,6 +63,10 @@ export default class App extends Component {
   show = () => this.setState({ open: true })
   handleConfirm = () => this.setState({ open: false })
   handleCancel = () => this.setState({ open: false })
+
+  showF = () => this.setState({ openF: true })
+  handleConfirmF = () => this.setState({ openF: false })
+  handleCancelF = () => this.setState({ openF: false })
 
   tick = () => {
     this.setAuction()
@@ -182,10 +187,10 @@ export default class App extends Component {
     this.auctionService.firstOffer(id, this.getAuthor(), parseInt(this.state.amount))
       .then(() => {
         this.setAuction()
-        this.handleCancel()
+        this.handleCancelF()
       })
       .catch(err => {
-        this.handleCancel()
+        this.handleCancelF()
         this.notificationRegisterError('Alert', err.response.data.message)
       })
   }
@@ -224,7 +229,7 @@ export default class App extends Component {
 
   render() {
 
-    const { auction, bidders, firstBidders, open } = this.state;
+    const { auction, bidders, firstBidders, open, openF } = this.state;
     const { isAuthenticated } = this.props.auth;
 
     return (
@@ -240,12 +245,19 @@ export default class App extends Component {
                       getLanguage={this.props.getLanguage}/> 
             <div style={leftpane}>
               <div style={titleS}>
+              <h5>{auction.emailAuthor}</h5>
                 <h1>{auction.title}</h1>
                 <h3>{auction.description}</h3>
                 <img alt='' style={image} src={auction.photos}/>
-                <h4>{this.props.getTranslation('other-users')}</h4>
-                <AuctionsList getAuctions={this.getAuctionsUsers} getTranslation={this.props.getTranslation}/> 
-              </div>
+                {
+                  moment(auction.publicationDate) < moment() && (
+                    <div>
+                      <h4>{this.props.getTranslation('other-users')}</h4>
+                      <AuctionsList getAuctions={this.getAuctionsUsers} getTranslation={this.props.getTranslation}/> 
+                    </div>
+                  )
+                }
+                </div>
             </div>
             <div style={middlepane}>
             <Table celled textAlign='center' >
@@ -277,7 +289,7 @@ export default class App extends Component {
                       <Table.Row>
                         <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
                         <Table.Cell>
-                          <Button primary onClick={this.show}>{this.props.getTranslation('offer')}</Button>
+                          <Button primary onClick={this.show}>6{this.props.getTranslation('offer')}</Button>
                           <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
                         </Table.Cell>
                       </Table.Row>
@@ -324,8 +336,8 @@ export default class App extends Component {
                       <Table.Cell>first offer</Table.Cell>
                       {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
                       <Table.Cell>
-                        <Button primary onClick={this.show} disabled={this.errorAmount()}>First Offer</Button>
-                        <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.firstOffer} />
+                        <Button primary onClick={this.showF} disabled={this.errorAmount()}>First Offer</Button>
+                        <Confirm open={openF} onCancel={this.handleCancelF} onConfirm={this.firstOffer} />
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>

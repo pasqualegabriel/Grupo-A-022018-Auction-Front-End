@@ -36,7 +36,7 @@ export default class CreateAuction extends Component {
       description: JSON.parse(localStorage.getItem('auction-create')).description,
       title: JSON.parse(localStorage.getItem('auction-create')).title,
       price: JSON.parse(localStorage.getItem('auction-create')).price,
-      address: JSON.parse(localStorage.getItem('auction-create')).address,
+      address: JSON.parse(localStorage.getItem('auction-create')).address ? JSON.parse(localStorage.getItem('auction-create')).address : '',
       photo: JSON.parse(localStorage.getItem('auction-create')).photo,
       showTitle: JSON.parse(localStorage.getItem('auction-create')).showTitle,
       confirm: JSON.parse(localStorage.getItem('auction-create')).confirm,
