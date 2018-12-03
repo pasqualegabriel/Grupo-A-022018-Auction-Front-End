@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { getItem } from '../services/LocalStorageService'
 import { Table, Button, Label, Confirm, Input } from 'semantic-ui-react'
+import { Link } from 'react-router-dom';
 import 'moment/locale/es'
 import moment from 'moment'
 import AuctionService from '../services/AuctionService'
@@ -15,6 +16,11 @@ const container = {
 }
 
 const help = {color:'#990000'}
+
+const blue = {
+  color:'#140e63',
+  fontSize: '13px'
+}
 
 const leftpane = {
   width: '55%',
@@ -246,6 +252,12 @@ export default class App extends Component {
     })
   }
 
+  toEmail = () => {
+    localStorage.setItem('search', '')
+    localStorage.setItem('search-email', this.state.auction.emailAuthor)
+    window.location.pathname = '/auctions/search'
+  }
+
   errorAmount = () => (!/^([0-9])*$/.test(this.state.amount)) || this.state.amount < ((this.state.auction.price * 5 / 100) + this.state.auction.price)
 
   render() {
@@ -266,7 +278,9 @@ export default class App extends Component {
                       getLanguage={this.props.getLanguage}/> 
             <div style={leftpane}>
               <div style={titleS}>
-              <h5>{auction.emailAuthor}</h5>
+                <Link style={blue} to={'/auctions/search'} onClick={this.toEmail}>
+                  {auction.emailAuthor}
+                </Link> 
                 <h1>{auction.title}</h1>
                 <h3>{auction.description}</h3>
                 <img alt='' style={image} src={auction.photos}/>

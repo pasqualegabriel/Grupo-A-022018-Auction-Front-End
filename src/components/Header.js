@@ -31,6 +31,7 @@ export default class Header extends Component {
   handleKeyPress = key => {
     if (key === 'Enter') {
       localStorage.setItem('search', this.state.search)
+      localStorage.setItem('search-email', '')
       window.location.pathname = '/auctions/search'
     }
   }
@@ -73,6 +74,18 @@ export default class Header extends Component {
     window.location.pathname = '/auction'
   }
 
+  getEmail = () => {
+    const profile = JSON.parse(localStorage.getItem('email'))
+    const nick = profile ? profile.nickname : ''
+    return `${nick}@gmail.com`
+  }
+
+  toEmail = () => {
+    localStorage.setItem('search', '')
+    localStorage.setItem('search-email', this.getEmail())
+    window.location.pathname = '/auctions/search'
+  }
+
   render() {
 
     return (
@@ -108,7 +121,7 @@ export default class Header extends Component {
           <Dropdown item text={this.nickname()}>
             <Dropdown.Menu >
             <Dropdown.Item  as={Button}
-                            onClick={() => this.goTo('/')}>{this.props.getTranslation('auctions')}</Dropdown.Item>
+                            onClick={this.toEmail}>{this.props.getTranslation('auctions')}</Dropdown.Item>
               {/* disabled={true} */}
               <Dropdown.Item as={Button}
               onClick={this.logout.bind(this)}>{this.props.getTranslation('logout')}</Dropdown.Item>
