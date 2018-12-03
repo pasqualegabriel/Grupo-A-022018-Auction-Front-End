@@ -143,10 +143,10 @@ export default class App extends Component {
       const diff = fd.diff(now)
       const diff2 = pd.diff(now)
       const res = now > fd 
-                  ? 'Finalizado' 
+                  ? this.props.getTranslation('finalizado')
                   : pd > now 
-                    ? `Comienza en ${this.convert(diff2)}` 
-                    : `Finaliza en ${this.convert(diff)}`
+                    ? `${this.props.getTranslation('comienza')} ${this.convert(diff2)}` 
+                    : `${this.props.getTranslation('finaliza')} ${this.convert(diff)}`
       // `Finaliza ${fd.fromNow()}`
       const usersName2 = [auction.emailAuthor, auction.emailAuthor, auction.emailAuthor]
       const authors = bidders.map(b => b.author)
@@ -264,6 +264,7 @@ export default class App extends Component {
 
     const { auction, bidders, firstBidders, open, openF, openD } = this.state;
     const { isAuthenticated } = this.props.auth;
+    const { getTranslation: t } = this.props;
 
     return (
       <div>
@@ -287,6 +288,7 @@ export default class App extends Component {
                 {
                   moment(auction.publicationDate) < moment() && (
                     <div>
+                      <br/>
                       <h4>{this.props.getTranslation('other-users')}</h4>
                       <AuctionsList getAuctions={this.getAuctionsUsers} getTranslation={this.props.getTranslation}/> 
                     </div>
@@ -310,7 +312,7 @@ export default class App extends Component {
                     <Table.HeaderCell>{this.props.getTranslation('last-stretch')}</Table.HeaderCell>
                     <Table.HeaderCell>
                     <Label color='teal'>
-                      <h2>$ {auction.price}</h2>
+                      <h2>{t('cash')} {auction.price}</h2>
                     </Label>
                     </Table.HeaderCell>
                   </Table.Row>
@@ -322,7 +324,7 @@ export default class App extends Component {
                   this.state.auction.emailAuthor !== this.getAuthor() && (
                     <Table.Body>
                       <Table.Row>
-                        <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
+                        <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - {t('cash')} {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
                         <Table.Cell>
                           <Button primary onClick={this.show}>{this.props.getTranslation('offer')}</Button>
                           <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
@@ -344,7 +346,7 @@ export default class App extends Component {
                       <Table.Cell>
                       {
                       (this.errorAmount()) && (
-                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                        <small id="emailHelp" style={help} className="form-text text-muted">{t('error-price2')}</small>
                       )
                     }
                       <Input 
@@ -415,7 +417,7 @@ export default class App extends Component {
               <Table celled textAlign='center' >
                 <Table.Header>
                   <Table.Row>
-                    <Table.HeaderCell colSpan='5'><h2>Avance de la subasta</h2></Table.HeaderCell>
+                    <Table.HeaderCell colSpan='5'><h2>{t('avance')}</h2></Table.HeaderCell>
                   </Table.Row>
                 </Table.Header>
                 {bidders.map((b, i) => 
@@ -423,8 +425,8 @@ export default class App extends Component {
                     <Table.Row>
                       <Table.Cell>{b.author}</Table.Cell>
                       <Table.Cell>{this.props.getTranslation('stretch')} {i + 1}</Table.Cell>
-                      <Table.Cell>$ {b.price}</Table.Cell>
-                      <Table.Cell>{moment(b.publicationDate).calendar()}</Table.Cell>
+                      <Table.Cell>{t('cash')} {b.price}</Table.Cell>
+                      <Table.Cell>{moment(b.publicationDate).locale(this.props.getLanguage()).calendar()}</Table.Cell>
                       {/* <Table.Cell>{moment(b.publicationDate).format('LT')}</Table.Cell> */}
                     </Table.Row>
                   </Table.Body>

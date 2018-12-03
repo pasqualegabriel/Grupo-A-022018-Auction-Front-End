@@ -43,5 +43,11 @@
   "alert": "Alerta",
   "create-error": "Ya hay cinco subastas nuevas o en progreso",
   "fields": "Campos incorrectos",
-  "show": "Mostrar"
+  "show": "Mostrar",
+  "cash": "$",
+  "finalizado": "Finalizado",
+  "finaliza": "Termina en",
+  "comienza": "Empieza en",
+  "avance": "Avance de la subasta",
+  "error-price2": "* Required: Valor numérico mayor al cinco por ciento del precio actual"
 }

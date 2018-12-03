@@ -43,5 +43,11 @@
   "alert": "Alert",
   "create-error": "There are five auctions in new or in progress",
   "fields": "Incorrect fields",
-  "show": "Show"
+  "show": "Show",
+  "cash": "U$D",
+  "finalizado": "Finalized",
+  "finaliza": "Ends in",
+  "comienza": "Starts in",
+  "avance": "Auction advance",
+  "error-price2": "* Required: Numerical value greater than five percent of the current price"
 }
