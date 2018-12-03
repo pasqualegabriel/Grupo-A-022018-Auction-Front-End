@@ -224,8 +224,8 @@ export default class App extends Component {
       price: auction.price,
       address: auction.address,
       photo: auction.photos,
-      showTitle: 'Update Auction',
-      confirm: 'Update',
+      showTitle: 'update-auction',
+      confirm: 'update',
       is: 'update'
     }
     localStorage.setItem('auction-create', JSON.stringify(anAuction))

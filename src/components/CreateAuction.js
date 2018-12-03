@@ -82,8 +82,8 @@ export default class CreateAuction extends Component {
       this.auctionService.auction(newAuction).then(res => {
         const aNotify = {
           is: true,
-          title: 'Successful',
-          message: 'Se creo correctamente la subasta',
+          title: this.props.getTranslation('successful'),
+          message: this.props.getTranslation('message-create'),
           type: 'success'
         }
         newAuction.id = res.data.id
@@ -91,7 +91,7 @@ export default class CreateAuction extends Component {
         localStorage.setItem('auction', JSON.stringify(newAuction))
         window.location.pathname = '/detail'
       }).catch(() => {
-        this.notificationRegisterError('Alert', 'There are five auctions in new or in progress')
+        this.notificationRegisterError(this.props.getTranslation('alert'), this.props.getTranslation('create-error'))
       }) 
     } 
     if (this.state.is === 'update') { 
@@ -99,15 +99,15 @@ export default class CreateAuction extends Component {
       this.auctionService.update(newAuction).then(res => {
         const aNotify = {
           is: true,
-          title: 'Successful',
-          message: 'Se edito correctamente la subasta',
+          title: this.props.getTranslation('successful'),
+          message: this.props.getTranslation('message-update'),
           type: 'success'
         }
         localStorage.setItem('notify', JSON.stringify(aNotify))
         localStorage.setItem('auction', JSON.stringify(newAuction))
         window.location.pathname = '/detail'
       }).catch(() => {
-        this.notificationRegisterError('Alert', 'Incorrect fields')
+        this.notificationRegisterError(this.props.getTranslation('alert'), this.props.getTranslation('fields'))
       })
     }
   }
@@ -127,6 +127,7 @@ export default class CreateAuction extends Component {
   render() {
 
     const { isAuthenticated } = this.props.auth;
+    const { getTranslation: t } = this.props;
 
     return ( 
       <div>
@@ -158,11 +159,11 @@ export default class CreateAuction extends Component {
                 <Form size='large' >
                   <Segment stacked >
                   <Header as='h2' color='blue' textAlign='center'>
-                    {this.state.showTitle}
+                    {t(this.state.showTitle)}
                   </Header>
                     {
                       this.errorTitle() && (
-                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                        <small id="emailHelp" style={help} className="form-text text-muted">{t('error-title')}</small>
                       )
                     }
                     <Form.Input
@@ -177,7 +178,7 @@ export default class CreateAuction extends Component {
                     />
                     {
                       this.errorDescription() && (
-                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                        <small id="emailHelp" style={help} className="form-text text-muted">{t('error-description')}</small>
                       )
                     }
                     <Form.Input
@@ -192,7 +193,7 @@ export default class CreateAuction extends Component {
                     />
                     {
                       this.errorPrice() && (
-                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                        <small id="emailHelp" style={help} className="form-text text-muted">{t('error-price')}</small>
                       )
                     }
                     <Form.Input
@@ -207,8 +208,8 @@ export default class CreateAuction extends Component {
                     />
     
                     <Form.Group widths='equal'>
-                      <Form.Field label='Publication Date' />
-                      <Form.Field label='Finish Date'  />
+                      <Form.Field label={t('publication-date')} />
+                      <Form.Field label={t('finish-date')}  />
                     </Form.Group>
     
                     <Form.Group widths='equal'>
@@ -247,7 +248,7 @@ export default class CreateAuction extends Component {
                     </Form.Group>
                     {
                       this.errorAddress() && (
-                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                        <small id="emailHelp" style={help} className="form-text text-muted">{t('error-address')}</small>
                       )
                     }
                     <Form.Input
@@ -263,7 +264,7 @@ export default class CreateAuction extends Component {
                     />
                     {
                       this.errorPhoto() && (
-                        <small id="emailHelp" style={help} className="form-text text-muted">Required</small>
+                        <small id="emailHelp" style={help} className="form-text text-muted">{t('error-photo')}</small>
                       )
                     }
                     <Form.Input
@@ -278,7 +279,7 @@ export default class CreateAuction extends Component {
                     />
     
                     <Button color='blue' onClick={this.create} fluid size='large' disabled={this.disabledButton()} >
-                      {this.state.confirm}
+                      {t(this.state.confirm)}
                     </Button>
                   </Segment>
                 </Form>

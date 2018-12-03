@@ -66,8 +66,8 @@ export default class Header extends Component {
       price: '',
       address: '',
       photo: '',
-      showTitle: 'Create Auction',
-      confirm: 'Create',
+      showTitle: 'create-auction',
+      confirm: 'create',
       is: 'create'
     }
     localStorage.setItem('auction-create', JSON.stringify(anAuction))

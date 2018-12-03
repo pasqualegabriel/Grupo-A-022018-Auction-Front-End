@@ -103,6 +103,7 @@ export default class Home extends Component {
   render() {
 
     const { isAuthenticated } = this.props.auth;
+    const { getTranslation: t } = this.props;
 
     return (
       <div>
@@ -125,7 +126,7 @@ export default class Home extends Component {
 
               <Table.Header>
                 <Table.Row>
-                  <Table.Cell width='6'>Show:</Table.Cell>
+                  <Table.Cell width='6'>{t('show')}:</Table.Cell>
                   <Table.Cell>
                     <Dropdown item text={this.state.limit.toString()} >
                       <Dropdown.Menu >
@@ -143,14 +144,14 @@ export default class Home extends Component {
 
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell width='6'>{this.props.getTranslation('title-search')}</Table.Cell>
+                  <Table.Cell width='6'>{t('title-search')}:</Table.Cell>
                   <Table.Cell>
                     <Input 
                       fluid
                       size='large'
                       name="title"
                       onChange={this.handleChange}
-                      placeholder='Title'
+                      placeholder={t('title-search')}
                       defaultValue={this.state.title}
                       error={false}
                     />
@@ -160,14 +161,14 @@ export default class Home extends Component {
 
               <Table.Body>
                 <Table.Row>
-                  <Table.Cell>{this.props.getTranslation('description')}</Table.Cell>
+                  <Table.Cell>{t('description')}:</Table.Cell>
                   <Table.Cell>
                     <Input 
                       fluid
                       size='large'
                       name="description"
                       onChange={this.handleChange}
-                      placeholder='Description'
+                      placeholder={t('description')}
                       defaultValue={this.state.description}
                       error={false}
                     />
@@ -195,12 +196,12 @@ export default class Home extends Component {
             </Table>
 
             <Button fluid size='large' onClick={this.search}>
-              <h3>{this.props.getTranslation('search')}</h3>
+              <h3>{t('search')}</h3>
             </Button>
 
             </div>
             <div style={middlepane}>
-              <ListAuction auctions={this.state.auctions} getTranslation={this.props.getTranslation} setEmail2={this.setEmail2}/>
+              <ListAuction auctions={this.state.auctions} getTranslation={t} setEmail2={this.setEmail2}/>
               <Pagination
                 offset={this.state.offset}
                 limit={this.state.limit}
