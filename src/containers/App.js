@@ -43,7 +43,7 @@ class App extends Component {
             <Router history={history}>
             <div>
               <Route exact path="/home"            render={(props) => <Home {...props} auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
-              <Route exact path="/"                render={  ()    => <Login           auth={auth} getTranslation={this.getTranslation} />} />
+              <Route exact path="/"                render={  ()    => <Login           auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} />} />
               <Route exact path="/auction"         render={  ()    => <CreateAuction   auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
               <Route exact path="/auctions/search" render={  ()    => <AuctionsSearch  auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />
               <Route exact path="/detail"          render={  ()    => <AuctionDetails  auth={auth} getTranslation={this.getTranslation} changeLanguage={this.changeLanguage} getLanguage={this.getLanguage} />} />

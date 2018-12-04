@@ -109,7 +109,7 @@ export default class Home extends Component {
       <div>
       {
         !isAuthenticated() && (
-          <Login auth={this.props.auth} getTranslation={this.props.getTranslation}/>
+          <Login auth={this.props.auth} getTranslation={this.props.getTranslation} changeLanguage={this.props.changeLanguage}/>
         )
       }
       {
