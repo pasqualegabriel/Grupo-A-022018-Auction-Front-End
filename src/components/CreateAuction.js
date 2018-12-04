@@ -31,8 +31,8 @@ export default class CreateAuction extends Component {
     this.auctionService = new AuctionService()
     this.state = {
       id: JSON.parse(localStorage.getItem('auction-create')).id,
-      startDate: JSON.parse(localStorage.getItem('auction-create')).is === 'create' ? moment(JSON.parse(localStorage.getItem('auction-create')).startDate).add(1, 'days') : moment(JSON.parse(localStorage.getItem('auction-create')).startDate),
-      endDate: JSON.parse(localStorage.getItem('auction-create')).is === 'create' ? moment(JSON.parse(localStorage.getItem('auction-create')).startDate).add(3, 'days') : moment(JSON.parse(localStorage.getItem('auction-create')).endDate),
+      startDate: JSON.parse(localStorage.getItem('auction-create')).is === 'create' ? moment(JSON.parse(localStorage.getItem('auction-create')).startDate).add(1, 'days') : moment(JSON.parse(localStorage.getItem('auction-create')).startDate).subtract(3, 'hours'),
+      endDate: JSON.parse(localStorage.getItem('auction-create')).is === 'create' ? moment(JSON.parse(localStorage.getItem('auction-create')).startDate).add(3, 'days') : moment(JSON.parse(localStorage.getItem('auction-create')).endDate).subtract(3, 'hours'),
       description: JSON.parse(localStorage.getItem('auction-create')).description,
       title: JSON.parse(localStorage.getItem('auction-create')).title,
       price: JSON.parse(localStorage.getItem('auction-create')).price,
@@ -216,7 +216,7 @@ export default class CreateAuction extends Component {
                     <div style={dateStyle}>
                       <DatePicker
                         label='First name'
-                        selected={this.state.startDate < moment().add(1, 'days') ? moment().add(1, 'days') : moment(this.state.startDate)}
+                        selected={moment(this.state.startDate) < moment().add(1, 'days') ? moment().add(1, 'days') : moment(this.state.startDate)}
                         onChange={this.handleChangeStartDate}
                         showTimeSelect
                         timeFormat="HH:mm"
