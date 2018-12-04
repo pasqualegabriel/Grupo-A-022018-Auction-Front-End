@@ -49,5 +49,18 @@
   "finaliza": "Ends in",
   "comienza": "Starts in",
   "avance": "Auction advance",
-  "error-price2": "* Required: Numerical value greater than five percent of the current price"
+  "error-price2": "* Required: Numerical value greater than five percent of the current price",
+  "offer-do": "Offer made",
+  "offer-first": "Offer with automatic tracking performed",
+  "delete-auction": "The auction was successfully deleted",
+  "input": "Input",
+  "first-offer": "Automatic Offer",
+  "edit": "Edit Auction",
+  "delete": "Delete Auction",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "sure": "Are you sure?",
+  "remove": "Delete",
+  "in": "in",
+  "last": "You are the last bidder"
 }

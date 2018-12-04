@@ -31,15 +31,17 @@ export default class Auth {
 
   handleAuthentication() {
     this.auth0.parseHash((err, authResult) => {
-      this.getEmail(authResult.accessToken)
-      console.log('set email')
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult);
-        history.replace('/home');
-      } else if (err) {
-        history.replace('/home');
-        console.log(err);
-        alert(`Error: ${err.error}. Check the console for further details.`);
+      if(authResult){
+        this.getEmail(authResult.accessToken)
+        console.log('set email')
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          this.setSession(authResult);
+          history.replace('/home');
+        } else if (err) {
+          history.replace('/home');
+          console.log(err);
+          alert(`Error: ${err.error}. Check the console for further details.`);
+        }
       }
     });
   }

@@ -49,5 +49,18 @@
   "finaliza": "Termina en",
   "comienza": "Empieza en",
   "avance": "Avance de la subasta",
-  "error-price2": "* Required: Valor numérico mayor al cinco por ciento del precio actual"
+  "error-price2": "* Required: Valor numérico mayor al cinco por ciento del precio actual",
+  "offer-do": "Oferta realizada",
+  "offer-first": "Oferta con seguimiento automatico realizada",
+  "delete-auction": "Se elimino correctamente la subasta",
+  "input": "Entrada",
+  "first-offer": "Oferta Automatica",
+  "edit": "Editar Subasta",
+  "delete": "Eliminar Subasta",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "sure": "¿Estás seguro?",
+  "remove": "Eliminar",
+  "in": "en",
+  "last": "Eres el último postor"
 }

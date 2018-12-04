@@ -180,11 +180,11 @@ export default class App extends Component {
       .then(() => {
         this.setAuction()
         this.handleCancel()
-        this.notificationRegisterSuccess('Successful', 'Oferta realizada')
+        this.notificationRegisterSuccess(this.props.getTranslation('successful'), this.props.getTranslation('offer-do'))
       })
       .catch(err => {
         this.handleCancel()
-        this.notificationRegisterError('Alert', err.response.data.message)
+        this.notificationRegisterError(this.props.getTranslation('alert'), this.props.getTranslation('last'))
       })
   }
 
@@ -194,17 +194,12 @@ export default class App extends Component {
       .then(() => {
         this.setAuction()
         this.handleCancelF()
-        this.notificationRegisterSuccess('Successful', 'Oferta con seguimiento automatico realizado')
+        this.notificationRegisterSuccess(this.props.getTranslation('successful'), this.props.getTranslation('offer-first'))
       })
       .catch(err => {
         this.handleCancelF()
-        this.notificationRegisterError('Alert', err.response.data.message)
+        this.notificationRegisterError(this.props.getTranslation('alert'), err.response.data.message)
       })
-  }
-
-  fO = () => {
-    localStorage.setItem('firstOffer', JSON.stringify({ id: this.state.auction.id }))
-    window.location.pathname = '/firstOffer'
   }
 
   handleChange2 = (ev, {name, value}) => {
@@ -239,8 +234,8 @@ export default class App extends Component {
       this.handleCancelD()
       const aNotify = {
         is: true,
-        title: 'Successful',
-        message: 'Se elimino correctamente la subasta',
+        title: this.props.getTranslation('successful'),
+        message: this.props.getTranslation('delete-auction'),
         type: 'success'
       }
       localStorage.setItem('notify', JSON.stringify(aNotify))
@@ -248,7 +243,7 @@ export default class App extends Component {
     })
     .catch(err => {
       this.handleCancelD()
-      this.notificationRegisterError('Alert', err.response.data.message)
+      this.notificationRegisterError(this.props.getTranslation('alert'), err.response.data.message)
     })
   }
 
@@ -327,7 +322,13 @@ export default class App extends Component {
                         <Table.Cell>{this.props.getTranslation('stretch')} {bidders.length + 1} - {t('cash')} {parseInt((auction.price * 5 / 100) + auction.price)}</Table.Cell>
                         <Table.Cell>
                           <Button primary onClick={this.show}>{this.props.getTranslation('offer')}</Button>
-                          <Confirm open={open} onCancel={this.handleCancel} onConfirm={this.offer} />
+                          <Confirm  open={open} 
+                                    onCancel={this.handleCancel} 
+                                    onConfirm={this.offer} 
+                                    content={`${t('offer')} ${t('in')} ${auction.title}, ${t('sure')}`}
+                                    cancelButton={t('cancel')}
+                                    confirmButton={t('ok')}
+                          />
                         </Table.Cell>
                       </Table.Row>
                     </Table.Body>
@@ -341,8 +342,7 @@ export default class App extends Component {
                   (!firstBidders.some(b => b.author === this.getAuthor())) && (
                   <Table.Body>
                     <Table.Row>
-                      <Table.Cell>input</Table.Cell>
-                      {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
+                      <Table.Cell>{t('input')}</Table.Cell>
                       <Table.Cell>
                       {
                       (this.errorAmount()) && (
@@ -370,11 +370,16 @@ export default class App extends Component {
                   (!firstBidders.some(b => b.author === this.getAuthor())) && (
                   <Table.Body>
                     <Table.Row>
-                      <Table.Cell>first offer</Table.Cell>
-                      {/* Tramo {bidders.length + 1} - $ {parseInt((auction.price * 5 / 100) + auction.price)} */}
+                      <Table.Cell>{t('first-offer')}</Table.Cell>
                       <Table.Cell>
-                        <Button primary onClick={this.showF} disabled={this.errorAmount()}>First Offer</Button>
-                        <Confirm open={openF} onCancel={this.handleCancelF} onConfirm={this.firstOffer} />
+                        <Button primary onClick={this.showF} disabled={this.errorAmount()}>{t('first-offer')}</Button>
+                        <Confirm  open={openF} 
+                                  onCancel={this.handleCancelF} 
+                                  onConfirm={this.firstOffer} 
+                                  content={`${t('first-offer')} ${t('in')} ${auction.title}, ${t('sure')}`}
+                                  cancelButton={t('cancel')}
+                                  confirmButton={t('ok')}
+                        />
                       </Table.Cell>
                     </Table.Row>
                   </Table.Body>
@@ -386,10 +391,10 @@ export default class App extends Component {
                   this.state.auction.emailAuthor === this.getAuthor() && (
                     <Table.Body>
                       <Table.Row>
-                        <Table.Cell>Editar subasta</Table.Cell>
+                        <Table.Cell>{t('edit')}</Table.Cell>
                         <Table.Cell>
                           <Button primary onClick={this.edit}>
-                            <h3>Editar</h3>
+                            <h3>{t('edit')}</h3>
                           </Button>
                         </Table.Cell>
                       </Table.Row>
@@ -402,10 +407,16 @@ export default class App extends Component {
                   this.state.auction.emailAuthor === this.getAuthor() && (
                     <Table.Body>
                       <Table.Row>
-                        <Table.Cell>Eliminar subasta</Table.Cell>
+                        <Table.Cell>{t('delete')}</Table.Cell>
                         <Table.Cell>
-                          <Button primary onClick={this.showD}>Delete Offer</Button>
-                          <Confirm open={openD} onCancel={this.handleCancelD} onConfirm={this.delete} />
+                          <Button primary onClick={this.showD}>{t('delete')}</Button>
+                          <Confirm  open={openD} 
+                                    onCancel={this.handleCancelD} 
+                                    onConfirm={this.delete} 
+                                    content={`${t('remove')} ${auction.title}, ${t('sure')}`}
+                                    cancelButton={t('cancel')}
+                                    confirmButton={t('ok')}
+                          />
                         </Table.Cell>
                       </Table.Row>
                     </Table.Body>
