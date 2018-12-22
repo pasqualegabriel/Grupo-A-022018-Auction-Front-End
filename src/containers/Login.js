@@ -1,60 +1,38 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+import './LoginCss.css'
 
-const styles = {
-    loginStyle: {
-        height: '100%',
-        width: '500', 
-        padding: '8em'
-    }
+const titleS = {
+    textAlign: 'center'
 }
 
-export default ({verify, handleChange}) => {
+export default ({ auth, getTranslation, changeLanguage }) => {
+
+    const ingles = () => {
+        changeLanguage('en')
+    }
+    
+    const latino = () => {
+        changeLanguage('es')
+    }
 
     return ( 
-          <div>
-            <div className='login-form'>
-            {/*
-              Heads up! The styles below are necessary for the correct render of this example.
-              You can do same with CSS, the main idea is that all the elements up to the `Grid`
-              below must have a height of 100%.
-            */}
-            <style>{`
-              body > div,
-              body > div > div,
-              body > div > div > div.login-form {
-                height: 100%;
-              }
-            `}</style>
-            <Grid textAlign='center' style={styles.loginStyle} verticalAlign='middle' >
-              <Grid.Column style={{ maxWidth: 500 }}>
-                
-                <Form size='large' >
-                  <Segment stacked inverted>
-                  <Header as='h2' color='teal' textAlign='center'>
-                  {/* <Image src="../UNQ Black Logo.png" />  */}
-                  Log-in to your account
-                </Header>
-                    <Form.Input name="name" onChange={handleChange} fluid icon='user' 
-                                iconPosition='left' placeholder='Username' />
-                    <Form.Input
-                      fluid
-                      name="password"
-                      onChange={handleChange}
-                      icon='lock'
-                      iconPosition='left'
-                      placeholder='Password'
-                      type='password'
-                    />
-        
-                    <Button color='teal' fluid size='large' onClick={verify}>
-                      Login
-                    </Button>
-                  </Segment>
-                </Form>
-              </Grid.Column>
-            </Grid>
-          </div>
+        <div>
+            <div style={{textAlign:'right'}}>
+                <button type="submit" style={{display: 'inline-block'}} onClick={ingles}>{getTranslation('idiom-en')}</button>
+                <button type="submit" style={{display: 'inline-block'}} onClick={latino}>{getTranslation('idiom-es')}</button>
+            </div>
+        <div style={titleS}>
+
+            <h6>Pasquale Gabriel - Autalan Fernando Nahuel</h6>
+            <h1>Subasteando A Cara De Perro</h1>
+            <h3>{getTranslation('let')}</h3>
+            <img src="https://dslv9ilpbe7p1.cloudfront.net/Z6vfSk5ZX0y22ZcB3V3XRQ_store_header_image" alt="Snow" 
+                            onClick={() => auth.login()}/>
+        </div>
         </div>
     )
 }
+
+/*
+https://react.semantic-ui.com/collections/form/#states-error
+*/

@@ -13,4 +13,3 @@ Number |       Name              | UNQ-Records |    EMail
 
 [Visual Story Mapping](https://trello.com/b/qexv6tAc/subastas-desarrollo-de-aplicaciones-a-cara-de-perro)
 
-

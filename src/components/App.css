@@ -1,0 +1,26 @@
+.menu-item {
+    padding: 2 50px;
+    margin: auto;
+    user-select: none;
+    cursor: pointer;
+    border: none;
+    margin: 'auto';
+    /* margin-left: '40px';
+    padding: '5em'; */ 
+    width: 'available';
+    height: 'available';
+}
+.menu-item-wrapper.active {
+    border: 1px blue solid;
+    width: 'available';
+}
+.menu-item.active {
+    border: 1px green solid;
+    width: 'available';
+}
+
+.scroll-menu-arrow {
+    padding: 20px;
+    cursor: pointer;
+    width: 'available';
+}
